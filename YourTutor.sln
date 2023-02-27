@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CBC5FC7F-E2DD-47BC-969E-93567DE67AA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YourTutor.Mvc", "src\YourTutor.Mvc\YourTutor.Mvc.csproj", "{BFA377BB-B097-4BA7-9D10-1922C6234159}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFA377BB-B097-4BA7-9D10-1922C6234159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFA377BB-B097-4BA7-9D10-1922C6234159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFA377BB-B097-4BA7-9D10-1922C6234159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFA377BB-B097-4BA7-9D10-1922C6234159}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BFA377BB-B097-4BA7-9D10-1922C6234159} = {CBC5FC7F-E2DD-47BC-969E-93567DE67AA5}
+	EndGlobalSection
+EndGlobal
