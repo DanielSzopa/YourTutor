@@ -11,6 +11,7 @@ namespace YourTutor.Core.Entities
         public LastName LastName { get; }
         public Password Password { get; private set; }
         public HashPassword HashPassword { get; private set; }
+
         public User(Guid id, Email email, FirstName firstName, LastName lastName, Password password)
         {
             Id = id;
@@ -18,6 +19,15 @@ namespace YourTutor.Core.Entities
             FirstName = firstName;
             LastName = lastName;
             Password = password;
+        }
+
+        public User(Guid id, Email email, FirstName firstName, LastName lastName, HashPassword hashPassword)
+        {
+            Id = id;
+            Email = email;
+            FirstName = firstName;
+            LastName = lastName;
+            HashPassword = hashPassword;
         }
 
         public void Register(string confirmedPassword)
