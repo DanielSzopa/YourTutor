@@ -9,7 +9,7 @@ namespace YourTutor.Core.Entities
         public Email Email { get; }
         public FirstName FirstName { get; }
         public LastName LastName { get; }
-        public Password Password { get; }
+        public Password Password { get; private set; }
         public HashPassword HashPassword { get; private set; }
         public User(Guid id, Email email, FirstName firstName, LastName lastName, Password password)
         {
@@ -20,28 +20,28 @@ namespace YourTutor.Core.Entities
             Password = password;
         }
 
-        public bool Register(Guid id, Email email, FirstName firstName, LastName lastName, Password password, string confirmedPassword)
+        public void Register(string confirmedPassword)
         {
-            try
+            if (string.IsNullOrWhiteSpace(confirmedPassword)
+                || Password.Value != confirmedPassword)
             {
-                if(string.IsNullOrWhiteSpace(confirmedPassword)
-                    || password.Value.ToLower() != confirmedPassword.ToLower())
-                {
-                    throw new InvalidPasswordException($"Passwords does not match: password {password.Value}, confirmedPassword: {confirmedPassword}");
-                }
-
-                var user = new User(id, email, firstName, lastName, password);
-                SetHashPassword(user.Password);
-
-                return true;
+                throw new InvalidPasswordException($"Passwords does not match: password {Password}, confirmedPassword: {confirmedPassword}");
             }
-            catch
-            {
-                return false;
-            }
+
+            SetHashPassword(Password);
         }
 
-        private void SetHashPassword(string password) => HashPassword = password;
+        private void SetHashPassword(string password)
+        {
+            //Logic for HashingPassword
+            HashPassword = password;
+        }
+
+        private void UnHashPassword(string hashPassoword)
+        {
+            //Logic for unHashPassword
+            Password = hashPassoword;
+        }
 
     }
 }
