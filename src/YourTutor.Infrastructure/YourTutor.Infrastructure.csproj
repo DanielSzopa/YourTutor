@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\YourTutor.Core\YourTutor.Core.csproj" />
+    <ProjectReference Include="..\YourTutor.Application\YourTutor.Application.csproj" />
   </ItemGroup>
 
 </Project>

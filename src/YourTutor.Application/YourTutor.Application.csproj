@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\YourTutor.Infrastructure\YourTutor.Infrastructure.csproj" />
+    <ProjectReference Include="..\YourTutor.Core\YourTutor.Core.csproj" />
   </ItemGroup>
 
 </Project>
