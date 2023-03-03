@@ -6,7 +6,7 @@ namespace YourTutor.Core.Entities
 {
     public sealed class User
     {
-        public UserId Id { get; private set; }
+        public UserId Id { get; }
         public Email Email { get; }
         public FirstName FirstName { get; }
         public LastName LastName { get; }
