@@ -32,7 +32,7 @@ namespace YourTutor.Mvc.Controllers
                 if (ModelState.IsValid)
                 {
                     await _mediator.Send(command);
-                    return RedirectToAction("Home", "Index");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
