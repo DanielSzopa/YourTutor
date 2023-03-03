@@ -2,7 +2,7 @@
 {
     public sealed class InvalidLastNameException : CustomException
     {
-        public InvalidLastNameException(string message) : base(message)
+        internal InvalidLastNameException(string message) : base(message)
         {
             
         }

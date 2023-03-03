@@ -1,10 +1,8 @@
-﻿using System.Net;
-
-namespace YourTutor.Core.Exceptions
+﻿namespace YourTutor.Core.Exceptions
 {
-    public class InvalidEmailException : CustomException
+    public sealed class InvalidEmailException : CustomException
     {
-        public InvalidEmailException(string message) : base(message)
+        internal InvalidEmailException(string message) : base(message)
         {
             
         }

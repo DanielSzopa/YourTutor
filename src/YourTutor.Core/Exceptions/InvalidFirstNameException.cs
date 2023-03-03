@@ -1,8 +1,8 @@
 ﻿namespace YourTutor.Core.Exceptions
 {
-    public class InvalidFirstNameException : CustomException
+    public sealed class InvalidFirstNameException : CustomException
     {
-        public InvalidFirstNameException(string message) : base(message) { }
+        internal InvalidFirstNameException(string message) : base(message) { }
     }
 }
 

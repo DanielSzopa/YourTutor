@@ -9,7 +9,10 @@ namespace YourTutor.Infrastructure.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(u => u.Id);
+            builder.HasKey(u => u.Id.Value);
+
+            builder.Property(u => u.Id)
+                .HasConversion(u => u.Value, u => new UserId(u));
 
             builder.Property(u => u.Email)
                 .HasConversion(e => e.Value, e => new Email(e));
