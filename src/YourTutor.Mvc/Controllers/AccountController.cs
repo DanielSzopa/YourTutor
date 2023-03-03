@@ -36,11 +36,13 @@ namespace YourTutor.Mvc.Controllers
                 }
                 else
                 {
+                    ViewBag.IsInvalidRegistration = true;
                     return View();
                 }
             }
             catch
             {
+                ViewBag.IsInvalidRegistration = true;
                 return View();
             }
                       

@@ -7,6 +7,10 @@
 <h1>Register</h1>
 
 <h4>Register</h4>
+@if (ViewBag.IsInvalidRegistration != null && ViewBag.IsInvalidRegistration == true)
+{
+    <h4>Is Invalid registration!!!!!!!!</h4>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">
