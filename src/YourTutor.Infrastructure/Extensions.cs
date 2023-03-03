@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using YourTutor.Core.Abstractions;
 using YourTutor.Infrastructure.DAL;
+using YourTutor.Infrastructure.DAL.Repositories;
 
 namespace YourTutor.Infrastructure
 {
@@ -7,7 +9,9 @@ namespace YourTutor.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddYourTutorDbContext();
+            services
+                .AddScoped<IUserRepository,UserRepository>()
+                .AddYourTutorDbContext();
 
             return services;
         }
