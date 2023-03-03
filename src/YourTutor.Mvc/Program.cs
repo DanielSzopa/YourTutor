@@ -1,6 +1,10 @@
+using YourTutor.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddInfrastructure()
+    .AddControllersWithViews();
 
 var app = builder.Build();
 
