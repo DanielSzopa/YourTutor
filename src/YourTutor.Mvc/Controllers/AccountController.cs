@@ -5,7 +5,7 @@ using YourTutor.Application.Commands;
 namespace YourTutor.Mvc.Controllers
 {
     [Route("[controller]")]
-    public class AccountController : Controller
+    public sealed class AccountController : Controller
     {
         private readonly IMediator _mediator;
 
