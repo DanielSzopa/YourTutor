@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using YourTutor.Core.Entities;
 using YourTutor.Core.ValueObjects;
 
-namespace YourTutor.Infrastructure.Configurations
+namespace YourTutor.Infrastructure.DAL.Configurations
 {
     internal class UserConfiguration : IEntityTypeConfiguration<User>
     {
