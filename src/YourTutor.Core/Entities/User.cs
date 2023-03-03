@@ -1,4 +1,5 @@
 ﻿using YourTutor.Core.Exceptions;
+using YourTutor.Core.Services;
 using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Core.Entities
@@ -38,21 +39,10 @@ namespace YourTutor.Core.Entities
                 throw new InvalidPasswordException($"Passwords does not match: password {Password}, confirmedPassword: {confirmedPassword}");
             }
 
-            SetHashPassword(Password);
+            SetHashPassword();
         }
 
-        private void SetHashPassword(string password)
-        {
-            //Logic for HashingPassword
-            HashPassword = password;
-        }
-
-        private void UnHashPassword(string hashPassoword)
-        {
-            //Logic for unHashPassword
-            Password = hashPassoword;
-        }
-
+        private void SetHashPassword() => HashPassword = HashService.HashPassword(Password);
     }
 }
 
