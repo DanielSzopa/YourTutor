@@ -14,7 +14,7 @@ namespace YourTutor.Core.ValueObjects
             Value = value;
         }
 
-        public static implicit operator UserId(Guid value) => new UserId(value);
+        public static implicit operator UserId(Guid value) => new(value);
 
         public static implicit operator Guid(UserId userId) => userId.Value;
     }

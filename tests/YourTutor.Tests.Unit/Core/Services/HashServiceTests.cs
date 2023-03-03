@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using YourTutor.Core.Services;
+﻿using YourTutor.Core.Services;
 
 namespace YourTutor.Tests.Unit.Core.Services
 {
