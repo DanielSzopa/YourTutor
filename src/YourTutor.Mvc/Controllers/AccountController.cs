@@ -26,7 +26,15 @@ namespace YourTutor.Mvc.Controllers
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register(Register command)
-        {           
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            else
+            {
+
+            }
             await _mediator.Send(command);
             return View();
         }
