@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using YourTutor.Application.Commands;
 
 namespace YourTutor.Application.Commands.Handlers
 {
