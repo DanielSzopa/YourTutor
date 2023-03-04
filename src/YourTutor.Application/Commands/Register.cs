@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using System.ComponentModel.DataAnnotations;
+using YourTutor.Application.Dtos;
 
 namespace YourTutor.Application.Commands;
 
-public class Register : IRequest<Unit>
+public class Register : IRequest<RegisterResponse>
 {
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Email address is invalid")]

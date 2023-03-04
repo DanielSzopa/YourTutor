@@ -22,31 +22,46 @@ namespace YourTutor.Mvc.Controllers
             return View();
         }
 
-
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register(Register command)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                var response = await _mediator.Send(command);
+
+                if (response.Errors.Count > 0)
                 {
-                    await _mediator.Send(command);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ViewBag.IsInvalidRegistration = true;
+                    ViewBag.ErrorMessages = response.Errors;
                     return View();
                 }
+
+                return RedirectToAction("Index", "Home");
             }
-            catch(Exception ex)
+            else
             {
-                ViewBag.IsInvalidRegistration = true;
-                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.ErrorMessages = GetErrors();
                 return View();
             }
-                      
+        }
+
+        private List<string> GetErrors()
+        {
+            var errors = new List<string>();
+            var test = ModelState?.Values
+                .Where(x => x.Errors.Count > 0)
+                .Select(x => x.Errors)
+                .ToList();
+
+            foreach (var error in test)
+            {
+                foreach (var e in error)
+                {
+                    errors.Add(e.ErrorMessage);
+                }
+            }
+
+            return errors;
         }
     }
 }

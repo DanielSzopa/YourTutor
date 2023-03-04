@@ -7,10 +7,13 @@
 <h1>Register</h1>
 
 <h4>Register</h4>
-@if (ViewBag.IsInvalidRegistration != null && ViewBag.IsInvalidRegistration == true)
+@if (ViewBag.ErrorMessages is not null && ViewBag.ErrorMessages.Count > 0)
 {
     <h4>Is Invalid registration!!!!!!!!</h4>
-    <h4>@ViewBag.ErrorMessage</h4>
+    @foreach (var error in ViewBag.ErrorMessages)
+    {
+        <h4>@error</h4>
+    }
 }
 <hr />
 <div class="row">
