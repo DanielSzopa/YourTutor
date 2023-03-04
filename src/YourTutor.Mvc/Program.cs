@@ -1,26 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application;
-using YourTutor.Infrastructure;
 using YourTutor.Infrastructure.Constans;
+using YourTutor.Infrastructure.Extensions;
+using YourTutor.Infrastructure.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
+var config = builder.Configuration;
 
 services
     .AddApplication()
-    .AddInfrastructure()
+    .AddInfrastructure(config)
     .AddHttpContextAccessor()
     .AddControllersWithViews(options =>
     {
         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
     });
 
+var identitySettings = services.GetSettings<IdentitySettings>(config);
+
 services.AddAuthentication()
     .AddCookie(Schemes.IdentityScheme, options =>
     {
         options.Cookie = new CookieBuilder()
         {
-            Name = "Identity",
+            Name = identitySettings.CookieName,
             HttpOnly = true,
             SecurePolicy = CookieSecurePolicy.Always
         };
