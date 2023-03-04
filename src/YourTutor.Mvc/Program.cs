@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application;
 using YourTutor.Infrastructure;
 using YourTutor.Infrastructure.Constans;
@@ -9,7 +10,10 @@ services
     .AddApplication()
     .AddInfrastructure()
     .AddHttpContextAccessor()
-    .AddControllersWithViews();
+    .AddControllersWithViews(options =>
+    {
+        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    });
 
 services.AddAuthentication()
     .AddCookie(Schemes.IdentityScheme, options =>
