@@ -17,7 +17,7 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpGet]
         [Route("register")]
-        public async Task<IActionResult> Register()
+        public IActionResult Register()
         {
             return View();
         }
@@ -40,9 +40,10 @@ namespace YourTutor.Mvc.Controllers
                     return View();
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 ViewBag.IsInvalidRegistration = true;
+                ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
                       

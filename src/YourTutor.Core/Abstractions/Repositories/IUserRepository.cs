@@ -7,5 +7,7 @@ namespace YourTutor.Core.Abstractions.Repositories
         Task<User> GetUserById(Guid userId);
 
         Task AddUser(User user);
+
+        Task<bool> IsEmailAlreadyExists(string email);
     }
 }

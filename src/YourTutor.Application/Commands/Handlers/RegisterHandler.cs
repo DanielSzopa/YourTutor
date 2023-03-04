@@ -2,6 +2,7 @@
 using YourTutor.Core.Abstractions;
 using YourTutor.Core.Abstractions.Repositories;
 using YourTutor.Core.Entities;
+using YourTutor.Core.Exceptions;
 using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Application.Commands.Handlers
@@ -19,6 +20,9 @@ namespace YourTutor.Application.Commands.Handlers
 
         public async Task<Unit> Handle(Register command, CancellationToken cancellationToken)
         {
+            if (await _userRepository.IsEmailAlreadyExists(command.Email))
+                throw new EmailAlreadyExistsException($"Email already exists: {command.Email}");
+
             var user = new User(Guid.NewGuid(), command.Email, command.FirstName, command.LastName, (Password)command.Password);
             user.Register(command.Password);
 

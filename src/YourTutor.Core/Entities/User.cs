@@ -36,7 +36,7 @@ namespace YourTutor.Core.Entities
             if (string.IsNullOrWhiteSpace(confirmedPassword)
                 || Password.Value != confirmedPassword)
             {
-                throw new InvalidPasswordException($"Passwords does not match: password {Password}, confirmedPassword: {confirmedPassword}");
+                throw new InvalidPasswordException($"Passwords does not match");
             }
 
             SetHashPassword();
