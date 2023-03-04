@@ -15,9 +15,10 @@ namespace YourTutor.Infrastructure.Extensions
         {
             services
                 .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<ISignInManager, SignInManager>()
-                .AddYourTutorDbContext()
-                .RegisterSettings<IdentitySettings>(configuration);
+                .AddScoped<ISignInManager, SignInManager>()              
+                .RegisterSettings<IdentitySettings>(configuration)
+                .RegisterSettings<ConnectionStringsSettings>(configuration)
+                .AddYourTutorDbContext(configuration);
 
             return services;
         }

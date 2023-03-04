@@ -3,7 +3,7 @@ using YourTutor.Infrastructure.Settings.Base;
 
 namespace YourTutor.Infrastructure.Settings
 {
-    public class IdentitySettings : Settings<IdentitySettings>, ISettings
+    public sealed class IdentitySettings : Settings<IdentitySettings>, ISettings
     {
         public static string SectionName => "Identity";
 
