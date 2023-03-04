@@ -1,32 +1,17 @@
-using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application;
-using YourTutor.Infrastructure;
-using YourTutor.Infrastructure.Constans;
+using YourTutor.Infrastructure.Extensions;
+using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
+var config = builder.Configuration;
 
 services
     .AddApplication()
-    .AddInfrastructure()
+    .AddInfrastructure(config)
     .AddHttpContextAccessor()
-    .AddControllersWithViews(options =>
-    {
-        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-    });
-
-services.AddAuthentication()
-    .AddCookie(Schemes.IdentityScheme, options =>
-    {
-        options.Cookie = new CookieBuilder()
-        {
-            Name = "Identity",
-            HttpOnly = true,
-            SecurePolicy = CookieSecurePolicy.Always
-        };
-        options.LoginPath = "/Account/Login";
-    });
-    
+    .AddAuthenticationExtension(config)
+    .AddControllersExtension();
 
 var app = builder.Build();
 
@@ -36,7 +21,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-await app.Services.UseInfrastructure();
+await app.UseInfrastructure();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
