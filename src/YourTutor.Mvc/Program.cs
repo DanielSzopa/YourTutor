@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application;
-using YourTutor.Infrastructure.Constans;
 using YourTutor.Infrastructure.Extensions;
-using YourTutor.Infrastructure.Settings;
+using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -12,25 +10,8 @@ services
     .AddApplication()
     .AddInfrastructure(config)
     .AddHttpContextAccessor()
-    .AddControllersWithViews(options =>
-    {
-        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-    });
-
-var identitySettings = services.GetSettings<IdentitySettings>(config);
-
-services.AddAuthentication()
-    .AddCookie(Schemes.IdentityScheme, options =>
-    {
-        options.Cookie = new CookieBuilder()
-        {
-            Name = identitySettings.CookieName,
-            HttpOnly = true,
-            SecurePolicy = CookieSecurePolicy.Always
-        };
-        options.LoginPath = "/Account/Login";
-    });
-    
+    .AddAuthenticationExtension(config)
+    .AddControllersExtension();
 
 var app = builder.Build();
 
