@@ -21,7 +21,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-await app.Services.UseInfrastructure();
+await app.UseInfrastructure();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

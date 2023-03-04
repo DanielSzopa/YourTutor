@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YourTutor.Core.Abstractions;
 using YourTutor.Core.Abstractions.Repositories;
@@ -23,9 +24,9 @@ namespace YourTutor.Infrastructure.Extensions
             return services;
         }
 
-        public static async Task UseInfrastructure(this IServiceProvider serviceProvider)
+        public static async Task UseInfrastructure(this WebApplication webApplication)
         {
-            await serviceProvider.UpdateDbMigrations();
+            await webApplication.UpdateDbMigrations();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YourTutor.Infrastructure.Extensions;
@@ -16,9 +17,9 @@ namespace YourTutor.Infrastructure.DAL
             return services;
         }
 
-        internal static async Task UpdateDbMigrations(this IServiceProvider serviceProvider)
+        internal static async Task UpdateDbMigrations(this WebApplication webApplication)
         {
-            using var scope = serviceProvider.CreateAsyncScope();
+            using var scope = webApplication.Services.CreateAsyncScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<YourTutorDbContext>();
 
             if (dbContext.Database.IsRelational())
