@@ -32,11 +32,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+await app.Services.UpdateDbMigrations();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
