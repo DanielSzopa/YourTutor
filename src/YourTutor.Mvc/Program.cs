@@ -7,7 +7,7 @@ var services = builder.Services;
 var config = builder.Configuration;
 
 services
-    .AddApplication()
+    .AddApplication(config)
     .AddInfrastructure(config)
     .AddHttpContextAccessor()
     .AddAuthenticationExtension(config)

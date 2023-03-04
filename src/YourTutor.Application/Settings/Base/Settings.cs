@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Options;
 
-namespace YourTutor.Infrastructure.Settings.Base
+namespace YourTutor.Application.Settings.Base
 {
     public abstract class Settings<T> : AbstractValidator<T>, IValidateOptions<T>
         where T : class, ISettings, new()

@@ -15,7 +15,7 @@ namespace YourTutor.Infrastructure.DAL.Configurations
             builder.HasKey(u => u.Id);
 
             builder.Property(u => u.Email)
-                .HasConversion(e => e.Value, e => new Email(e));
+                .HasConversion(e => e.Value, e => new Core.ValueObjects.Email(e));
 
             builder.Property(u => u.FirstName)
                .HasConversion(f => f.Value, f => new FirstName(f));
