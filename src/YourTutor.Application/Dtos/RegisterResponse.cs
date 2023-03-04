@@ -1,6 +1,6 @@
 ﻿namespace YourTutor.Application.Dtos
 {
-    public class RegisterResponse
+    public sealed class RegisterResponse
     {
         public List<string> Errors { get; set; } = new();
     }

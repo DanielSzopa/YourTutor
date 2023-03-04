@@ -4,7 +4,7 @@ using YourTutor.Application.Dtos;
 
 namespace YourTutor.Application.Commands;
 
-public class Register : IRequest<RegisterResponse>
+public sealed class Register : IRequest<RegisterResponse>
 {
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Email address is invalid")]

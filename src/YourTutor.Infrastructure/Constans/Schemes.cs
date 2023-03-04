@@ -1,6 +1,6 @@
 ﻿namespace YourTutor.Infrastructure.Constans
 {
-    public class Schemes
+    public static class Schemes
     {
         public const string IdentityScheme = "IdentityDefault";
     }

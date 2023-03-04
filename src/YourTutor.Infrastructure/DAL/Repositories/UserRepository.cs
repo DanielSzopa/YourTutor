@@ -4,7 +4,7 @@ using YourTutor.Core.Entities;
 
 namespace YourTutor.Infrastructure.DAL.Repositories
 {
-    internal class UserRepository : IUserRepository
+    internal sealed class UserRepository : IUserRepository
     {
         private readonly YourTutorDbContext _dbContext;
 
