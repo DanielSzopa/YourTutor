@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using YourTutor.Infrastructure.Settings.Base;
+using YourTutor.Application.Settings.Base;
 
 namespace YourTutor.Infrastructure.Settings
 {

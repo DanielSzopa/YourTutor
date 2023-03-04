@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using YourTutor.Application.Settings.Base;
 
-namespace YourTutor.Infrastructure.Extensions
+namespace YourTutor.Application
 {
     public static class SettingsProvider
     {
