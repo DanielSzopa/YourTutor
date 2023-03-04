@@ -32,7 +32,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-await app.Services.UpdateDbMigrations();
+await app.Services.UseInfrastructure();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

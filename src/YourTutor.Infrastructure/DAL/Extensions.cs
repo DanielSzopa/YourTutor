@@ -12,6 +12,21 @@ namespace YourTutor.Infrastructure.DAL
 
             return services;
         }
+
+        internal static async Task UpdateDbMigrations(this IServiceProvider serviceProvider)
+        {
+            using var scope = serviceProvider.CreateAsyncScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<YourTutorDbContext>();
+
+            if (dbContext.Database.IsRelational())
+            {
+                var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
+                if (pendingMigrations != null && pendingMigrations.Any())
+                {
+                    await dbContext.Database.MigrateAsync();
+                }
+            }
+        }
     }
 }
 
