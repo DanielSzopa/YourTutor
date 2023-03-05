@@ -20,7 +20,8 @@
 }
 
 .nav-item > a:hover {
-    background-color: #FE9481;
+    background-color: #F86C53;
+    color:white!important;
 }
 
 #tutorIcon {
@@ -36,12 +37,12 @@
         color:white!important;
     }
 
-    #signIn {
-        margin-right: 4px;
+    .nav-item > a {
+        border-radius: 0.25rem;
     }
 
-    #signUp:hover {
-        background-color: #FE9481;
+    #signIn {
+        margin-right: 4px;
     }
 
     #myaccount-small {
@@ -52,6 +53,11 @@
 @media (max-width: 575px) {
     .nav-item:hover {
         background-color: #E1F4FC;
+    }
+
+    .nav-item > a {
+        border-radius: 0.25rem;
+        padding-left:4px!important
     }
 
     #myaccount {
