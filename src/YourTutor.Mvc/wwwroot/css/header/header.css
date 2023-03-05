@@ -1,6 +1,20 @@
-﻿header{
+﻿header {
     font-weight: 500;
 }
+
+#myaccount, #myaccount-small {
+    line-height:initial;
+}
+
+    #myaccount:hover, #myaccount-small:hover {
+        background-color: #E1F4FC;
+        cursor: pointer;
+    }
+
+.nav-item > a:hover {
+    background-color: #E1F4FC;
+}
+
 
 @media (min-width: 576px) {
     #signUp {
@@ -8,8 +22,12 @@
         border: 2px solid black;
     }
 
-    #signUp:hover{
-        background-color: #E1F4FC;
+        #signUp:hover {
+            background-color: #E1F4FC;
+        }
+
+    #myaccount-small {
+        display: none;
     }
 }
 
@@ -17,5 +35,8 @@
     .nav-item:hover {
         background-color: #E1F4FC;
     }
-}
 
+    #myaccount {
+        display: none;
+    }
+}

@@ -18,4 +18,8 @@
     <ProjectReference Include="..\YourTutor.Infrastructure\YourTutor.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>
