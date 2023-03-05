@@ -7,17 +7,20 @@
     padding-bottom: 0px;
 }
 
-#myaccount, #myaccount-small {
-    line-height:initial;
+#logo-text {
+   font-size: 25px
 }
 
-    #myaccount:hover, #myaccount-small:hover {
-        background-color: #E1F4FC;
-        cursor: pointer;
-    }
+#tutor-text {
+    color: red;
+}
+
+#myaccount, #myaccount-small {
+    line-height: initial;
+}
 
 .nav-item > a:hover {
-    background-color: #E1F4FC;
+    background-color: #FE9481;
 }
 
 #tutorIcon {
@@ -33,7 +36,7 @@
     }
 
         #signUp:hover {
-            background-color: #E1F4FC;
+            background-color: #FE9481;
         }
 
     #myaccount-small {
