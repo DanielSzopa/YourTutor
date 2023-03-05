@@ -2,6 +2,11 @@
     font-weight: 500;
 }
 
+#main-navbar {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
 #myaccount, #myaccount-small {
     line-height:initial;
 }
@@ -13,6 +18,11 @@
 
 .nav-item > a:hover {
     background-color: #E1F4FC;
+}
+
+#tutorIcon {
+    height: 50px;
+    width: 50px
 }
 
 
