@@ -7,6 +7,10 @@
         border-radius: 0.25rem;
         border: 2px solid black;
     }
+
+    #signUp:hover{
+        background-color: #E1F4FC;
+    }
 }
 
 @media (max-width: 575px) {

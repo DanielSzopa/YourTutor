@@ -15,11 +15,12 @@ namespace YourTutor.Core.Services.SignInManager
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task SignInAsync(bool isPersistent, Guid userId)
+        public async Task SignInAsync(bool isPersistent, Guid userId, string fullName)
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                new Claim(ClaimTypes.Name, fullName)
             };
 
             var claimIdentity = new ClaimsPrincipal(new ClaimsIdentity(claims, Schemes.IdentityScheme));
