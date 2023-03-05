@@ -33,11 +33,16 @@
     #signUp {
         border-radius: 0.25rem;
         border: 2px solid black;
+        background: #F86C53;
     }
 
-        #signUp:hover {
-            background-color: #FE9481;
-        }
+    #signIn {
+        margin-right: 4px;
+    }
+
+    #signUp:hover {
+        background-color: #FE9481;
+    }
 
     #myaccount-small {
         display: none;
