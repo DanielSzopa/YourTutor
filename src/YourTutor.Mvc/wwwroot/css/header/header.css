@@ -1,0 +1,17 @@
+﻿header{
+    font-weight: 500;
+}
+
+@media (min-width: 576px) {
+    #signUp {
+        border-radius: 0.25rem;
+        border: 2px solid black;
+    }
+}
+
+@media (max-width: 575px) {
+    .nav-item:hover {
+        background-color: #E1F4FC;
+    }
+}
+
