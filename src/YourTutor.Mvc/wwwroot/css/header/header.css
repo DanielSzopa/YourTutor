@@ -32,8 +32,8 @@
 @media (min-width: 576px) {
     #signUp {
         border-radius: 0.25rem;
-        border: 2px solid black;
         background: #F86C53;
+        color:white!important;
     }
 
     #signIn {
