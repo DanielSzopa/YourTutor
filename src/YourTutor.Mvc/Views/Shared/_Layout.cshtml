@@ -21,10 +21,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index"><img src="~/img/homeIcon.png" alt="homeIcon" />  Home</a>
                         </li>
                     </ul>
                     @if (!User.Identity.IsAuthenticated)
@@ -52,10 +49,10 @@
                                 </div>
                             </li>
                             <li class="nav-item" id="myaccount-small">
-                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index"><img src="~/img/userIcon.png" alt="userIcon" /> My account</a>
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index"><img src="~/img/userIcon.png" alt="userIcon" />  My account</a>
                             </li>
                             <li class="nav-item" id="signout-small">
-                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index"> Sign out</a>
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index"> <img src="~/img/logoutIcon.png" alt="logoutIcon" />  Sign out</a>
                             </li>
                         </ul>
                     }                  
