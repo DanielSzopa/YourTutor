@@ -8,7 +8,7 @@
 }
 
 #logo-text {
-   font-size: 25px
+    font-size: 25px
 }
 
 #tutor-text {
@@ -21,7 +21,7 @@
 
 .nav-item > a:hover {
     background-color: #F86C53;
-    color:white!important;
+    color: white !important;
 }
 
 #tutorIcon {
@@ -34,8 +34,12 @@
     #signUp {
         border-radius: 0.25rem;
         background: #F86C53;
-        color:white!important;
+        color: white !important;
     }
+
+        #signUp:hover {
+            background: #E3563D;
+        }
 
     .nav-item > a {
         border-radius: 0.25rem;
@@ -57,7 +61,7 @@
 
     .nav-item > a {
         border-radius: 0.25rem;
-        padding-left:4px!important
+        padding-left: 4px !important
     }
 
     #myaccount {
