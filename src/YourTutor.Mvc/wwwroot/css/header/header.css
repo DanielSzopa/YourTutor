@@ -29,6 +29,15 @@
     width: 50px
 }
 
+.dropdown-menu > li > a {
+    font-weight: 500;
+}
+
+    .dropdown-menu > li > a:hover {
+        background: #F86C53;
+        color: white !important;
+    }
+
 
 @media (min-width: 576px) {
     #signUp {
@@ -49,12 +58,12 @@
         margin-right: 4px;
     }
 
-    #myaccount-small {
+    #myaccount-small, #signout-small {
         display: none;
     }
 }
 
-@media (max-width: 575px) {
+@media (max-width: 576px) {
     .nav-item:hover {
         background-color: #E1F4FC;
     }
