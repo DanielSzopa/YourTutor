@@ -58,7 +58,7 @@
         margin-right: 4px;
     }
 
-    #myaccount-small, #signout-small {
+    .hidden-desktop {
         display: none;
     }
 }
