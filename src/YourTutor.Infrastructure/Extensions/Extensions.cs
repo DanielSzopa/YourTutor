@@ -8,6 +8,7 @@ using YourTutor.Core.Services.SignInManager;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Infrastructure.DAL.Repositories;
 using YourTutor.Infrastructure.Email;
+using YourTutor.Infrastructure.Services;
 using YourTutor.Infrastructure.Settings;
 
 namespace YourTutor.Infrastructure.Extensions
@@ -19,6 +20,7 @@ namespace YourTutor.Infrastructure.Extensions
             services
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ISignInManager, SignInManager>()              
+                .AddScoped<ISignOutManager, SignOutManager>()              
                 .AddScoped<IEmailSender, EmailSender>()                           
                 .AddYourTutorDbContext(configuration);
 

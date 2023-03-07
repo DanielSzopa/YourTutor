@@ -75,6 +75,14 @@ namespace YourTutor.Mvc.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("logout")]
+        public async Task<IActionResult> Logout(SignOut command)
+        {
+            await _mediator.Send(command);
+            return RedirectToAction("Index", "Home");
+        }
+
         private List<string> GetErrors()
         {
             var errors = new List<string>();
