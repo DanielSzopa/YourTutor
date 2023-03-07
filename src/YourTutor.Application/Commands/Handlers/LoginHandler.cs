@@ -34,7 +34,7 @@ namespace YourTutor.Application.Commands.Handlers
                 return loginResponse;
             }
 
-            await _signInManager.SignInAsync(request.IsPersistent, user.Id, $"{user.FirstName.Value} {user.LastName.Value}");
+            await _signInManager.SignInAsync(request.RememberMe, user.Id, $"{user.FirstName.Value} {user.LastName.Value}");
 
             return loginResponse;
         }
