@@ -11,7 +11,7 @@ namespace YourTutor.Core.ValueObjects
             if (string.IsNullOrWhiteSpace(value))
                 throw new InvalidEmailException($"This email is invalid: {value}");
 
-            Value = value;
+            Value = value.ToLower();
         }
 
         public static implicit operator string(Email email) => email.Value;

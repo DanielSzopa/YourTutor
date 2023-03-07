@@ -12,6 +12,8 @@ namespace YourTutor.Application.Commands
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
+
+        public bool IsPersistent { get; set; }
     }
 }
 
