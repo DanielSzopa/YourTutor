@@ -1,0 +1,13 @@
+﻿footer > .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer > .container > span > a {
+    text-decoration: none;
+}
+
+#github {
+    margin-left: 10px;
+}

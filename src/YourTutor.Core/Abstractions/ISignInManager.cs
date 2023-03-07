@@ -2,6 +2,6 @@
 {
     public interface ISignInManager
     {
-        Task SignInAsync(bool isPersistent, Guid userId);
+        Task SignInAsync(bool isPersistent, Guid userId, string fullName);
     }
 }

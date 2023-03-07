@@ -49,7 +49,7 @@ namespace YourTutor.Application.Commands.Handlers
                 return response;
 
             await _userRepository.AddUser(user);
-            await _signInManager.SignInAsync(false, user.Id);
+            await _signInManager.SignInAsync(false, user.Id, $"{user.FirstName.Value} {user.LastName.Value}");
 
             if (_emailSettings.RegistrationNotificationIsEnabled)
                 await _emailSender.SendEmail(new RegisterEmail(user.Email, _emailSettings.From));
