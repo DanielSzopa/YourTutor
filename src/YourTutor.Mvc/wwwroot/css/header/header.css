@@ -76,4 +76,13 @@
     #myaccount {
         display: none;
     }
+
+    .mobile-item {
+        display: flex;
+        align-items: center;       
+    }
+
+        .mobile-item > span {
+            margin-left: 7px;
+        }
 }
