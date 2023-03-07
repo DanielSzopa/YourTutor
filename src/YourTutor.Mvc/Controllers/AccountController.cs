@@ -45,6 +45,36 @@ namespace YourTutor.Mvc.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login(Login command)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await _mediator.Send(command);
+
+                if (response.Errors.Count > 0)
+                {
+                    ViewBag.ErrorMessages = response.Errors;
+                    return View();
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.ErrorMessages = GetErrors();
+                return View();
+            }
+        }
+
         private List<string> GetErrors()
         {
             var errors = new List<string>();
