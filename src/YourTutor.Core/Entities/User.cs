@@ -42,6 +42,9 @@ namespace YourTutor.Core.Entities
             SetHashPassword();
         }
 
+        public bool Login(string inputedPassword) =>
+            HashService.VerifyPassword(inputedPassword, HashPassword);
+
         private void SetHashPassword() => HashPassword = HashService.HashPassword(Password);
     }
 }

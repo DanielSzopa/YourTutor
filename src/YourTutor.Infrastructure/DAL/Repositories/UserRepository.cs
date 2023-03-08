@@ -19,6 +19,9 @@ namespace YourTutor.Infrastructure.DAL.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<User> GetUserByEmail(string email) => await _dbContext.Users
+            .FirstOrDefaultAsync(u => u.Email == email);
+
         public Task<User> GetUserById(Guid userId) => _dbContext.Users
             .SingleOrDefaultAsync(u => u.Id == userId);
 

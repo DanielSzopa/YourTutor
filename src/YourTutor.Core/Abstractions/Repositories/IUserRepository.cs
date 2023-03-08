@@ -5,6 +5,7 @@ namespace YourTutor.Core.Abstractions.Repositories
     public interface IUserRepository
     {
         Task<User> GetUserById(Guid userId);
+        Task<User> GetUserByEmail(string email);
 
         Task AddUser(User user);
 
