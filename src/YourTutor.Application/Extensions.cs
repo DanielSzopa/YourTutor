@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using YourTutor.Infrastructure.Settings;
 
 namespace YourTutor.Application
 {
@@ -13,11 +12,7 @@ namespace YourTutor.Application
 
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
-            services
-                .RegisterSettings<IdentitySettings>(configuration)
-                .RegisterSettings<ConnectionStringsSettings>(configuration)
-                .RegisterSettings<SendGridSettings>(configuration)
-                .RegisterSettings<EmailSettings>(configuration)
+            services              
                 .AddMediatR(config => config.AsScoped(), Assembly.Load(_applicationAssemblyName));
             return services;
         }

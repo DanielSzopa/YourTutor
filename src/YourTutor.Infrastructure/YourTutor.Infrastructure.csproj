@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\YourTutor.Application\YourTutor.Application.csproj" />
+    <ProjectReference Include="..\YourTutor.Shared\YourTutor.Shared.csproj" />
   </ItemGroup>
 
 </Project>

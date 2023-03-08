@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using YourTutor.Infrastructure.Constans;
-using YourTutor.Infrastructure.Extensions;
-using YourTutor.Infrastructure.Settings;
+using YourTutor.Shared.Settings;
 
 namespace YourTutor.Mvc.Extensions
 {
