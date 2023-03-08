@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using YourTutor.Application.Settings.Base;
+using YourTutor.Shared.Settings.Base;
 
-namespace YourTutor.Infrastructure.Settings
+namespace YourTutor.Shared.Settings
 {
     public sealed class IdentitySettings : Settings<IdentitySettings>, ISettings
     {

@@ -2,13 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using YourTutor.Application.Settings.Base;
+using YourTutor.Shared.Settings.Base;
 
-namespace YourTutor.Application
+namespace YourTutor.Shared.Settings
 {
     public static class SettingsProvider
     {
-        internal static IServiceCollection RegisterSettings<TSettings>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection RegisterSettings<TSettings>(this IServiceCollection services, IConfiguration configuration)
             where TSettings : Settings<TSettings>, ISettings, new()
         {
             services.AddOptions<TSettings>()

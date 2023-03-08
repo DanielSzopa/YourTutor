@@ -1,4 +1,4 @@
-﻿namespace YourTutor.Application.Settings.Base
+﻿namespace YourTutor.Shared.Settings.Base
 {
     public interface ISettings
     {

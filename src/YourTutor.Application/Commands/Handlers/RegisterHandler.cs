@@ -7,7 +7,7 @@ using YourTutor.Core.Abstractions;
 using YourTutor.Core.Abstractions.Repositories;
 using YourTutor.Core.Entities;
 using YourTutor.Core.ValueObjects;
-using YourTutor.Infrastructure.Settings;
+using YourTutor.Shared.Settings;
 
 namespace YourTutor.Application.Commands.Handlers
 {

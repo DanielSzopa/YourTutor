@@ -1,5 +1,5 @@
 using YourTutor.Application;
-using YourTutor.Infrastructure.Extensions;
+using YourTutor.Infrastructure;
 using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
