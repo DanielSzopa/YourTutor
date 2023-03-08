@@ -21,15 +21,11 @@ namespace YourTutor.Infrastructure.Extensions
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ISignInManager, SignInManager>()              
                 .AddScoped<ISignOutManager, SignOutManager>()              
-                .AddScoped<IEmailSender, EmailSender>()                           
+                .AddScoped<IEmailSender, EmailSender>() 
+                .AddHostedService<DatabaseInitializer>()
                 .AddYourTutorDbContext(configuration);
 
             return services;
-        }
-
-        public static async Task UseInfrastructure(this WebApplication webApplication)
-        {
-            await webApplication.UpdateDbMigrations();
         }
     }
 }
