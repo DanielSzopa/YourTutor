@@ -31,10 +31,10 @@ namespace YourTutor.Infrastructure.Email
             SendResponse response = await _sendGridSender.SendAsync(fluentEmail);
 
             if (!response.Successful)
-                _logger.LogError("Problem with sending email by sendGrid, messageId: {@messageId}, error: {@error}", response.MessageId, SplitErrors(response.ErrorMessages));
+                _logger.LogError("Problem with sending email by sendGrid, messageId: {@messageId}, error: {@error}", response.MessageId, JoinErrors(response.ErrorMessages));
         }
 
-        private static string SplitErrors(IList<string> strings)
+        private static string JoinErrors(IList<string> strings)
         {
             if(strings is null || strings.Count <= 0)
                 return string.Empty;
