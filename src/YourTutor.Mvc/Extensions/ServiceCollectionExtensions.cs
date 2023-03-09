@@ -20,6 +20,7 @@ namespace YourTutor.Mvc.Extensions
                         SecurePolicy = CookieSecurePolicy.Always
                     };
                     options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
                 });
 
             return services;

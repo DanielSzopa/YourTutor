@@ -89,6 +89,13 @@ namespace YourTutor.Mvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        [Route("AccessDenied")]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         private List<string> GetErrors()
         {
             var errors = new List<string>();
