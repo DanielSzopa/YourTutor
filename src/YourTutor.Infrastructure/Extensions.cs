@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YourTutor.Application.Abstractions;
 using YourTutor.Core.Abstractions;
@@ -7,6 +8,7 @@ using YourTutor.Core.Services.SignInManager;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Infrastructure.DAL.Repositories;
 using YourTutor.Infrastructure.Email;
+using YourTutor.Infrastructure.Logging;
 using YourTutor.Infrastructure.Services;
 using YourTutor.Shared.Settings;
 
@@ -21,6 +23,8 @@ namespace YourTutor.Infrastructure
                 .AddScoped<ISignInManager, SignInManager>()
                 .AddScoped<ISignOutManager, SignOutManager>()
                 .AddScoped<IEmailSender, EmailSender>()
+                .AddScoped<IClock, Clock>()
+                .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingHandler<,>))
                 .AddHostedService<DatabaseInitializer>()
                 .RegisterAllSettings(configuration)
                 .AddYourTutorDbContext(configuration);
