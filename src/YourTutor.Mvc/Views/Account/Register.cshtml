@@ -14,15 +14,7 @@
         <form asp-action="Register">
             @if (ViewBag.ErrorMessages is not null && ViewBag.ErrorMessages.Count > 0)
             {
-                <div class="form-group account-form-group error-banner">
-                    <h2>Invalid Registration!!!</h2>
-                    <ul>
-                    @foreach (var error in ViewBag.ErrorMessages)
-                    {
-                        <li>@error</li>
-                    }
-                    </ul>
-                </div>               
+                <partial name="~/Views/Account/_ErrorBannerPartial.cshtml" model='new ErrorBanner(ViewBag.ErrorMessages," Invalid Registration!!!")' />
             }
             <div class="form-group account-form-group">
                 <label asp-for="Email" class="form-label"></label>
