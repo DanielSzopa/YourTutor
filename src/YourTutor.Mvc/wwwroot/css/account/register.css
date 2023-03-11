@@ -1,0 +1,9 @@
+﻿.register-form-group {
+    padding-bottom: 10px;
+}
+
+#signUp-btn{
+    font-weight:500;
+    width: 100%;
+    margin-top: 10px;
+}

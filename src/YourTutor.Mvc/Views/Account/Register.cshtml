@@ -4,9 +4,10 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>Register</h1>
+<link rel="stylesheet" href="~/css/account/register.css" />
 
-<h4>Register</h4>
+<h1>Become a <span style="color:red">Tutor</span>!</h1>
+
 @if (ViewBag.ErrorMessages is not null && ViewBag.ErrorMessages.Count > 0)
 {
     <h4>Is Invalid registration!!!!!!!!</h4>
@@ -17,43 +18,40 @@
 }
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
         <form asp-action="Register">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
+            <div class="form-group register-form-group">
+                <label asp-for="Email" class="form-label"></label>
                 <input asp-for="Email" class="form-control" />
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
+            <div class="form-group register-form-group">
+                <label asp-for="FirstName" class="form-label">First name</label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
+            <div class="form-group register-form-group">
+                <label asp-for="LastName" class="form-label">Last name</label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
+            <div class="form-group register-form-group">
+                <label asp-for="Password" class="form-label"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PasswordConfirmation" class="control-label"></label>
+            <div class="form-group register-form-group">
+                <label asp-for="PasswordConfirmation" class="form-label">Confirm your password</label>
                 <input asp-for="PasswordConfirmation" class="form-control" />
                 <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Sign up" id="signUp-btn" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
