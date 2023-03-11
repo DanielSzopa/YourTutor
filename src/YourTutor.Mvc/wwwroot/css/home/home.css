@@ -1,24 +1,28 @@
-﻿.teacher-container{
-    display:flex;
-    align-items:center;
-    justify-content:center;
+﻿.teacher-container, .students-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.teacher-content-header {
+teacher-content, .students-content{
+    flex-grow:1;
+}
+
+.teacher-content-header, .students-content-header {
     font-size: 32px;
     font-weight: 500;
 }
 
-.teacher-content-body{
+.teacher-content-body, .students-content-body {
     font-size: 20px;
     margin-top: 10px;
 }
 
-.teacher-content-body > div {
-    padding: 5px 0;
-}
+    .teacher-content-body > div, .students-content-body > div {
+        padding: 5px 0;
+    }
 
-#joinUsBtn {
+#joinUsBtn, #offersBtn {
     background-color: #F86C53;
     color: white;
     font-weight: 500;
@@ -28,35 +32,43 @@
     margin-top: 10px;
 }
 
-#teacher-picture {
-    height: 400px;
-}
+    #joinUsBtn:hover, #offersBtn:hover {
+        background: #E3563D;
+    }
+
+    #teacher-picture, #students-picture {
+        height: 400px;
+    }
 
 
 @media (max-width: 768px){
-    .teacher-container{
-        flex-direction:column;
+    .teacher-container {
+        flex-direction: column;
+    }
+
+    .students-container{
+        flex-direction: column-reverse;
     }
 }
 
 @media (max-width: 576px) {
-    .teacher-content-header {
+    .teacher-content-header, .students-content-header {
         font-size: 28px;
     }
 
-    .teacher-content-body {
+    .teacher-content-body, .students-content-body {
         font-size: 17px;
     }
 }
 
 @media (max-width: 500px) {
-    #teacher-picture{
+    #teacher-picture, #students-picture {
         height: 350px;
     }
 }
 
 @media (max-width: 350px) {
-    #teacher-picture {
+    #teacher-picture, #students-picture {
         height: 200px;
     }
 }
