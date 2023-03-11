@@ -19,7 +19,7 @@ public sealed class Register : IRequest<RegisterResponse>
     public string LastName { get; init; }
 
     [Required(ErrorMessage = "Password is required")]
-    [StringLength(50, MinimumLength = 8, ErrorMessage = "Must be between 2 and 50 characters")]
+    [StringLength(50, MinimumLength = 8, ErrorMessage = "Must be between 8 and 50 characters")]
     public string Password { get; init; }
 
     [Required(ErrorMessage = "Password confirmation is required")]
