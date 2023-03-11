@@ -1,0 +1,20 @@
+﻿.account-form-group {
+    padding-bottom: 10px;
+}
+
+#sign-btn {
+    background-color: #F86C53;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 1px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+    #sign-btn:hover {
+        background-color: #E3563D;
+    }
+
+#password-small-text {
+    display: block;
+}

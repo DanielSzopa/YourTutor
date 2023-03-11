@@ -1,0 +1,13 @@
+﻿@model ErrorBanner
+
+<link rel="stylesheet" href="~/css/account/errorBanner.css" />
+
+<div class="form-group account-form-group error-banner">
+    <h2>@Model.Message</h2>
+    <ul>
+        @foreach (var error in Model.Errors)
+        {
+            <li>@error</li>
+        }
+    </ul>
+</div>        
