@@ -11,3 +11,19 @@
 #password-small-text{
     display:block;
 }
+
+.error-banner {
+    background: #F75D40;
+    border: 2px solid black;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+}
+.error-banner > h2{
+    padding-top: 10px;    
+    text-align:center;
+}
+
+    .error-banner > ul > li {
+        font-weight: 500;
+        word-break: break-word;
+    }

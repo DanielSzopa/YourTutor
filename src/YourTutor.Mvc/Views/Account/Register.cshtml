@@ -8,19 +8,22 @@
 
 <h1>Become a <span style="color:red">Tutor</span>!</h1>
 
-@if (ViewBag.ErrorMessages is not null && ViewBag.ErrorMessages.Count > 0)
-{
-    <h4>Is Invalid registration!!!!!!!!</h4>
-    @foreach (var error in ViewBag.ErrorMessages)
-    {
-        <h4>@error</h4>
-    }
-}
 <hr />
 <div class="row">
     <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
         <form asp-action="Register">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (ViewBag.ErrorMessages is not null && ViewBag.ErrorMessages.Count > 0)
+            {
+                <div class="form-group register-form-group error-banner">
+                    <h2>Invalid Registration!!!</h2>
+                    <ul>
+                    @foreach (var error in ViewBag.ErrorMessages)
+                    {
+                        <li>@error</li>
+                    }
+                    </ul>
+                </div>               
+            }
             <div class="form-group register-form-group">
                 <label asp-for="Email" class="form-label"></label>
                 <input asp-for="Email" class="form-control" />
