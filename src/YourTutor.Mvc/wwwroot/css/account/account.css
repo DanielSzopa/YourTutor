@@ -1,8 +1,8 @@
-﻿.register-form-group {
+﻿.account-form-group {
     padding-bottom: 10px;
 }
 
-#signUp-btn{
+#sign-btn{
     font-weight:500;
     width: 100%;
     margin-top: 10px;

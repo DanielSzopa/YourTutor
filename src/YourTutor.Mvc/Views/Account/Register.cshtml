@@ -4,7 +4,7 @@
     ViewData["Title"] = "Register";
 }
 
-<link rel="stylesheet" href="~/css/account/register.css" />
+<link rel="stylesheet" href="~/css/account/account.css" />
 
 <h1>Become a <span style="color:red">Tutor</span>!</h1>
 
@@ -14,7 +14,7 @@
         <form asp-action="Register">
             @if (ViewBag.ErrorMessages is not null && ViewBag.ErrorMessages.Count > 0)
             {
-                <div class="form-group register-form-group error-banner">
+                <div class="form-group account-form-group error-banner">
                     <h2>Invalid Registration!!!</h2>
                     <ul>
                     @foreach (var error in ViewBag.ErrorMessages)
@@ -24,23 +24,23 @@
                     </ul>
                 </div>               
             }
-            <div class="form-group register-form-group">
+            <div class="form-group account-form-group">
                 <label asp-for="Email" class="form-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group register-form-group">
+            <div class="form-group account-form-group">
                 <label asp-for="FirstName" class="form-label">First name</label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-            <div class="form-group register-form-group">
+            <div class="form-group account-form-group">
                 <label asp-for="LastName" class="form-label">Last name</label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
-            <div class="form-group register-form-group">
+            <div class="form-group account-form-group">
                 <label asp-for="Password" class="form-label"></label>
                 <input asp-for="Password" class="form-control" type="password" />
                 <small id="password-small-text" class="form-text text-muted">
@@ -48,13 +48,13 @@
                 </small>
                 <span asp-validation-for="Password" class="text-danger"></span>                
             </div>
-            <div class="form-group register-form-group">
+            <div class="form-group account-form-group">
                 <label asp-for="PasswordConfirmation" class="form-label">Confirm your password</label>
                 <input asp-for="PasswordConfirmation" class="form-control" type="password" />
                 <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Sign up" id="signUp-btn" class="btn btn-primary" />
+                <input type="submit" value="Sign up" id="sign-btn" class="btn btn-primary" />
             </div>
         </form>
     </div>
