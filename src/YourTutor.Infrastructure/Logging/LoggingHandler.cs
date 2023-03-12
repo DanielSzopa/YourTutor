@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using YourTutor.Core.Abstractions;
+using YourTutor.Application.Abstractions;
 
 namespace YourTutor.Infrastructure.Logging
 {

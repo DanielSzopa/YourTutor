@@ -1,4 +1,4 @@
-﻿using YourTutor.Core.Abstractions;
+﻿using YourTutor.Application.Abstractions;
 
 namespace YourTutor.Infrastructure.Services
 {

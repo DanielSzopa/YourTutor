@@ -1,4 +1,4 @@
-﻿namespace YourTutor.Core.Abstractions
+﻿namespace YourTutor.Application.Abstractions.UserManager
 {
     public interface ISignOutManager
     {

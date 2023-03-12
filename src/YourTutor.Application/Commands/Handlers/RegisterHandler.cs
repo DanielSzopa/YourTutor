@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Options;
-using YourTutor.Application.Abstractions;
+using YourTutor.Application.Abstractions.Email;
+using YourTutor.Application.Abstractions.UserManager;
 using YourTutor.Application.Dtos;
 using YourTutor.Application.Models.EmailBase;
-using YourTutor.Core.Abstractions;
-using YourTutor.Core.Abstractions.Repositories;
 using YourTutor.Core.Entities;
+using YourTutor.Core.Repositories;
 using YourTutor.Core.ValueObjects;
 using YourTutor.Shared.Settings;
 
