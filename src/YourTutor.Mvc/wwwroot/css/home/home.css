@@ -1,0 +1,74 @@
+﻿.section-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-content {
+    flex-grow: 1;
+}
+
+.section-content-header {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.section-content-body {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+    .section-content-body > ul > li {
+        padding: 5px 0;
+    }
+
+.home-btn {
+    background-color: var(--button-background-color);
+    color: var(--button-text-color) !important;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding-right: 25px;
+    padding-left: 25px;
+    margin-top: 10px;
+}
+
+    .home-btn:hover {
+        background: var(--button-background-hover-color);
+    }
+
+.home-picture {
+    height: 400px;
+}
+
+
+@media (max-width: 768px) {
+    .teacher-container {
+        flex-direction: column;
+    }
+
+    .students-container {
+        flex-direction: column-reverse;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-content-header {
+        font-size: 28px;
+    }
+
+    .section-content-body {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 500px) {
+    .home-picture {
+        height: 350px;
+    }
+}
+
+@media (max-width: 350px) {
+    .home-picture {
+        height: 200px;
+    }
+}

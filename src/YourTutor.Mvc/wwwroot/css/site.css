@@ -1,3 +1,10 @@
+:root {
+    --tutor-text-color: red;
+    --button-text-color: white;
+    --button-background-color: #F86C53;
+    --button-background-hover-color: #E3563D;
+}
+
 html {
   font-size: 14px;
 }
