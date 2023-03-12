@@ -1,6 +1,6 @@
 ﻿using YourTutor.Core.Entities;
 
-namespace YourTutor.Core.Abstractions.Repositories
+namespace YourTutor.Core.Repositories
 {
     public interface IUserRepository
     {

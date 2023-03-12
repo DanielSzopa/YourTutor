@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
-using YourTutor.Core.Abstractions;
+using YourTutor.Application.Abstractions.UserManager;
+using YourTutor.Application.Settings;
 using YourTutor.Infrastructure.Constans;
-using YourTutor.Shared.Settings;
 
 namespace YourTutor.Core.Services.SignInManager
 {

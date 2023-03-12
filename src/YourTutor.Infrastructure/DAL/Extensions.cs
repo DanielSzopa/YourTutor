@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using YourTutor.Shared.Settings;
+using YourTutor.Application.Settings;
 
 namespace YourTutor.Infrastructure.DAL
 {
@@ -9,7 +9,7 @@ namespace YourTutor.Infrastructure.DAL
     {
         internal static IServiceCollection AddYourTutorDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = services.GetSettings<ConnectionStringsSettings>(configuration);
+            var connectionString = configuration.GetSettings<ConnectionStringsSettings>();
             services.AddDbContext<YourTutorDbContext>(x => x.UseSqlServer(connectionString.DefaultConnectionString));
 
             return services;

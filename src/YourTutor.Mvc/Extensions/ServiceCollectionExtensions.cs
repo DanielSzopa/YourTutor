@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using YourTutor.Application.Settings;
 using YourTutor.Infrastructure.Constans;
-using YourTutor.Shared.Settings;
 
 namespace YourTutor.Mvc.Extensions
 {
@@ -8,7 +8,7 @@ namespace YourTutor.Mvc.Extensions
     {
         internal static IServiceCollection AddAuthenticationExtension(this IServiceCollection services, IConfiguration config)
         {
-            var identitySettings = services.GetSettings<IdentitySettings>(config);
+            var identitySettings = config.GetSettings<IdentitySettings>();
 
             services.AddAuthentication()
                 .AddCookie(Schemes.IdentityScheme, options =>

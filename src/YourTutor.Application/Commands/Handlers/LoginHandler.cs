@@ -1,7 +1,7 @@
 ﻿using MediatR;
+using YourTutor.Application.Abstractions.UserManager;
 using YourTutor.Application.Dtos;
-using YourTutor.Core.Abstractions;
-using YourTutor.Core.Abstractions.Repositories;
+using YourTutor.Core.Repositories;
 
 namespace YourTutor.Application.Commands.Handlers
 {

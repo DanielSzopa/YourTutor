@@ -2,15 +2,17 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YourTutor.Application.Abstractions;
-using YourTutor.Core.Abstractions;
-using YourTutor.Core.Abstractions.Repositories;
+using YourTutor.Application.Abstractions.Email;
+using YourTutor.Application.Abstractions.UserManager;
+using YourTutor.Application.Settings;
+using YourTutor.Application.Settings.Email;
+using YourTutor.Core.Repositories;
 using YourTutor.Core.Services.SignInManager;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Infrastructure.DAL.Repositories;
 using YourTutor.Infrastructure.Email;
 using YourTutor.Infrastructure.Logging;
 using YourTutor.Infrastructure.Services;
-using YourTutor.Shared.Settings;
 
 namespace YourTutor.Infrastructure
 {

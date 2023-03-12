@@ -3,9 +3,9 @@ using FluentEmail.Core.Models;
 using FluentEmail.SendGrid;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using YourTutor.Application.Abstractions;
+using YourTutor.Application.Abstractions.Email;
 using YourTutor.Application.Models.EmailBase;
-using YourTutor.Shared.Settings;
+using YourTutor.Application.Settings;
 
 namespace YourTutor.Infrastructure.Email
 {

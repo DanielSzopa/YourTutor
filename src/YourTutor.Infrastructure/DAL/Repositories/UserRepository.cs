@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using YourTutor.Core.Abstractions.Repositories;
 using YourTutor.Core.Entities;
+using YourTutor.Core.Repositories;
 
 namespace YourTutor.Infrastructure.DAL.Repositories
 {

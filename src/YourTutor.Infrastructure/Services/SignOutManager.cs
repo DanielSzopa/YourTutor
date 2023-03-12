@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using YourTutor.Core.Abstractions;
+using YourTutor.Application.Abstractions.UserManager;
 
 namespace YourTutor.Infrastructure.Services
 {

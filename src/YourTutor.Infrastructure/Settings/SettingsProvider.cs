@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using YourTutor.Shared.Settings.Base;
+using YourTutor.Application.Abstractions.Settings;
 
-namespace YourTutor.Shared.Settings
+namespace YourTutor.Application.Settings
 {
     public static class SettingsProvider
     {
@@ -19,7 +19,7 @@ namespace YourTutor.Shared.Settings
             return services;
         }
 
-        public static TSettings GetSettings<TSettings>(this IServiceCollection services, IConfiguration configuration)
+        public static TSettings GetSettings<TSettings>(this IConfiguration configuration)
             where TSettings : Settings<TSettings>, ISettings, new()
         {
             TSettings settings = new();

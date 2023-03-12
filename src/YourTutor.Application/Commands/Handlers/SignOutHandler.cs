@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using YourTutor.Core.Abstractions;
+using YourTutor.Application.Abstractions.UserManager;
 
 namespace YourTutor.Application.Commands.Handlers
 {
