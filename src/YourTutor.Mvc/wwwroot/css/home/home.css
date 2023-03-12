@@ -23,8 +23,8 @@
     }
 
 .home-btn {
-    background-color: #F86C53;
-    color: white!important;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color) !important;
     font-weight: 500;
     letter-spacing: 1px;
     padding-right: 25px;
@@ -32,9 +32,9 @@
     margin-top: 10px;
 }
 
-.home-btn:hover {
-    background: #E3563D;
-}
+    .home-btn:hover {
+        background: var(--button-background-hover-color);
+    }
 
 .home-picture {
     height: 400px;

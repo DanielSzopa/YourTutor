@@ -12,7 +12,7 @@
 }
 
 .tutor-text {
-    color: red;
+    color: var(--tutor-text-color);
 }
 
 #myaccount, #myaccount-small {
@@ -20,8 +20,8 @@
 }
 
 .nav-item > a:hover {
-    background-color: #F86C53;
-    color: white !important;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color) !important;
 }
 
 #tutorIcon {
@@ -34,20 +34,20 @@
 }
 
     .dropdown-menu > li > a:hover {
-        background: #F86C53;
-        color: white !important;
+        background: var(--button-background-color);
+        color: var(--button-text-color) !important;
     }
 
 
 @media (min-width: 576px) {
     #signUp {
         border-radius: 0.25rem;
-        background: #F86C53;
-        color: white !important;
+        background: var(--button-background-color);
+        color: var(--button-text-color) !important;
     }
 
         #signUp:hover {
-            background: #E3563D;
+            background: var(--button-background-hover-color);
         }
 
     .nav-item > a {
@@ -64,10 +64,6 @@
 }
 
 @media (max-width: 576px) {
-    .nav-item:hover {
-        background-color: #E1F4FC;
-    }
-
     .nav-item > a {
         border-radius: 0.25rem;
         padding-left: 4px !important
@@ -79,7 +75,7 @@
 
     .mobile-item {
         display: flex;
-        align-items: center;       
+        align-items: center;
     }
 
         .mobile-item > span {
