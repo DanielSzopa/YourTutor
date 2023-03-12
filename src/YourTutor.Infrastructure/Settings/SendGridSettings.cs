@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using YourTutor.Shared.Settings.Base;
+using YourTutor.Application.Abstractions.Settings;
 
-namespace YourTutor.Shared.Settings
+namespace YourTutor.Application.Settings
 {
     public sealed class SendGridSettings : Settings<SendGridSettings>, ISettings
     {

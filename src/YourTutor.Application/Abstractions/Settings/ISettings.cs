@@ -1,4 +1,4 @@
-﻿namespace YourTutor.Shared.Settings.Base
+﻿namespace YourTutor.Application.Abstractions.Settings
 {
     public interface ISettings
     {

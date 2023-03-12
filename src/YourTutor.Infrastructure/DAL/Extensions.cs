@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using YourTutor.Shared.Settings;
+using YourTutor.Application.Settings;
 
 namespace YourTutor.Infrastructure.DAL
 {

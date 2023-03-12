@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using YourTutor.Shared.Settings.Base;
+using YourTutor.Application.Abstractions.Settings;
 
-namespace YourTutor.Shared.Settings
+namespace YourTutor.Application.Settings
 {
     public static class SettingsProvider
     {

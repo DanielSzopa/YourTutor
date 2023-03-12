@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using YourTutor.Shared.Settings.Base;
+using YourTutor.Application.Abstractions.Settings;
 
-namespace YourTutor.Shared.Settings
+namespace YourTutor.Application.Settings.Email
 {
     public sealed class EmailSettings : Settings<EmailSettings>, ISettings
     {
