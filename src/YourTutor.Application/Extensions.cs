@@ -10,7 +10,7 @@ namespace YourTutor.Application
         private static readonly string _applicationAssemblyName = 
             typeof(Extensions).Assembly.GetName().Name;
 
-        public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services              
                 .AddMediatR(config => config.AsScoped(), Assembly.Load(_applicationAssemblyName));

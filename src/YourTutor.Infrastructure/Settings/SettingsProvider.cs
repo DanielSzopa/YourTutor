@@ -19,7 +19,7 @@ namespace YourTutor.Application.Settings
             return services;
         }
 
-        public static TSettings GetSettings<TSettings>(this IServiceCollection services, IConfiguration configuration)
+        public static TSettings GetSettings<TSettings>(this IConfiguration configuration)
             where TSettings : Settings<TSettings>, ISettings, new()
         {
             TSettings settings = new();
