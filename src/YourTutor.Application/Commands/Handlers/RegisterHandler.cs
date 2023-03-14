@@ -41,7 +41,7 @@ namespace YourTutor.Application.Commands.Handlers
             try
             {
                 var password = new Password(command.Password);
-                password.CheckIsPasswordsMatching(command.PasswordConfirmation);
+                password.CheckIfPasswordsMatch(command.PasswordConfirmation);
 
                 var hashPassword = new HashPassword(_hashService.HashPassword(password));
 

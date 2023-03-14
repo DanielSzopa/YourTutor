@@ -18,7 +18,7 @@ namespace YourTutor.Core.ValueObjects
             Value = password;
         }
 
-        public void CheckIsPasswordsMatching(string confirmedPassword)
+        public void CheckIfPasswordsMatch(string confirmedPassword)
         {
             if (string.IsNullOrWhiteSpace(confirmedPassword)
                 || Value != confirmedPassword)
