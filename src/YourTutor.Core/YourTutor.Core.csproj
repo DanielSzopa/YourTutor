@@ -5,12 +5,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <InternalsVisibleTo Include="YourTutor.Tests.Unit" />
-  </ItemGroup>
-
 </Project>

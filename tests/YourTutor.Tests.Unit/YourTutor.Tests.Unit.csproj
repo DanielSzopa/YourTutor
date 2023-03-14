@@ -21,7 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\YourTutor.Application\YourTutor.Application.csproj" />
     <ProjectReference Include="..\..\src\YourTutor.Core\YourTutor.Core.csproj" />
+    <ProjectReference Include="..\..\src\YourTutor.Infrastructure\YourTutor.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

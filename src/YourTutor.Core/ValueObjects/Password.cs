@@ -18,8 +18,17 @@ namespace YourTutor.Core.ValueObjects
             Value = password;
         }
 
+        public void CheckIsPasswordsMatching(string confirmedPassword)
+        {
+            if (string.IsNullOrWhiteSpace(confirmedPassword)
+                || Value != confirmedPassword)
+            {
+                throw new InvalidPasswordException($"Passwords does not match");
+            }
+        }
 
-        public static implicit operator Password(string value) => new Password(value);
+
+        public static implicit operator Password(string value) => new(value);
 
         public static implicit operator string(Password password) => password.Value;
     }

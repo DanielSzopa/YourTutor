@@ -25,8 +25,6 @@ namespace YourTutor.Infrastructure.DAL.Configurations
 
             builder.Property(u => u.HashPassword)
                .HasConversion(h => h.Value, h => new HashPassword(h));
-
-            builder.Ignore(u => u.Password);
         }
     }
 }
