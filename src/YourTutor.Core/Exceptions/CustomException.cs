@@ -1,10 +1,8 @@
-﻿using System.Net;
-
-namespace YourTutor.Core.Exceptions
+﻿namespace YourTutor.Core.Exceptions
 {
-    public abstract class CustomException : Exception
+    internal abstract class CustomException : Exception
     {
-        public CustomException(string message) : base(message)
+        protected CustomException(string message) : base(message)
         {
             
         }
