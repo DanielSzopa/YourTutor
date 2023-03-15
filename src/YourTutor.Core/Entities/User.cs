@@ -10,6 +10,8 @@ namespace YourTutor.Core.Entities
         public LastName LastName { get; }
         public HashPassword HashPassword { get; }
 
+        public Tutor Tutor { get; private set; }
+
         public User(UserId id, Email email, FirstName firstName, LastName lastName, HashPassword hashPassword)
         {
             Id = id;
@@ -18,6 +20,9 @@ namespace YourTutor.Core.Entities
             LastName = lastName;
             HashPassword = hashPassword;
         }
+
+        public void CreateTutor() => 
+            Tutor = new Tutor(Guid.NewGuid(), string.Empty, string.Empty, string.Empty, Id);
     }
 }
 

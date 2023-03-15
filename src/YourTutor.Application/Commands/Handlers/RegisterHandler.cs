@@ -46,6 +46,8 @@ namespace YourTutor.Application.Commands.Handlers
                 var hashPassword = new HashPassword(_hashService.HashPassword(password));
 
                 user = new User(Guid.NewGuid(), command.Email, command.FirstName, command.LastName, hashPassword);
+
+                user.CreateTutor();
             }
             catch (Exception ex) 
             {

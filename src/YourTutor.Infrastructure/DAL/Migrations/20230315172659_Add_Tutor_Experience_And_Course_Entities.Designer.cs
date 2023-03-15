@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourTutor.Infrastructure.DAL;
 
 #nullable disable
 
-namespace YourTutor.Infrastructure.DAL.Migrations
+namespace YourTutor.Infrastructure.Dal.Migrations
 {
     [DbContext(typeof(YourTutorDbContext))]
-    partial class YourTutorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230315172659_Add_Tutor_Experience_And_Course_Entities")]
+    partial class Add_Tutor_Experience_And_Course_Entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
