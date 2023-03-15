@@ -4,11 +4,10 @@ namespace YourTutor.Core.Repositories
 {
     public interface IUserRepository
     {
-        Task<User> GetUserById(Guid userId);
-        Task<User> GetUserByEmail(string email);
+        Task<User> GetUserByEmailAsync(string email);
 
-        Task AddUser(User user);
+        Task AddUserAsync(User user);
 
-        Task<bool> IsEmailAlreadyExists(string email);
+        Task<bool> IsEmailAlreadyExistsAsync(string email);
     }
 }

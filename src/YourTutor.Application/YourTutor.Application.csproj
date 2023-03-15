@@ -14,4 +14,9 @@
     <ProjectReference Include="..\YourTutor.Core\YourTutor.Core.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="YourTutor.Tests.Unit" />
+  </ItemGroup>
+
 </Project>

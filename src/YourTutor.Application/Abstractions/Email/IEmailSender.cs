@@ -4,6 +4,6 @@ namespace YourTutor.Application.Abstractions.Email
 {
     public interface IEmailSender
     {
-        Task SendEmail(EmailBase email);
+        Task SendEmailAsync(EmailBase email);
     }
 }

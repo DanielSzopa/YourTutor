@@ -1,9 +1,16 @@
-﻿using YourTutor.Core.Services;
+﻿using YourTutor.Application.Abstractions.Security;
+using YourTutor.Infrastructure.Security;
 
 namespace YourTutor.Tests.Unit.Core.Services
 {
     public sealed class HashServiceTests
     {
+        private readonly IHashService _hashService;
+        public HashServiceTests()
+        {
+            _hashService = new HashService();
+        }
+
         [Fact]
         public void HashPassword_ShouldHashPassword()
         {
@@ -11,7 +18,7 @@ namespace YourTutor.Tests.Unit.Core.Services
             var password = "Test123!!!";
 
             //act
-            var hashPassword = HashService.HashPassword(password);
+            var hashPassword = _hashService.HashPassword(password);
 
             //assert
             hashPassword.Should().NotBe(password);
@@ -22,7 +29,7 @@ namespace YourTutor.Tests.Unit.Core.Services
         public void VerifyPassword_WhenPasswordsMatches_ShouldReturnTrue(string password, string hashPassword)
         {
             //act
-            var result = HashService.VerifyPassword(password, hashPassword);
+            var result = _hashService.VerifyPassword(password, hashPassword);
 
             //assert
             result.Should().BeTrue();
@@ -34,7 +41,7 @@ namespace YourTutor.Tests.Unit.Core.Services
         public void VerifyPassword_WhenPasswordsDoesNotMatch_ShouldReturnFalse(string password, string hashPassword)
         {
             //act
-            var result = HashService.VerifyPassword(password, hashPassword);
+            var result = _hashService.VerifyPassword(password, hashPassword);
 
             //assert
             result.Should().BeFalse();

@@ -15,7 +15,7 @@ namespace YourTutor.Core.ValueObjects
         }
 
 
-        public static implicit operator HashPassword(string value) => new HashPassword(value);
+        public static implicit operator HashPassword(string value) => new(value);
 
         public static implicit operator string(HashPassword password) => password.Value;
     }
