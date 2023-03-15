@@ -13,20 +13,17 @@ namespace YourTutor.Infrastructure.DAL.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddUser(User user)
+        public async Task AddUserAsync(User user)
         {
             await _dbContext.AddAsync<User>(user);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<User> GetUserByEmail(string email) => await _dbContext.Users
+        public Task<User> GetUserByEmailAsync(string email) => _dbContext.Users
             .FirstOrDefaultAsync(u => u.Email == email);
 
-        public Task<User> GetUserById(Guid userId) => _dbContext.Users
-            .SingleOrDefaultAsync(u => u.Id == userId);
-
-        public async Task<bool> IsEmailAlreadyExists(string email) => 
-            await _dbContext.Users.AnyAsync(u => u.Email == email);
+        public Task<bool> IsEmailAlreadyExistsAsync(string email) => 
+             _dbContext.Users.AnyAsync(u => u.Email == email);
     }
 }
 

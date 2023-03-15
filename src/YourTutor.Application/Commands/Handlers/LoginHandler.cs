@@ -22,7 +22,7 @@ namespace YourTutor.Application.Commands.Handlers
         public async Task<LoginResponse> Handle(Login request, CancellationToken cancellationToken)
         {
             var loginResponse = new LoginResponse();
-            var user = await _userRepository.GetUserByEmail(request.Email.ToLower());
+            var user = await _userRepository.GetUserByEmailAsync(request.Email.ToLower());
             if (user is null)
             {
                 loginResponse.Errors.Add("Invalid credentials");

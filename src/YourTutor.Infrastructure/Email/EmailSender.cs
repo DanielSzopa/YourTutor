@@ -19,7 +19,7 @@ namespace YourTutor.Infrastructure.Email
             _sendGridSender = new SendGridSender(sendGridSettings.Value.ApiKey);
             _logger = logger;
         }
-        public async Task SendEmail(EmailBase email)
+        public async Task SendEmailAsync(EmailBase email)
         {
             IFluentEmail fluentEmail = FluentEmail.Core.Email
                 .From(email.From)
