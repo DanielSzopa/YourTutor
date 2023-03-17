@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using YourTutor.Application.Dtos.Tutor;
+using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
 
 namespace YourTutor.Application.Queries.Handlers
 {
-    public class GetTutorByUserIdHandler : IRequestHandler<GetTutorByUserId, TutorDto>
+    public class GetTutorByUserIdHandler : IRequestHandler<GetTutorByUserId, TutorDetailsReadModel>
     {
         private readonly ITutorRepository _tutorRepository;
 
@@ -13,13 +13,20 @@ namespace YourTutor.Application.Queries.Handlers
             _tutorRepository = tutorRepository;
         }
 
-        public async Task<TutorDto> Handle(GetTutorByUserId request, CancellationToken cancellationToken)
+        public async Task<TutorDetailsReadModel> Handle(GetTutorByUserId request, CancellationToken cancellationToken)
         {
             var details = await _tutorRepository.GetTutorDetailsByUserId(request.UserId);
             if (details is null)
                 return default;
 
-            return new TutorDto($"{details.FirstName} {details.LastName}", details.Email, details.Description, details.Country, details.Language, null, null);
+            return new TutorDetailsReadModel()
+            {
+                FullName = details.FullName,
+                Email = details.Email,
+                Description = details.Description,
+                Country = details.Country,
+                Language = details.Language,
+            };
         }
     }
 }

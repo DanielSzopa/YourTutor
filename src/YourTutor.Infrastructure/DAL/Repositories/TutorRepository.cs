@@ -21,8 +21,7 @@ namespace YourTutor.Infrastructure.DAL.Repositories
                 .Where(t => t.UserId == new UserId(userId))
                 .Select(t => new TutorDetailsReadModel()
                 {
-                    FirstName = t.User.FirstName,
-                    LastName = t.User.LastName,
+                    FullName = t.User.FirstName + " " + t.User.LastName,
                     Email = t.User.Email,
                     Description = t.Description,
                     Country = t.Country,
