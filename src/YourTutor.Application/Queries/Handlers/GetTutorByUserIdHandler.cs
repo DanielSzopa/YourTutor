@@ -19,7 +19,7 @@ namespace YourTutor.Application.Queries.Handlers
             if (tutor is null)
                 return default;
 
-            return new TutorDto($"{tutor.User.FirstName} {tutor.User.LastName}", tutor.User.Email, tutor.Description, tutor.Country, tutor.Language, null, null);
+            return new TutorDto($"{tutor.User.FirstName.Value} {tutor.User.LastName.Value}", tutor.User.Email, tutor.Description, tutor.Country, tutor.Language, null, null);
         }
     }
 }
