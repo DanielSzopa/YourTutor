@@ -21,8 +21,8 @@ namespace YourTutor.Core.Entities
             HashPassword = hashPassword;
         }
 
-        public void CreateTutor() => 
-            Tutor = new Tutor(Guid.NewGuid(), string.Empty, string.Empty, string.Empty, Id);
+        public void CreateTutor() =>
+            Tutor = new Tutor(Id, string.Empty, string.Empty, string.Empty);
     }
 }
 

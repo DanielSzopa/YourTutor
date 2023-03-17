@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourTutor.Infrastructure.DAL;
 
 #nullable disable
 
-namespace YourTutor.Infrastructure.DAL.Migrations
+namespace YourTutor.Infrastructure.Dal.Migrations
 {
     [DbContext(typeof(YourTutorDbContext))]
-    partial class YourTutorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230317173900_ChangePrimaryKeyForTutor_For_TheSame_Like_UserId")]
+    partial class ChangePrimaryKeyForTutor_For_TheSame_Like_UserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

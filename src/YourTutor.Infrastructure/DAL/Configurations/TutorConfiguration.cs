@@ -9,14 +9,10 @@ namespace YourTutor.Infrastructure.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Tutor> builder)
         {
-            builder.HasKey(t => t.TutorId);
-
-            builder.Property(t => t.TutorId)
-                .HasConversion(t => t.Value, t => new TutorId(t));
+            builder.HasKey(t => t.UserId);
 
             builder.Property(t => t.UserId)
                 .HasConversion(t => t.Value, t => new UserId(t));
-
         }
     }
 }

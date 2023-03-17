@@ -9,8 +9,8 @@ namespace YourTutor.Infrastructure.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Experience> builder)
         {
-            builder.Property(e => e.TutorId)
-                .HasConversion(e => e.Value, e => new TutorId(e));
+            builder.Property(e => e.UserId)
+                .HasConversion(e => e.Value, e => new UserId(e));
         }
     }
 }

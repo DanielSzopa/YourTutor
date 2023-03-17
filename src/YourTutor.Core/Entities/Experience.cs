@@ -7,7 +7,7 @@ namespace YourTutor.Core.Entities
         public int ExperienceId { get; private set; }
         public string Name { get; private set; }
 
-        public TutorId TutorId { get; private set; }
+        public UserId UserId { get; private set; }
     }
 }
 
