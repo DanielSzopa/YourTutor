@@ -2,7 +2,7 @@
 
 namespace YourTutor.Core.ValueObjects
 {
-    public sealed class TutorId
+    public sealed record TutorId
     {
         public Guid Value { get; }
 

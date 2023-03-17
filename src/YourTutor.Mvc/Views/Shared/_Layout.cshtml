@@ -44,13 +44,13 @@
                                     <a class="nav-link text-dark  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" asp-controller="Home" asp-action="Index">@($"{User.Identity.Name}") <img src="~/img/userIcon.png" alt="userIcon" /></a>
 
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item text-dark" href="#">My account</a></li>
+                                        <li><a class="dropdown-item text-dark" asp-controller="Tutor" asp-action="MyAccount">My account</a></li>
                                         <li><a class="dropdown-item text-dark" asp-controller="Account" asp-action="Logout">Sign out</a></li>
                                     </ul>
                                 </div>
                             </li>
                             <li class="nav-item hidden-desktop" id="myaccount-small">
-                                <a class="nav-link text-dark mobile-item" asp-controller="Home" asp-action="Index"><img src="~/img/userIcon.png" alt="userIcon" /><span>My account</span></a>
+                                <a class="nav-link text-dark mobile-item" asp-controller="Tutor" asp-action="MyAccount"><img src="~/img/userIcon.png" alt="userIcon" /><span>My account</span></a>
                             </li>
                             <li class="nav-item hidden-desktop">
                                 <a class="nav-link text-dark mobile-item" asp-controller="Account" asp-action="Logout"> <img src="~/img/logoutIcon.png" alt="logoutIcon" /><span>Sign out</span></a>

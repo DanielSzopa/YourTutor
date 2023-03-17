@@ -25,6 +25,10 @@ namespace YourTutor.Infrastructure.DAL.Configurations
 
             builder.Property(u => u.HashPassword)
                .HasConversion(h => h.Value, h => new HashPassword(h));
+
+            builder.HasOne(u => u.Tutor)
+                .WithOne(t => t.User)
+                .HasForeignKey<Tutor>(t => t.UserId);
         }
     }
 }

@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YourTutor.Application.Settings;
+using YourTutor.Core.Repositories;
+using YourTutor.Infrastructure.DAL.Repositories;
 
 namespace YourTutor.Infrastructure.DAL
 {
@@ -13,6 +15,13 @@ namespace YourTutor.Infrastructure.DAL
             services.AddDbContext<YourTutorDbContext>(x => x.UseSqlServer(connectionString.DefaultConnectionString));
 
             return services;
+        }
+
+        internal static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            return services
+                    .AddScoped<IUserRepository, UserRepository>()
+                    .AddScoped<ITutorRepository, TutorRepository>();
         }
     }
 }

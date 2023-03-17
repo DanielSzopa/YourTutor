@@ -18,8 +18,8 @@ namespace YourTutor.Core.Entities
         public IReadOnlyCollection<Course> Courses => _coursesList;
 
 
-        public UserId UserId { get; }
-        public User User { get; }
+        public UserId UserId { get; private set; }
+        public User User { get; private set; }
 
         internal Tutor(TutorId tutorId, string description, string country, string language, UserId userId)
         {
