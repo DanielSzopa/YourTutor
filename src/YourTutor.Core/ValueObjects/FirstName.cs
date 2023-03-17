@@ -2,7 +2,7 @@
 
 namespace YourTutor.Core.ValueObjects
 {
-    public sealed class FirstName
+    public sealed record FirstName
     {
         public string Value { get; }
         public FirstName(string value)
