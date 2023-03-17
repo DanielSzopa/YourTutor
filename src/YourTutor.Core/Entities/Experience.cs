@@ -4,10 +4,10 @@ namespace YourTutor.Core.Entities
 {
     public sealed class Experience
     {
-        public int ExperienceId { get; set; }
-        public string Name { get; set; }
+        public int ExperienceId { get; private set; }
+        public string Name { get; private set; }
 
-        public TutorId TutorId { get; set; }
+        public TutorId TutorId { get; private set; }
     }
 }
 

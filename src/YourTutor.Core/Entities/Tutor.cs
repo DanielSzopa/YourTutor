@@ -7,7 +7,7 @@ namespace YourTutor.Core.Entities
         private readonly List<Experience> _experienceList = new();
         private readonly List<Course> _coursesList = new();
 
-        public TutorId TutorId { get; }
+        public TutorId TutorId { get; private set; }
 
         public string Description { get; private set; }
         public string Country { get; private set; }

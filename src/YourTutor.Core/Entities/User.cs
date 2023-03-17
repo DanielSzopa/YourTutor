@@ -4,11 +4,11 @@ namespace YourTutor.Core.Entities
 {
     public sealed class User
     {
-        public UserId Id { get; }
-        public Email Email { get; }
-        public FirstName FirstName { get; }
-        public LastName LastName { get; }
-        public HashPassword HashPassword { get; }
+        public UserId Id { get; private set; }
+        public Email Email { get; private set; }
+        public FirstName FirstName { get; private set; }
+        public LastName LastName { get; private set; }
+        public HashPassword HashPassword { get; private set; }
 
         public Tutor Tutor { get; private set; }
 
