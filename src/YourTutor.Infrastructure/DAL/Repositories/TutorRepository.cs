@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using YourTutor.Core.Entities;
+using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
 using YourTutor.Core.ValueObjects;
 
@@ -14,13 +14,24 @@ namespace YourTutor.Infrastructure.DAL.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Tutor> GetTutorDetailsByUserId(Guid userId)
+        public async Task<TutorDetailsReadModel> GetTutorDetailsByUserId(Guid userId)
         {
-            var tutor = await _dbContext.Tutor
+            var details = await _dbContext.Tutor
                 .Include(t => t.User)
-                .SingleAsync(u => u.UserId == new UserId(userId));
+                .Where(t => t.UserId == new UserId(userId))
+                .Select(t => new TutorDetailsReadModel()
+                {
+                    FirstName = t.User.FirstName,
+                    LastName = t.User.LastName,
+                    Email = t.User.Email,
+                    Description = t.Description,
+                    Country = t.Country,
+                    Language = t.Language
+                })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
 
-            return tutor;
+            return details;
         }
     }
 }

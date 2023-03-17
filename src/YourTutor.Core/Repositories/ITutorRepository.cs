@@ -1,9 +1,9 @@
-﻿using YourTutor.Core.Entities;
+﻿using YourTutor.Core.ReadModels;
 
 namespace YourTutor.Core.Repositories
 {
     public interface ITutorRepository
     {
-        Task<Tutor> GetTutorDetailsByUserId(Guid userId);
+        Task<TutorDetailsReadModel> GetTutorDetailsByUserId(Guid userId);
     }
 }

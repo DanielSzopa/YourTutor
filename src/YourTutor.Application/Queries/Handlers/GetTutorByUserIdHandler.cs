@@ -15,11 +15,11 @@ namespace YourTutor.Application.Queries.Handlers
 
         public async Task<TutorDto> Handle(GetTutorByUserId request, CancellationToken cancellationToken)
         {
-            var tutor = await _tutorRepository.GetTutorDetailsByUserId(request.UserId);
-            if (tutor is null)
+            var details = await _tutorRepository.GetTutorDetailsByUserId(request.UserId);
+            if (details is null)
                 return default;
 
-            return new TutorDto($"{tutor.User.FirstName.Value} {tutor.User.LastName.Value}", tutor.User.Email, tutor.Description, tutor.Country, tutor.Language, null, null);
+            return new TutorDto($"{details.FirstName} {details.LastName}", details.Email, details.Description, details.Country, details.Language, null, null);
         }
     }
 }
