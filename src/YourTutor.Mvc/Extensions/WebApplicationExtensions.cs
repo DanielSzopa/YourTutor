@@ -15,6 +15,7 @@ namespace YourTutor.Mvc.Extensions
                     var error = feature?.Error;
                     logger.LogCritical("Unexpected error: {@date}", clock.Now);
                     httpContext.Response.Redirect("/Home/Error");
+                    await Task.CompletedTask;
                 },
             };
             app.UseExceptionHandler(errorHandlerOptions);
