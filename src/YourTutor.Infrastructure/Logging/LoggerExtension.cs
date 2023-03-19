@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace YourTutor.Infrastructure.Logging
 {
-    internal static class LoggerExtension
+    public static class LoggerExtension
     {
-        internal static ILogger<T> GetLogger<T>(this IServiceProvider serviceProvider)
+        public static ILogger<T> GetLogger<T>(this IServiceProvider serviceProvider)
             where T : class 
             => serviceProvider.GetRequiredService<ILogger<T>>();
     }

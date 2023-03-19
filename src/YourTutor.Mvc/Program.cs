@@ -1,5 +1,7 @@
 using YourTutor.Application;
+using YourTutor.Application.Abstractions;
 using YourTutor.Infrastructure;
+using YourTutor.Infrastructure.Logging;
 using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,10 +16,13 @@ services
     .AddControllersExtension();
 
 var app = builder.Build();
+var logger = app.Services.GetLogger<Program>();
+using var scope = app.Services.CreateAsyncScope();
+var clock = scope.ServiceProvider.GetRequiredService<IClock>();
 
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseCustomExceptionHandler(logger, clock);
     app.UseHsts();
 }
 
