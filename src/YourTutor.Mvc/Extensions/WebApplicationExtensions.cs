@@ -9,13 +9,13 @@ namespace YourTutor.Mvc.Extensions
         {
             var errorHandlerOptions = new ExceptionHandlerOptions()
             {
-                ExceptionHandler = async (httpContext) =>
+                ExceptionHandler = httpContext =>
                 {
                     var feature = httpContext.Features.Get<IExceptionHandlerFeature>();
                     var error = feature?.Error;
                     logger.LogCritical("Unexpected error: {@date}", clock.Now);
                     httpContext.Response.Redirect("/Home/Error");
-                    await Task.CompletedTask;
+                    return Task.CompletedTask;
                 },
             };
             app.UseExceptionHandler(errorHandlerOptions);
