@@ -19,6 +19,14 @@ namespace YourTutor.Core.Entities
             Language = language;
         }
 
+        internal void UpdateDescription(string description)
+            => Description = description;
+
+        internal void UpdateCountry(string country)
+            => Country = country;
+
+        internal void UpdateLanguage(string language)
+            => Language = language;
     }
 }
 
