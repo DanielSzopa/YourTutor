@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using YourTutor.Core.Entities;
 using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
 using YourTutor.Core.ValueObjects;
@@ -31,6 +32,14 @@ namespace YourTutor.Infrastructure.DAL.Repositories
                 .FirstOrDefaultAsync();
 
             return details;
+        }
+
+        public async Task<Tutor> GetTutorById(Guid userId)
+        {
+            var tutor = await _dbContext
+                .Tutor
+                .FirstOrDefaultAsync(t => t.UserId == new UserId(userId));
+            return tutor;
         }
     }
 }

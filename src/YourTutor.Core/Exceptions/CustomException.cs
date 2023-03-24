@@ -1,6 +1,6 @@
 ﻿namespace YourTutor.Core.Exceptions
 {
-    internal abstract class CustomException : Exception
+    public abstract class CustomException : Exception
     {
         protected CustomException(string message) : base(message)
         {
