@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace YourTutor.Application.Queries
+namespace YourTutor.Application.Dtos
 {
-    public class EditTutor
+    public class EditTutorDto
     {
         [Required(ErrorMessage = "Description is required")]
         [StringLength(350, MinimumLength = 2, ErrorMessage = "Must be between 2 and 350 characters")]

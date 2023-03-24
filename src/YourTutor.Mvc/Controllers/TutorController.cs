@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
+using YourTutor.Application.Commands;
+using YourTutor.Application.Dtos;
 using YourTutor.Application.Queries;
 
 namespace YourTutor.Mvc.Controllers
@@ -44,9 +46,18 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpPost("Edit")]
-        public IActionResult Edit(EditTutor editTutor)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditTutorDto dto)
         {
-            return View();
+            var userId = _httpContextService.GetUserIdFromClaims();
+            if (userId == Guid.Empty)
+            {
+                _logger.LogError("Problem with indicating user");
+                return RedirectToAction(nameof(HomeController.Error), "Home");
+            }
+
+            await _mediator.Send(new EditTutor(dto,userId));
+            return RedirectToAction(nameof(MyAccount));
         }
     }
 }
