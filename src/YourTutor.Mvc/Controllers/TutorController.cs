@@ -7,6 +7,7 @@ using YourTutor.Application.Queries;
 namespace YourTutor.Mvc.Controllers
 {
     [Route("[controller]")]
+    [Authorize]
     public sealed class TutorController : Controller
     {
         private readonly IMediator _mediator;
@@ -21,8 +22,7 @@ namespace YourTutor.Mvc.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        [Authorize]
+        [HttpGet]      
         public async Task<IActionResult> MyAccount()
         {
             var userId = _httpContextService.GetUserIdFromClaims();
@@ -35,6 +35,18 @@ namespace YourTutor.Mvc.Controllers
             var tutorDto = await _mediator.Send(new GetTutorByUserId(userId));
 
             return View("Tutor", tutorDto);
+        }
+
+        [HttpGet("Edit")]
+        public IActionResult Edit()
+        {           
+            return View();
+        }
+
+        [HttpPost("Edit")]
+        public IActionResult Edit(EditTutor editTutor)
+        {
+            return View();
         }
     }
 }
