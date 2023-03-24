@@ -7,8 +7,6 @@ namespace YourTutor.Infrastructure.DAL
     {
         internal DbSet<User> Users { get; set; }
         internal DbSet<Tutor> Tutor { get; set; }
-        internal DbSet<Experience> Experience { get; set; }
-        internal DbSet<Course> Course { get; set; }
 
         public YourTutorDbContext(DbContextOptions<YourTutorDbContext> dbContextOptions) : base (dbContextOptions)
         {
