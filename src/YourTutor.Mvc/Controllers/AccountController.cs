@@ -26,7 +26,6 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpPost]
         [Route("register")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Register command)
         {
             if (ModelState.IsValid)
@@ -57,7 +56,6 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpPost]
         [Route("login")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(Login command)
         {          
             if (ModelState.IsValid)

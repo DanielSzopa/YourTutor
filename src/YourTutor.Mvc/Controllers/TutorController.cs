@@ -46,7 +46,6 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpPost("Edit")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditTutorDto dto)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
