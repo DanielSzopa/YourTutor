@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using YourTutor.Application.Helpers;
 
 namespace YourTutor.Infrastructure.Logging
 {
@@ -15,11 +16,11 @@ namespace YourTutor.Infrastructure.Logging
         }
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Starting request {@RequestName}", typeof(TRequest).Name);
+            _logger.LogInformation(AppLogEvent.RequestLog, "Starting request {@RequestName}", typeof(TRequest).Name);
 
             var result = await next();
 
-            _logger.LogInformation("Completed request {@RequestName}", typeof(TRequest).Name);
+            _logger.LogInformation(AppLogEvent.RequestLog, "Completed request {@RequestName}", typeof(TRequest).Name);
 
             return result;
         }

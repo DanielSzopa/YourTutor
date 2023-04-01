@@ -4,6 +4,7 @@ using FluentEmail.SendGrid;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using YourTutor.Application.Abstractions.Email;
+using YourTutor.Application.Helpers;
 using YourTutor.Application.Models.EmailBase;
 using YourTutor.Application.Settings;
 
@@ -31,7 +32,7 @@ namespace YourTutor.Infrastructure.Email
             SendResponse response = await _sendGridSender.SendAsync(fluentEmail);
 
             if (!response.Successful)
-                _logger.LogError("Problem with sending email by sendGrid, messageId: {@messageId}, error: {@error}", response.MessageId, JoinErrors(response.ErrorMessages));
+                _logger.LogError(AppLogEvent.EmailSending, "Problem with sending email by sendGrid, messageId: {@messageId}, error: {@error}", response.MessageId, JoinErrors(response.ErrorMessages));
         }
 
         private static string JoinErrors(IList<string> strings)

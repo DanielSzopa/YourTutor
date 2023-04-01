@@ -1,5 +1,6 @@
 using Serilog;
 using YourTutor.Application;
+using YourTutor.Application.Helpers;
 using YourTutor.Infrastructure;
 using YourTutor.Mvc.Extensions;
 
@@ -14,10 +15,14 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var logger = Log.Logger;
+var logEvent = new
+{
+    EventId = AppLogEvent.Start
+};
 
 try
 {
-    logger.Information("Start building application");
+    logger.Information("Start building application, {0}", logEvent);
 
     services
     .AddApplication()
@@ -28,7 +33,7 @@ try
 
     var app = builder.Build();
 
-    logger.Information("Application has been build");
+    logger.Information("Application has been build, {0}", logEvent);
 
     if (!app.Environment.IsDevelopment())
     {
@@ -48,14 +53,14 @@ try
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
-    logger.Information("Application works correctly before Run Middleware");
+    logger.Information("Application works correctly before Run Middleware, {0}", logEvent);
 
     app.Run();
 
 }
 catch (Exception ex)
 {
-    logger.Fatal(ex, "Application terminated unexpectedly");
+    logger.Fatal(ex, "Application terminated unexpectedly, {0}", logEvent);
 }
 finally
 {

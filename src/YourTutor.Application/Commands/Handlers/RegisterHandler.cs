@@ -5,6 +5,7 @@ using YourTutor.Application.Abstractions.Email;
 using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Abstractions.UserManager;
 using YourTutor.Application.Dtos;
+using YourTutor.Application.Helpers;
 using YourTutor.Application.Models.EmailBase;
 using YourTutor.Application.Settings.Email;
 using YourTutor.Core.Entities;
@@ -40,7 +41,7 @@ namespace YourTutor.Application.Commands.Handlers
             if (await _userRepository.IsEmailAlreadyExistsAsync(command.Email))
             {
                 response.Errors.Add($"Email already exists: {command.Email}");
-                _logger.LogError("Problem with registering user, email already exists, email {@email}", command.Email);
+                _logger.LogError(AppLogEvent.SignUp ,"Problem with registering user, email already exists, email {@email}", command.Email);
             }
 
 
@@ -60,7 +61,7 @@ namespace YourTutor.Application.Commands.Handlers
             catch (Exception ex)
             {
                 response.Errors.Add(ex.Message);
-                _logger.LogError(ex, "Problem with registering user");
+                _logger.LogError(AppLogEvent.SignUp, ex, "Problem with registering user");
             }
 
             if (response.Errors.Count > 0)

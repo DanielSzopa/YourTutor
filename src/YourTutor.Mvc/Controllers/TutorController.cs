@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
 using YourTutor.Application.Commands;
 using YourTutor.Application.Dtos;
+using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries;
 
 namespace YourTutor.Mvc.Controllers
@@ -30,7 +31,7 @@ namespace YourTutor.Mvc.Controllers
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
             {
-                _logger.LogError("Problem with indicating user");
+                _logger.LogError(AppLogEvent.IndicateUser, "Problem with indicating user");
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
@@ -51,7 +52,7 @@ namespace YourTutor.Mvc.Controllers
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
             {
-                _logger.LogError("Problem with indicating user");
+                _logger.LogError(AppLogEvent.IndicateUser, "Problem with indicating user");
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 

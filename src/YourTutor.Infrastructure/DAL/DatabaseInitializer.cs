@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using YourTutor.Application.Helpers;
 
 namespace YourTutor.Infrastructure.DAL;
 
@@ -22,16 +23,16 @@ internal sealed class DatabaseInitializer : IHostedService
 
         if (dbContext.Database.IsRelational())
         {
-            _logger.LogInformation("Check migrations...");
+            _logger.LogInformation(AppLogEvent.DbInit ,"Check migrations...");
             var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
             if (pendingMigrations != null && pendingMigrations.Any())
             {
                 await dbContext.Database.MigrateAsync();
-                _logger.LogInformation("Migrations have been added to database");
+                _logger.LogInformation(AppLogEvent.DbInit, "Migrations have been added to database");
             }
             else
             {
-                _logger.LogInformation("Database is up to date, do not need add any migrations");
+                _logger.LogInformation(AppLogEvent.DbInit, "Database is up to date, do not need add any migrations");
             }
         }
     }

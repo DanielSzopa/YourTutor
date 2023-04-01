@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Abstractions.UserManager;
 using YourTutor.Application.Dtos;
+using YourTutor.Application.Helpers;
 using YourTutor.Core.Repositories;
 
 namespace YourTutor.Application.Commands.Handlers
@@ -29,7 +30,7 @@ namespace YourTutor.Application.Commands.Handlers
             if (user is null)
             {
                 loginResponse.Errors.Add("Invalid credentials");
-                _logger.LogError("Can not found user {@email}", request.Email);
+                _logger.LogError(AppLogEvent.SignIn, "Can not found user {@email}", request.Email);
                 return loginResponse;
             }
 
@@ -38,7 +39,7 @@ namespace YourTutor.Application.Commands.Handlers
             if(result is false)
             {
                 loginResponse.Errors.Add("Invalid credentials");
-                _logger.LogError("Password is incorrect for: {@email}", request.Email);
+                _logger.LogError(AppLogEvent.SignIn, "Password is incorrect for: {@email}", request.Email);
                 return loginResponse;
             }
 
