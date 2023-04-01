@@ -22,13 +22,10 @@ services
     .AddControllersExtension();
 
 var app = builder.Build();
-var logger = app.Services.GetLogger<Program>();
-using var scope = app.Services.CreateAsyncScope();
-var clock = scope.ServiceProvider.GetRequiredService<IClock>();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseCustomExceptionHandler(logger, clock);
+    app.UseCustomExceptionHandler(app.Logger);
     app.UseHsts();
 }
 
