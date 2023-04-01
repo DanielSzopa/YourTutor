@@ -19,7 +19,7 @@ namespace YourTutor.Infrastructure.Logging
 
             var result = await next();
 
-            _logger.LogInformation("Completed request {@RequestName}", typeof(TRequest).Name,);
+            _logger.LogInformation("Completed request {@RequestName}", typeof(TRequest).Name);
 
             return result;
         }

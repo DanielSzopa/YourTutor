@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using YourTutor.Application.Abstractions;
 using YourTutor.Application.Abstractions.Email;
 using YourTutor.Application.Abstractions.Security;
@@ -20,7 +22,7 @@ namespace YourTutor.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services      
+            services
                 .AddRepositories()
                 .AddScoped<ISignInManager, SignInManager>()
                 .AddScoped<ISignOutManager, SignOutManager>()
@@ -45,6 +47,16 @@ namespace YourTutor.Infrastructure
                 .RegisterSettings<EmailSettings>(configuration);
 
             return services;
+        }
+
+        public static ConfigureHostBuilder UseLogger(this ConfigureHostBuilder host)
+        {
+            host.UseSerilog((context, config) =>
+            {
+                config.ReadFrom.Configuration(context.Configuration);
+            });
+
+            return host;
         }
 
     }

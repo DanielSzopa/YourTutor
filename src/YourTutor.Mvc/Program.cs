@@ -6,10 +6,7 @@ using YourTutor.Infrastructure.Logging;
 using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog((context, config) =>
-{
-    config.ReadFrom.Configuration(context.Configuration);
-});
+builder.Host.UseLogger();
 
 var services = builder.Services;
 var config = builder.Configuration;
