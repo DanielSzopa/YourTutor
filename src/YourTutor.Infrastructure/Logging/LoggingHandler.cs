@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using YourTutor.Application.Abstractions;
+using YourTutor.Application.Helpers;
 
 namespace YourTutor.Infrastructure.Logging
 {
@@ -9,20 +9,18 @@ namespace YourTutor.Infrastructure.Logging
         where TRequest : IRequest<TResponse>
     {
         private readonly ILogger<LoggingHandler<TRequest, TResponse>> _logger;
-        private readonly IClock _clock;
 
-        public LoggingHandler(ILogger<LoggingHandler<TRequest, TResponse>> logger, IClock clock)
+        public LoggingHandler(ILogger<LoggingHandler<TRequest, TResponse>> logger)
         {
             _logger = logger;
-            _clock = clock;
         }
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Starting request {@RequestName}, {@DateTime}", typeof(TRequest).Name, _clock.Now);
+            _logger.LogInformation(AppLogEvent.RequestLog, "Starting request {@RequestName}", typeof(TRequest).Name);
 
             var result = await next();
 
-            _logger.LogInformation("Completed request {@RequestName}, {@DateTime}", typeof(TRequest).Name, _clock.Now);
+            _logger.LogInformation(AppLogEvent.RequestLog, "Completed request {@RequestName}", typeof(TRequest).Name);
 
             return result;
         }

@@ -2,7 +2,7 @@
 
 namespace YourTutor.Core.ValueObjects
 {
-    public sealed class HashPassword
+    public sealed record HashPassword
     {
         public string Value { get; }
 

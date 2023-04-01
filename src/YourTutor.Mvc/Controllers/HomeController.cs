@@ -1,16 +1,16 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using YourTutor.Mvc.Models;
 
 namespace YourTutor.Mvc.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IHttpContextAccessor httpContextAccessor)
     {
-        _logger = logger;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public IActionResult Index()
@@ -18,14 +18,10 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
+        _httpContextAccessor.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

@@ -1,36 +1,68 @@
+using Serilog;
 using YourTutor.Application;
+using YourTutor.Application.Helpers;
 using YourTutor.Infrastructure;
 using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseLogger();
+
 var services = builder.Services;
 var config = builder.Configuration;
 
-services
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(config)
+    .CreateLogger();
+
+var logger = Log.Logger;
+var logEvent = new
+{
+    EventId = AppLogEvent.Start
+};
+
+try
+{
+    logger.Information("Start building application, {0}", logEvent);
+
+    services
     .AddApplication()
     .AddInfrastructure(config)
     .AddHttpContextAccessor()
     .AddAuthenticationExtension(config)
     .AddControllersExtension();
 
-var app = builder.Build();
+    var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    logger.Information("Application has been build, {0}", logEvent);
+
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseCustomExceptionHandler();
+        app.UseHsts();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+
+    app.UseRouting();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    logger.Information("Application works correctly before Run Middleware, {0}", logEvent);
+
+    app.Run();
+
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
+catch (Exception ex)
+{
+    logger.Fatal(ex, "Application terminated unexpectedly, {0}", logEvent);
+}
+finally
+{
+    Log.CloseAndFlush();
+}

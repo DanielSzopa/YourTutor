@@ -5,7 +5,8 @@ namespace YourTutor.Infrastructure.DAL
 {
     internal sealed class YourTutorDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        internal DbSet<User> Users { get; set; }
+        internal DbSet<Tutor> Tutor { get; set; }
 
         public YourTutorDbContext(DbContextOptions<YourTutorDbContext> dbContextOptions) : base (dbContextOptions)
         {
