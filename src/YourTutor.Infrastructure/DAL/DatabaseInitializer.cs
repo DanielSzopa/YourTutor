@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using YourTutor.Infrastructure.Logging;
 
 namespace YourTutor.Infrastructure.DAL;
 
@@ -11,10 +10,10 @@ internal sealed class DatabaseInitializer : IHostedService
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<DatabaseInitializer> _logger;
 
-    public DatabaseInitializer(IServiceProvider serviceProvider)
+    public DatabaseInitializer(IServiceProvider serviceProvider, ILogger<DatabaseInitializer> logger)
     {
         _serviceProvider = serviceProvider;
-        _logger = _serviceProvider.GetLogger<DatabaseInitializer>();
+        _logger = logger;
     }
     public async Task StartAsync(CancellationToken cancellationToken)
     {
