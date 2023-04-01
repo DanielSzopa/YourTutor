@@ -1,3 +1,4 @@
+using Serilog;
 using YourTutor.Application;
 using YourTutor.Application.Abstractions;
 using YourTutor.Infrastructure;
@@ -5,6 +6,11 @@ using YourTutor.Infrastructure.Logging;
 using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((context, config) =>
+{
+    config.ReadFrom.Configuration(context.Configuration);
+});
+
 var services = builder.Services;
 var config = builder.Configuration;
 
