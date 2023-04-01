@@ -32,7 +32,7 @@ try
 
     if (!app.Environment.IsDevelopment())
     {
-        app.UseCustomExceptionHandler(app.Logger);
+        app.UseCustomExceptionHandler();
         app.UseHsts();
     }
 

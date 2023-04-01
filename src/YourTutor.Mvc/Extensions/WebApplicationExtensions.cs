@@ -4,7 +4,7 @@ namespace YourTutor.Mvc.Extensions
 {
     internal static class WebApplicationExtensions
     {
-        internal static WebApplication UseCustomExceptionHandler(this WebApplication app, ILogger logger)
+        internal static WebApplication UseCustomExceptionHandler(this WebApplication app)
         {
             var errorHandlerOptions = new ExceptionHandlerOptions()
             {
@@ -12,7 +12,6 @@ namespace YourTutor.Mvc.Extensions
                 {
                     var feature = httpContext.Features.Get<IExceptionHandlerFeature>();
                     var error = feature?.Error;
-                    logger.LogCritical("Unexpected error: {@error}", error);
                     httpContext.Response.Redirect("/Home/Error");
                     return Task.CompletedTask;
                 },
