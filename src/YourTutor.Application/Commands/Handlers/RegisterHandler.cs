@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using YourTutor.Application.Abstractions.Email;
 using YourTutor.Application.Abstractions.Security;
@@ -18,15 +19,18 @@ namespace YourTutor.Application.Commands.Handlers
         private readonly ISignInManager _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly IHashService _hashService;
+        private readonly ILogger<RegisterHandler> _logger;
         private readonly EmailSettings _emailSettings;
 
         public RegisterHandler(IUserRepository userRepository, ISignInManager signInManager,
-            IEmailSender emailSender, IOptions<EmailSettings> emailSettings, IHashService hashService)
+            IEmailSender emailSender, IOptions<EmailSettings> emailSettings, IHashService hashService,
+            ILogger<RegisterHandler> logger)
         {
             _userRepository = userRepository;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _hashService = hashService;
+            _logger = logger;
             _emailSettings = emailSettings.Value;
         }
 
@@ -34,7 +38,11 @@ namespace YourTutor.Application.Commands.Handlers
         {
             var response = new RegisterResponse();
             if (await _userRepository.IsEmailAlreadyExistsAsync(command.Email))
+            {
                 response.Errors.Add($"Email already exists: {command.Email}");
+                _logger.LogError("Problem with registering user, email already exists, email {@email}", command.Email);
+            }
+
 
             User user = null;
 
@@ -49,9 +57,10 @@ namespace YourTutor.Application.Commands.Handlers
 
                 user.CreateTutor();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 response.Errors.Add(ex.Message);
+                _logger.LogError(ex, "Problem with registering user");
             }
 
             if (response.Errors.Count > 0)
