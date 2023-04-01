@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
-using YourTutor.Application.Abstractions;
 
 namespace YourTutor.Mvc.Extensions
 {
