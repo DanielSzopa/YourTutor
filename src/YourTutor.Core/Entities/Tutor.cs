@@ -11,6 +11,8 @@ namespace YourTutor.Core.Entities
 
         public User User { get; private set; }
 
+        public IReadOnlyCollection<Offert> Offerts { get; private set; }
+
         internal Tutor(UserId userId, string description, string country, string language)
         {
             UserId = userId;
