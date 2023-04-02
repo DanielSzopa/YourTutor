@@ -19,14 +19,7 @@ namespace YourTutor.Application.Queries.Handlers
             if (details is null)
                 return default;
 
-            return new TutorDetailsReadModel()
-            {
-                FullName = details.FullName,
-                Email = details.Email,
-                Description = details.Description,
-                Country = details.Country,
-                Language = details.Language,
-            };
+            return details;
         }
     }
 }
