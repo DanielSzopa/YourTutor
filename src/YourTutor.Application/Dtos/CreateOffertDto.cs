@@ -14,11 +14,7 @@ namespace YourTutor.Application.Dtos
 
         [Required(ErrorMessage = "Price is required")]
         [Range(1, int.MaxValue, ErrorMessage = "Price have to be greather than 0")]
-        public int PriceFrom { get; set; }
-
-        [Required(ErrorMessage = "Price is required")]
-        [Range(1, int.MaxValue, ErrorMessage = "Price have to be greather than 0")]
-        public int PriceTo { get; set; }
+        public int Price { get; set; }
 
         public bool IsRemotely { get; set; }
         public string Location { get; set; }
