@@ -6,8 +6,8 @@ public sealed class Offert
 {
     public OffertId Id { get; private set; }
 
-    public Offert(OffertId id, string description, string subject, int priceFrom,
-        int priceTo, bool isRemotely, string location, Tutor tutor, UserId tutorId)
+    public Offert(OffertId id, string description, string subject, Price priceFrom,
+        Price priceTo, bool isRemotely, string location, Tutor tutor, UserId tutorId)
     {
         Id = id;
         Description = description;
@@ -22,8 +22,8 @@ public sealed class Offert
 
     public string Description { get; private set; }
     public string Subject { get; private set; }
-    public int PriceFrom { get; private set; }
-    public int PriceTo { get; private set; }
+    public Price PriceFrom { get; private set; }
+    public Price PriceTo { get; private set; }
     public bool IsRemotely { get; private set; }
     public string Location { get; private set; }
     public Tutor Tutor { get; private set; }
