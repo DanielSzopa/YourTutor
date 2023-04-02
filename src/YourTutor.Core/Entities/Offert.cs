@@ -7,7 +7,7 @@ public sealed class Offert
     public OffertId Id { get; private set; }
 
     public Offert(OffertId id, string description, string subject, Price priceFrom,
-        Price priceTo, bool isRemotely, string location, Tutor tutor, UserId tutorId)
+        Price priceTo, bool isRemotely, string location, UserId tutorId)
     {
         Id = id;
         Description = description;
@@ -16,7 +16,6 @@ public sealed class Offert
         PriceTo = priceTo;
         IsRemotely = isRemotely;
         Location = location;
-        Tutor = tutor;
         TutorId = tutorId;
     }
 
