@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
 using YourTutor.Application.Commands;
 using YourTutor.Application.Dtos;
+using YourTutor.Application.Dtos.Pagination;
 using YourTutor.Application.Helpers;
+using YourTutor.Application.Queries;
 
 namespace YourTutor.Mvc.Controllers
 {
@@ -43,6 +45,13 @@ namespace YourTutor.Mvc.Controllers
             var id = await _mediator.Send(new CreateOffert(dto, userId));
             //Todo:
             //Redirect to new created offert
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffertsFilterDto offertsDto)
+        {
+            var query = new GetSmallOfferts(paginationDto, offertsDto);
             return View();
         }
     }
