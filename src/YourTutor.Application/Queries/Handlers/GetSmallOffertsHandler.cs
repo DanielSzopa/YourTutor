@@ -40,6 +40,7 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Ge
                 || ((string)o.Tutor.User.LastName).ToLower().Contains(searchString));
         }
 
+        if(offert.IsRemotelyFiltered)
         query = query
             .Where(o => o.IsRemotely == offert.IsRemotely);
 
@@ -63,7 +64,7 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Ge
             .ToList();
 
         var paginationResponse = new PaginationResponse<SmallOffertsReadModel>(results, pagination.PageNumber, _pageSize, quantity, pagination?.SearchString);
-        var filter = new OffertsFilterDto(offert.IsRemotely, offert.PriceFrom, offert.PriceTo);
+        var filter = new OffertsFilterDto(offert.IsRemotely, offert.IsRemotelyFiltered, offert.PriceFrom, offert.PriceTo);
 
         return new GetSmallOffertsResponse(paginationResponse, filter);
     }
