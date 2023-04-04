@@ -53,7 +53,7 @@ namespace YourTutor.Mvc.Controllers
         {
             var query = new GetSmallOfferts(paginationDto, offertsDto);
             var response = await _mediator.Send(query);
-            return Ok(response);
+            return View(response);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace YourTutor.Application.Queries.Handlers;
 public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, GetSmallOffertsResponse>
 {
     private readonly int _pageSize = 10;
+    private readonly int _defaultPage = 1;
+
     private readonly IOffertRepository _offertRepository;
 
     public GetSmallOffertsHandler(IOffertRepository offertRepository)
@@ -21,6 +23,10 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Ge
     public async Task<GetSmallOffertsResponse> Handle(GetSmallOfferts request, CancellationToken cancellationToken)
     {
         var (pagination, offert) = request;
+        pagination = pagination.PageNumber == 0 
+            ? pagination with { PageNumber = _defaultPage } 
+            : pagination;
+
         var query = _offertRepository.GetOffertsAsQueryable();
         var searchString = pagination?.SearchString?.ToLower();
 
