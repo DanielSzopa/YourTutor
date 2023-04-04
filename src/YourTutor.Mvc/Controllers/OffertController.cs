@@ -52,8 +52,8 @@ namespace YourTutor.Mvc.Controllers
         public async Task<IActionResult> Index([FromQuery]PaginationDto paginationDto, [FromQuery]OffertsFilterDto offertsDto)
         {
             var query = new GetSmallOfferts(paginationDto, offertsDto);
-            await _mediator.Send(query);
-            return View();
+            var response = await _mediator.Send(query);
+            return Ok(response);
         }
     }
 }

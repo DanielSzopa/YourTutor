@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Abstractions.UserManager;
-using YourTutor.Application.Dtos;
+using YourTutor.Application.Dtos.Responses;
 using YourTutor.Application.Helpers;
 using YourTutor.Core.Repositories;
 

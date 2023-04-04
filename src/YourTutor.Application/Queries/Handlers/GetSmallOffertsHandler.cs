@@ -1,10 +1,14 @@
 ﻿using MediatR;
+using YourTutor.Application.Dtos;
+using YourTutor.Application.Dtos.Pagination;
+using YourTutor.Application.Dtos.Responses;
+using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
 using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Application.Queries.Handlers;
 
-public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Unit>
+public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, GetSmallOffertsResponse>
 {
     private readonly int _pageSize = 10;
     private readonly IOffertRepository _offertRepository;
@@ -14,7 +18,7 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Un
         _offertRepository = offertRepository;
     }
 
-    public async Task<Unit> Handle(GetSmallOfferts request, CancellationToken cancellationToken)
+    public async Task<GetSmallOffertsResponse> Handle(GetSmallOfferts request, CancellationToken cancellationToken)
     {
         var (pagination, offert) = request;
         var query = _offertRepository.GetOffertsAsQueryable();
@@ -39,13 +43,23 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Un
                .Where(o => o.Price >= new Price(offert.PriceFrom) && o.Price <= new Price(offert.PriceTo));
         }
 
+        var quantity = await _offertRepository.CountOfferts(query);
+
         query = query
             .Skip(ExcludeRecords(pagination.PageNumber, _pageSize))
             .Take(_pageSize);
 
-        var result = await _offertRepository.GetSmallOfferts(query);
+        var items = await _offertRepository
+            .GetSmallOfferts(query);
 
-        return Unit.Value;
+        var results = items
+            .OrderBy(o => o.FullName)
+            .ToList();
+
+        var paginationResponse = new PaginationResponse<SmallOffertsReadModel>(results, pagination.PageNumber, _pageSize, quantity, pagination?.SearchString);
+        var filter = new OffertsFilterDto(offert.IsRemotely, offert.PriceFrom, offert.PriceTo);
+
+        return new GetSmallOffertsResponse(paginationResponse, filter);
     }
 
 

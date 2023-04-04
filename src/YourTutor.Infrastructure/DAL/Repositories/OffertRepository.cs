@@ -36,6 +36,9 @@ internal class OffertRepository : IOffertRepository
             .Include(o => o.Tutor)
             .ThenInclude(t => t.User);
     }
+
+    public async Task<int> CountOfferts(IQueryable<Offert> offerts)
+        => await offerts.CountAsync();
 }
 
 

@@ -1,4 +1,4 @@
-﻿namespace YourTutor.Application.Dtos
+﻿namespace YourTutor.Application.Dtos.Responses
 {
     public class LoginResponse
     {
