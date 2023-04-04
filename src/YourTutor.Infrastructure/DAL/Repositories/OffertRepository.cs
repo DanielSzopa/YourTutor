@@ -20,16 +20,21 @@ internal class OffertRepository : IOffertRepository
             .AddAsync(offert);
     }
 
-    public async Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts()
+    public async Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts(IQueryable<Offert> offertsQuery)
     {
-        var offerts = await _db
-            .Offerts
-            .Include(o => o.Tutor)
-            .ThenInclude(t => t.User)
+        var offerts = await offertsQuery
             .Select(o => new SmallOffertsReadModel(o.Id, o.Subject, o.Price, o.Location, o.IsRemotely, $"{o.Tutor.User.FirstName.Value} {o.Tutor.User.LastName.Value}", o.Tutor.User.Email))
             .ToListAsync();
 
         return offerts;
+    }
+
+    public IQueryable<Offert> GetOffertsAsQueryable()
+    {
+        return _db.
+            Offerts
+            .Include(o => o.Tutor)
+            .ThenInclude(t => t.User);
     }
 }
 

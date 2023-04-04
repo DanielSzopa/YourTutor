@@ -49,9 +49,10 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffertsFilterDto offertsDto)
+        public async Task<IActionResult> Index([FromQuery]PaginationDto paginationDto, [FromQuery]OffertsFilterDto offertsDto)
         {
             var query = new GetSmallOfferts(paginationDto, offertsDto);
+            await _mediator.Send(query);
             return View();
         }
     }

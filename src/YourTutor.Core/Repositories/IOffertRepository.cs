@@ -7,5 +7,7 @@ public interface IOffertRepository
 {
     Task CreateOffert(Offert offert);
 
-    Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts();
+    Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts(IQueryable<Offert> offertsQuery);
+
+    IQueryable<Offert> GetOffertsAsQueryable();
 }
