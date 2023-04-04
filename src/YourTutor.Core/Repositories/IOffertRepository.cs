@@ -1,5 +1,6 @@
 ﻿using YourTutor.Core.Entities;
 using YourTutor.Core.ReadModels;
+using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Core.Repositories;
 
@@ -12,4 +13,5 @@ public interface IOffertRepository
     Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts(IQueryable<Offert> offertsQuery);
 
     IQueryable<Offert> GetOffertsAsQueryable();
+    Task<OffertDetailsReadmodel> GetOffertDetails(OffertId id);
 }

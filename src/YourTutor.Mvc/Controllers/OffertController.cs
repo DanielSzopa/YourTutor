@@ -24,6 +24,26 @@ namespace YourTutor.Mvc.Controllers
             _httpContextService = httpContextService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffertsFilterDto offertsDto)
+        {
+            var query = new GetSmallOfferts(paginationDto, offertsDto);
+            var response = await _mediator.Send(query);
+            return View(response);
+        }
+
+
+        [HttpGet("{id:Guid}")]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var response = await _mediator.Send(new GetOffertDetails(id));
+
+            if (response is null)
+                return RedirectToAction(nameof(Index));
+
+            return View(response);
+        }
+
         [Authorize]
         [HttpGet("Create")]
         public IActionResult Create()
@@ -43,17 +63,8 @@ namespace YourTutor.Mvc.Controllers
             }
 
             var id = await _mediator.Send(new CreateOffert(dto, userId));
-            //Todo:
-            //Redirect to new created offert
-            return View();
-        }
 
-        [HttpGet]
-        public async Task<IActionResult> Index([FromQuery]PaginationDto paginationDto, [FromQuery]OffertsFilterDto offertsDto)
-        {
-            var query = new GetSmallOfferts(paginationDto, offertsDto);
-            var response = await _mediator.Send(query);
-            return View(response);
-        }
+            return RedirectToAction(nameof(Details), new { id = id.Value });
+        }      
     }
 }

@@ -2,6 +2,7 @@
 using YourTutor.Core.Entities;
 using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
+using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Infrastructure.DAL.Repositories;
 
@@ -23,7 +24,7 @@ internal class OffertRepository : IOffertRepository
     public async Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts(IQueryable<Offert> offertsQuery)
     {
         var offerts = await offertsQuery
-            .Select(o => new SmallOffertsReadModel(o.Id, o.Subject, o.Price, o.Location, o.IsRemotely, $"{o.Tutor.User.FirstName.Value} {o.Tutor.User.LastName.Value}", o.Tutor.User.Email))
+            .Select(o => new SmallOffertsReadModel(o.Id, o.Subject, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName, o.Tutor.User.Email))
             .ToListAsync();
 
         return offerts;
@@ -39,6 +40,20 @@ internal class OffertRepository : IOffertRepository
 
     public async Task<int> CountOfferts(IQueryable<Offert> offerts)
         => await offerts.CountAsync();
+
+    public async Task<OffertDetailsReadmodel> GetOffertDetails(OffertId id)
+    {
+        var offert = await _db
+            .Offerts
+            .Include(o => o.Tutor)
+            .ThenInclude(t => t.User)
+            .Where(o => o.Id == id)
+            .Select(o => new OffertDetailsReadmodel(o.Id, o.Description, o.Subject, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName,
+                o.Tutor.User.Email, o.Tutor.Country, o.Tutor.Language, o.Tutor.UserId))
+            .FirstOrDefaultAsync();
+
+        return offert;
+    }
 }
 
 
