@@ -1,13 +1,6 @@
 ﻿namespace YourTutor.Core.ReadModels
 {
-    public sealed class TutorDetailsReadModel
-    {
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string Description { get; set; }
-        public string Country { get; set; }
-        public string Language { get; set; }
-    }
+    public sealed record TutorDetailsReadModel(string FullName, string Email, string Description, string Country, string Language);
 }
 
 

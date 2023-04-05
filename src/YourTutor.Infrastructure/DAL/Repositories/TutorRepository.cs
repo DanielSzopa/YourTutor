@@ -20,15 +20,7 @@ namespace YourTutor.Infrastructure.DAL.Repositories
             var details = await _dbContext.Tutor
                 .Include(t => t.User)
                 .Where(t => t.UserId == new UserId(userId))
-                .Select(t => new TutorDetailsReadModel()
-                {
-                    FullName = t.User.FirstName + " " + t.User.LastName,
-                    Email = t.User.Email,
-                    Description = t.Description,
-                    Country = t.Country,
-                    Language = t.Language
-                })
-                .AsNoTracking()
+                .Select(t => new TutorDetailsReadModel($"{t.User.FirstName.Value} {t.User.LastName.Value}", t.User.Email, t.Description, t.Country, t.Language))
                 .FirstOrDefaultAsync();
 
             return details;

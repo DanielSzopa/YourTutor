@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,8 @@ using YourTutor.Application.Abstractions.UserManager;
 using YourTutor.Application.Settings;
 using YourTutor.Application.Settings.Email;
 using YourTutor.Core.Services.SignInManager;
+using YourTutor.Infrastructure.Authorization;
+using YourTutor.Infrastructure.Constans;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Infrastructure.Email;
 using YourTutor.Infrastructure.Logging;
@@ -23,6 +26,7 @@ namespace YourTutor.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services
+                .AddAuthorizationPolicies()
                 .AddRepositories()
                 .AddScoped<ISignInManager, SignInManager>()
                 .AddScoped<ISignOutManager, SignOutManager>()
@@ -32,6 +36,7 @@ namespace YourTutor.Infrastructure
                 .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingHandler<,>))
                 .AddSingleton<IHashService, HashService>()
                 .AddHostedService<DatabaseInitializer>()
+                .AddScoped<IAuthorizationHandler, CanRemoveOffertRequirementHandler>()
                 .RegisterAllSettings(configuration)
                 .AddYourTutorDbContext(configuration);
 
@@ -45,6 +50,20 @@ namespace YourTutor.Infrastructure
                 .RegisterSettings<ConnectionStringsSettings>(configuration)
                 .RegisterSettings<SendGridSettings>(configuration)
                 .RegisterSettings<EmailSettings>(configuration);
+
+            return services;
+        }
+
+        private static IServiceCollection AddAuthorizationPolicies(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(CustomAuthorizationPolicy.DeleteOffert, policy =>
+                {
+                    policy.Requirements.Add(new CanRemoveOffertRequirement());
+
+                });
+            });
 
             return services;
         }
