@@ -5,7 +5,7 @@ using YourTutor.Core.Repositories;
 
 namespace YourTutor.Application.Queries.GetOffertDetails;
 
-public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, OffertDetailsReadmodel>
+public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, OffertDetailsReadModel>
 {
     private readonly ILogger<GetOffertDetailsHandler> _logger;
     private readonly IOffertRepository _offertRepository;
@@ -16,7 +16,7 @@ public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, 
         _offertRepository = offertRepository;
     }
 
-    public async Task<OffertDetailsReadmodel> Handle(GetOffertDetails request, CancellationToken cancellationToken)
+    public async Task<OffertDetailsReadModel> Handle(GetOffertDetails request, CancellationToken cancellationToken)
     {
         var offert = await _offertRepository.GetOffertDetails(request.id);
 

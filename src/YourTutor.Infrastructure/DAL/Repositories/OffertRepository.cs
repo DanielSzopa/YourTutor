@@ -41,14 +41,14 @@ internal class OffertRepository : IOffertRepository
     public async Task<int> CountOfferts(IQueryable<Offert> offerts)
         => await offerts.CountAsync();
 
-    public async Task<OffertDetailsReadmodel> GetOffertDetails(OffertId id)
+    public async Task<OffertDetailsReadModel> GetOffertDetails(OffertId id)
     {
         var offert = await _db
             .Offerts
             .Include(o => o.Tutor)
             .ThenInclude(t => t.User)
             .Where(o => o.Id == id)
-            .Select(o => new OffertDetailsReadmodel(o.Id, o.Description, o.Subject, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName,
+            .Select(o => new OffertDetailsReadModel(o.Id, o.Description, o.Subject, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName,
                 o.Tutor.User.Email, o.Tutor.Country, o.Tutor.Language, o.Tutor.UserId))
             .FirstOrDefaultAsync();
 

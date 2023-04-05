@@ -15,7 +15,7 @@ public interface IOffertRepository
     Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts(IQueryable<Offert> offertsQuery);
 
     IQueryable<Offert> GetOffertsAsQueryable();
-    Task<OffertDetailsReadmodel> GetOffertDetails(OffertId id);
+    Task<OffertDetailsReadModel> GetOffertDetails(OffertId id);
 
     Task<bool> CheckIfUserHasAccessToOffert(OffertId offertId, UserId userId);
 }
