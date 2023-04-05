@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using YourTutor.Application.Abstractions.UnitOfWork;
 using YourTutor.Core.Repositories;
 
-namespace YourTutor.Application.Commands.Handlers;
+namespace YourTutor.Application.Commands.DeleteOffert;
 
 public sealed class DeleteOffertHandler : IRequestHandler<DeleteOffert, Unit>
 {

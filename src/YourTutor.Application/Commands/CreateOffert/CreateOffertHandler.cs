@@ -4,7 +4,7 @@ using YourTutor.Core.Entities;
 using YourTutor.Core.Repositories;
 using YourTutor.Core.ValueObjects;
 
-namespace YourTutor.Application.Commands.Handlers
+namespace YourTutor.Application.Commands.CreateOffert
 {
     public sealed class CreateOffertHandler : IRequestHandler<CreateOffert, OffertId>
     {

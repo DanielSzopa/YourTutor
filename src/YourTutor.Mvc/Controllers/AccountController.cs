@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using YourTutor.Application.Commands;
+using YourTutor.Application.Commands.SignIn;
+using YourTutor.Application.Commands.SignOut;
+using YourTutor.Application.Commands.SignUp;
 
 namespace YourTutor.Mvc.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using YourTutor.Application.Abstractions.UserManager;
 
-namespace YourTutor.Application.Commands.Handlers
+namespace YourTutor.Application.Commands.SignOut
 {
     public class SignOutHandler : IRequestHandler<SignOut, Unit>
     {

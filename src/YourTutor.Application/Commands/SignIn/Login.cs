@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using YourTutor.Application.Dtos.Responses;
 
-namespace YourTutor.Application.Commands
+namespace YourTutor.Application.Commands.SignIn
 {
     public sealed class Login : IRequest<LoginResponse>
     {

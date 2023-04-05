@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
-using YourTutor.Application.Commands;
+using YourTutor.Application.Commands.CreateOffert;
+using YourTutor.Application.Commands.DeleteOffert;
 using YourTutor.Application.Dtos;
 using YourTutor.Application.Dtos.Pagination;
 using YourTutor.Application.Helpers;

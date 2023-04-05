@@ -12,7 +12,7 @@ using YourTutor.Core.Entities;
 using YourTutor.Core.Repositories;
 using YourTutor.Core.ValueObjects;
 
-namespace YourTutor.Application.Commands.Handlers
+namespace YourTutor.Application.Commands.SignUp
 {
     public class RegisterHandler : IRequestHandler<Register, RegisterResponse>
     {
@@ -41,7 +41,7 @@ namespace YourTutor.Application.Commands.Handlers
             if (await _userRepository.IsEmailAlreadyExistsAsync(command.Email))
             {
                 response.Errors.Add($"Email already exists: {command.Email}");
-                _logger.LogError(AppLogEvent.SignUp ,"Problem with registering user, email already exists, email {@email}", command.Email);
+                _logger.LogError(AppLogEvent.SignUp, "Problem with registering user, email already exists, email {@email}", command.Email);
             }
 
 

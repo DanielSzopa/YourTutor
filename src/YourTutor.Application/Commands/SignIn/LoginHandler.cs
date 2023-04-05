@@ -2,11 +2,12 @@
 using Microsoft.Extensions.Logging;
 using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Abstractions.UserManager;
+using YourTutor.Application.Dtos;
 using YourTutor.Application.Dtos.Responses;
 using YourTutor.Application.Helpers;
 using YourTutor.Core.Repositories;
 
-namespace YourTutor.Application.Commands.Handlers
+namespace YourTutor.Application.Commands.SignIn
 {
     public sealed class LoginHandler : IRequestHandler<Login, LoginResponse>
     {
@@ -36,7 +37,7 @@ namespace YourTutor.Application.Commands.Handlers
 
             var result = _hashService.VerifyPassword(request.Password, user.HashPassword);
 
-            if(result is false)
+            if (result is false)
             {
                 loginResponse.Errors.Add("Invalid credentials");
                 _logger.LogError(AppLogEvent.SignIn, "Password is incorrect for: {@email}", request.Email);

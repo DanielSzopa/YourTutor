@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using YourTutor.Application.Dtos.Responses;
 
-namespace YourTutor.Application.Commands;
+namespace YourTutor.Application.Commands.SignUp;
 
 public sealed class Register : IRequest<RegisterResponse>
 {
@@ -23,7 +23,7 @@ public sealed class Register : IRequest<RegisterResponse>
     public string Password { get; init; }
 
     [Required(ErrorMessage = "Password confirmation is required")]
-    [Compare(nameof(Register.Password), ErrorMessage = "Passwords must be the same")]
+    [Compare(nameof(Password), ErrorMessage = "Passwords must be the same")]
     public string PasswordConfirmation { get; init; }
 
 }

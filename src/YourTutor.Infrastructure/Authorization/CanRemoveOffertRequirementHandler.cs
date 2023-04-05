@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using YourTutor.Application.Abstractions;
-using YourTutor.Application.Commands;
+using YourTutor.Application.Commands.DeleteOffert;
 using YourTutor.Core.Repositories;
 using YourTutor.Core.ValueObjects;
 

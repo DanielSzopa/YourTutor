@@ -3,7 +3,7 @@ using YourTutor.Application.Abstractions.UnitOfWork;
 using YourTutor.Core.Exceptions;
 using YourTutor.Core.Repositories;
 
-namespace YourTutor.Application.Commands.Handlers;
+namespace YourTutor.Application.Commands.EditTutor;
 
 public sealed class EditTutorHandler : IRequestHandler<EditTutor, Unit>
 {

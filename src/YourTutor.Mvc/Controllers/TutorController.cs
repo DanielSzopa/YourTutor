@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
-using YourTutor.Application.Commands;
+using YourTutor.Application.Commands.EditTutor;
 using YourTutor.Application.Dtos;
 using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries;
