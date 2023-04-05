@@ -73,7 +73,7 @@ namespace YourTutor.Mvc.Controllers
 
 
         [Authorize]
-        [HttpDelete("{id:Guid}")]
+        [Route("delete/{id:Guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var authorizationResult = await _authorizationService.AuthorizeAsync(_httpContextService.GetUser(),
