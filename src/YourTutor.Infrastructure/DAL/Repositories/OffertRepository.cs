@@ -54,6 +54,17 @@ internal class OffertRepository : IOffertRepository
 
         return offert;
     }
+
+    public async Task<bool> CheckIfUserHasAccessToOffert(OffertId offertId, UserId userId)
+    {
+        var result = await _db
+            .Offerts
+            .Include(o => o.Tutor)
+            .ThenInclude(t => t.User)
+            .AnyAsync(o => o.Id == offertId && o.Tutor.User.Id == userId);
+
+        return result;
+    }
 }
 
 

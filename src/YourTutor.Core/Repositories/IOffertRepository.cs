@@ -14,4 +14,6 @@ public interface IOffertRepository
 
     IQueryable<Offert> GetOffertsAsQueryable();
     Task<OffertDetailsReadmodel> GetOffertDetails(OffertId id);
+
+    Task<bool> CheckIfUserHasAccessToOffert(OffertId offertId, UserId userId);
 }

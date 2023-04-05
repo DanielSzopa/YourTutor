@@ -13,6 +13,11 @@ namespace YourTutor.Infrastructure.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public ClaimsPrincipal GetUser()
+        {
+            return _httpContextAccessor.HttpContext.User;
+        }
+
         public Guid GetUserIdFromClaims()
         {
             try
