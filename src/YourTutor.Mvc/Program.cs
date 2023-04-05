@@ -28,7 +28,6 @@ try
     .AddApplication()
     .AddInfrastructure(config)
     .AddHttpContextAccessor()
-    .AddAuthenticationExtension(config)
     .AddControllersExtension();
 
     var app = builder.Build();

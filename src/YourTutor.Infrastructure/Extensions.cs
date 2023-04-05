@@ -11,6 +11,7 @@ using YourTutor.Application.Abstractions.UserManager;
 using YourTutor.Application.Settings;
 using YourTutor.Application.Settings.Email;
 using YourTutor.Core.Services.SignInManager;
+using YourTutor.Infrastructure.Authentication;
 using YourTutor.Infrastructure.Authorization;
 using YourTutor.Infrastructure.Constans;
 using YourTutor.Infrastructure.DAL;
@@ -27,6 +28,7 @@ namespace YourTutor.Infrastructure
         {
             services
                 .AddAuthorizationPolicies()
+                .AddAuthenticationExtension(configuration)
                 .AddRepositories()
                 .AddScoped<ISignInManager, SignInManager>()
                 .AddScoped<ISignOutManager, SignOutManager>()
