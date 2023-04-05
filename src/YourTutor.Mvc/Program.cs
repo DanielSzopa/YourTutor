@@ -2,6 +2,7 @@ using Serilog;
 using YourTutor.Application;
 using YourTutor.Application.Helpers;
 using YourTutor.Infrastructure;
+using YourTutor.Infrastructure.Middlewares;
 using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
