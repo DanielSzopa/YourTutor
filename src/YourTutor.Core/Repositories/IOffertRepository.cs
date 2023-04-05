@@ -10,6 +10,8 @@ public interface IOffertRepository
 
     Task<int> CountOfferts(IQueryable<Offert> offerts);
 
+    Task RemoveOffertById(OffertId id);
+
     Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts(IQueryable<Offert> offertsQuery);
 
     IQueryable<Offert> GetOffertsAsQueryable();

@@ -65,6 +65,14 @@ internal class OffertRepository : IOffertRepository
 
         return result;
     }
+
+    public async Task RemoveOffertById(OffertId id)
+    {
+        var offert = await _db.Offerts
+            .FirstAsync(o => o.Id == id);
+
+        _db.Remove(offert);
+    }
 }
 
 

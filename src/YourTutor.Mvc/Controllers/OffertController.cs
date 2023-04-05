@@ -82,6 +82,8 @@ namespace YourTutor.Mvc.Controllers
             if (!authorizationResult.Succeeded)
                 return new ForbidResult();
 
+            await _mediator.Send(new DeleteOffert(id));
+
             return RedirectToAction(nameof(Index));
         }
     }
