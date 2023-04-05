@@ -2,7 +2,7 @@
 using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
 
-namespace YourTutor.Application.Queries.Handlers
+namespace YourTutor.Application.Queries.GetTutorByUserId
 {
     public class GetTutorByUserIdHandler : IRequestHandler<GetTutorByUserId, TutorDetailsReadModel>
     {

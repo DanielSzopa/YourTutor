@@ -7,7 +7,8 @@ using YourTutor.Application.Commands.DeleteOffert;
 using YourTutor.Application.Dtos;
 using YourTutor.Application.Dtos.Pagination;
 using YourTutor.Application.Helpers;
-using YourTutor.Application.Queries;
+using YourTutor.Application.Queries.GetOffertDetails;
+using YourTutor.Application.Queries.GetSmallOfferts;
 using YourTutor.Infrastructure.Constans;
 
 namespace YourTutor.Mvc.Controllers

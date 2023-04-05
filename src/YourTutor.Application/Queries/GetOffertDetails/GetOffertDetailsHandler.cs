@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
 
-namespace YourTutor.Application.Queries.Handlers;
+namespace YourTutor.Application.Queries.GetOffertDetails;
 
 public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, OffertDetailsReadmodel>
 {

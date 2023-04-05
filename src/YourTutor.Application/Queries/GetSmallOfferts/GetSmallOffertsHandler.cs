@@ -6,7 +6,7 @@ using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
 using YourTutor.Core.ValueObjects;
 
-namespace YourTutor.Application.Queries.Handlers;
+namespace YourTutor.Application.Queries.GetSmallOfferts;
 
 public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, GetSmallOffertsResponse>
 {
@@ -23,8 +23,8 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Ge
     public async Task<GetSmallOffertsResponse> Handle(GetSmallOfferts request, CancellationToken cancellationToken)
     {
         var (pagination, offert) = request;
-        pagination = pagination.PageNumber == 0 
-            ? pagination with { PageNumber = _defaultPage } 
+        pagination = pagination.PageNumber == 0
+            ? pagination with { PageNumber = _defaultPage }
             : pagination;
 
         var query = _offertRepository.GetOffertsAsQueryable();
@@ -40,9 +40,9 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Ge
                 || ((string)o.Tutor.User.LastName).ToLower().Contains(searchString));
         }
 
-        if(offert.IsRemotelyFiltered)
-        query = query
-            .Where(o => o.IsRemotely == offert.IsRemotely);
+        if (offert.IsRemotelyFiltered)
+            query = query
+                .Where(o => o.IsRemotely == offert.IsRemotely);
 
         if (offert.PriceFrom > 0 && offert.PriceTo > 0)
         {

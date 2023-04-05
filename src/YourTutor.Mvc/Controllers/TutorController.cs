@@ -6,6 +6,7 @@ using YourTutor.Application.Commands.EditTutor;
 using YourTutor.Application.Dtos;
 using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries;
+using YourTutor.Application.Queries.GetTutorByUserId;
 
 namespace YourTutor.Mvc.Controllers
 {
