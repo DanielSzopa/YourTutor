@@ -27,7 +27,6 @@ try
     services
     .AddApplication()
     .AddInfrastructure(config)
-    .AddHttpContextAccessor()
     .AddControllersExtension();
 
     var app = builder.Build();

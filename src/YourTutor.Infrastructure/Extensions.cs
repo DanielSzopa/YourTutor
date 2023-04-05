@@ -30,6 +30,7 @@ namespace YourTutor.Infrastructure
                 .AddAuthorizationPolicies()
                 .AddAuthenticationExtension(configuration)
                 .AddRepositories()
+                .AddHttpContextAccessor()
                 .AddScoped<ISignInManager, SignInManager>()
                 .AddScoped<ISignOutManager, SignOutManager>()
                 .AddScoped<IEmailSender, EmailSender>()
