@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using System.ComponentModel.DataAnnotations;
-using YourTutor.Application.Dtos.Responses;
 
 namespace YourTutor.Application.Commands.SignUp;
 

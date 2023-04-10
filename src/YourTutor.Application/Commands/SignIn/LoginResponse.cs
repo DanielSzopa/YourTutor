@@ -1,4 +1,4 @@
-﻿namespace YourTutor.Application.Dtos.Responses
+﻿namespace YourTutor.Application.Commands.SignIn
 {
     public class LoginResponse
     {
