@@ -9,6 +9,7 @@ using YourTutor.Application.Dtos.Pagination;
 using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries.GetOffertDetails;
 using YourTutor.Application.Queries.GetSmallOfferts;
+using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.Constans;
 
 namespace YourTutor.Mvc.Controllers
@@ -59,7 +60,7 @@ namespace YourTutor.Mvc.Controllers
 
         [Authorize]
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(CreateOffertDto dto)
+        public async Task<IActionResult> Create(CreateOffertVm vm)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
@@ -68,7 +69,7 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var id = await _mediator.Send(new CreateOffert(dto, userId));
+            var id = await _mediator.Send(new CreateOffert(vm, userId));
 
             return RedirectToAction(nameof(Details), new { id = id.Value });
         }

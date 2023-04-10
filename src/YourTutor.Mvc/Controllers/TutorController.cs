@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
 using YourTutor.Application.Commands.EditTutor;
-using YourTutor.Application.Dtos;
 using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries;
 using YourTutor.Application.Queries.GetTutorByUserId;
+using YourTutor.Application.ViewModels;
 
 namespace YourTutor.Mvc.Controllers
 {
@@ -48,7 +48,7 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpPost("Edit")]
-        public async Task<IActionResult> Edit(EditTutorDto dto)
+        public async Task<IActionResult> Edit(EditTutorVm vm)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
@@ -57,7 +57,7 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            await _mediator.Send(new EditTutor(dto,userId));
+            await _mediator.Send(new EditTutor(vm,userId));
             return RedirectToAction(nameof(MyAccount));
         }
     }

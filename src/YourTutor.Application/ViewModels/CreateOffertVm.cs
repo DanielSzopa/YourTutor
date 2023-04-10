@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace YourTutor.Application.Dtos
+namespace YourTutor.Application.ViewModels
 {
-    public class CreateOffertDto
+    public class CreateOffertVm
     {
         [Required(ErrorMessage = "Description is required")]
         [StringLength(350, MinimumLength = 2, ErrorMessage = "Must be between 2 and 350 characters")]

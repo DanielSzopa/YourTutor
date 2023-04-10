@@ -22,9 +22,9 @@ public sealed class EditTutorHandler : IRequestHandler<EditTutor, Unit>
         if (tutor is null)
             throw new NotFoundTutorException(request.UserId);
 
-        tutor.UpdateDescription(request.Dto.Description);
-        tutor.UpdateCountry(request.Dto.Country);
-        tutor.UpdateLanguage(request.Dto.Language);
+        tutor.UpdateDescription(request.EditTutorVm.Description);
+        tutor.UpdateCountry(request.EditTutorVm.Country);
+        tutor.UpdateLanguage(request.EditTutorVm.Language);
 
         await _unitOfWork.SaveChangesAsync();
 

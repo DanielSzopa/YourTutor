@@ -19,8 +19,8 @@ namespace YourTutor.Application.Commands.CreateOffert
 
         public async Task<OffertId> Handle(CreateOffert request, CancellationToken cancellationToken)
         {
-            var dto = request.Dto;
-            var offert = new Offert(Guid.NewGuid(), dto.Description, dto.Subject, dto.Price, dto.IsRemotely, dto.Location, request.UserId);
+            var vm = request.CreateOffertVm;
+            var offert = new Offert(Guid.NewGuid(), vm.Description, vm.Subject, vm.Price, vm.IsRemotely, vm.Location, request.UserId);
 
             await _offertRepository.CreateOffert(offert);
             await _unitOfWork.SaveChangesAsync();

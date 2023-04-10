@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using YourTutor.Application.Dtos;
+using YourTutor.Application.ViewModels;
 
 namespace YourTutor.Application.Commands.EditTutor
 {
-    public sealed record EditTutor(EditTutorDto Dto, Guid UserId) : IRequest<Unit>;
+    public sealed record EditTutor(EditTutorVm EditTutorVm, Guid UserId) : IRequest<Unit>;
 }
 
 
