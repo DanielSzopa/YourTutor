@@ -21,26 +21,6 @@ internal class OffertRepository : IOffertRepository
             .AddAsync(offert);
     }
 
-    public async Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts(IQueryable<Offert> offertsQuery)
-    {
-        var offerts = await offertsQuery
-            .Select(o => new SmallOffertsReadModel(o.Id, o.Subject, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName, o.Tutor.User.Email))
-            .ToListAsync();
-
-        return offerts;
-    }
-
-    public IQueryable<Offert> GetOffertsAsQueryable()
-    {
-        return _db.
-            Offerts
-            .Include(o => o.Tutor)
-            .ThenInclude(t => t.User);
-    }
-
-    public async Task<int> CountOfferts(IQueryable<Offert> offerts)
-        => await offerts.CountAsync();
-
     public async Task<OffertDetailsReadModel> GetOffertDetails(OffertId id)
     {
         var offert = await _db
@@ -72,6 +52,49 @@ internal class OffertRepository : IOffertRepository
             .FirstAsync(o => o.Id == id);
 
         _db.Remove(offert);
+    }
+
+    public async Task<SmallOffertPaginationReadModel> GetSmallOfferts(bool isRemotely, bool isRemotelyFiltered, int priceFrom, int priceTo, int pageSize, int excludeRecords, string searchString)
+    {
+        var query = _db.
+            Offerts
+            .Include(o => o.Tutor)
+            .ThenInclude(t => t.User)
+            .AsQueryable();
+
+        searchString = searchString?.ToLower();
+
+        if (!string.IsNullOrWhiteSpace(searchString))
+        {
+            query = query
+                .Where(o => o.Subject.ToLower().Contains(searchString)
+                || o.Location.ToLower().Contains(searchString)
+                || ((string)o.Tutor.User.Email).ToLower().Contains(searchString)
+                || ((string)o.Tutor.User.FirstName).ToLower().Contains(searchString)
+                || ((string)o.Tutor.User.LastName).ToLower().Contains(searchString));
+        }
+
+        if (isRemotelyFiltered)
+            query = query
+                .Where(o => o.IsRemotely == isRemotely);
+
+        if (priceFrom > 0 && priceTo > 0)
+        {
+            query = query
+               .Where(o => o.Price >= new Price(priceFrom) && o.Price <= new Price(priceTo));
+        }
+
+        var quantity = await query.CountAsync();
+
+        query = query
+            .Skip(excludeRecords)
+            .Take(pageSize);
+
+        var items = await query
+            .Select(o => new SmallOffertsReadModel(o.Id, o.Subject, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName, o.Tutor.User.Email))
+            .ToListAsync();
+
+        return new SmallOffertPaginationReadModel(items, quantity);
     }
 }
 

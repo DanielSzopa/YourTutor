@@ -4,7 +4,6 @@ using YourTutor.Application.Dtos.Pagination;
 using YourTutor.Application.Dtos.Responses;
 using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
-using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Application.Queries.GetSmallOfferts;
 
@@ -27,48 +26,19 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Ge
             ? pagination with { PageNumber = _defaultPage }
             : pagination;
 
-        var query = _offertRepository.GetOffertsAsQueryable();
-        var searchString = pagination?.SearchString?.ToLower();
+        var smallOffersGroup = await _offertRepository.GetSmallOfferts(offert.IsRemotely, offert.IsRemotelyFiltered, offert.PriceFrom, offert.PriceTo,
+            _pageSize, ExcludeRecords(pagination.PageNumber, _pageSize), pagination.SearchString);
 
-        if (!string.IsNullOrWhiteSpace(searchString))
-        {
-            query = query
-                .Where(o => o.Subject.ToLower().Contains(searchString)
-                || o.Location.ToLower().Contains(searchString)
-                || ((string)o.Tutor.User.Email).ToLower().Contains(searchString)
-                || ((string)o.Tutor.User.FirstName).ToLower().Contains(searchString)
-                || ((string)o.Tutor.User.LastName).ToLower().Contains(searchString));
-        }
 
-        if (offert.IsRemotelyFiltered)
-            query = query
-                .Where(o => o.IsRemotely == offert.IsRemotely);
-
-        if (offert.PriceFrom > 0 && offert.PriceTo > 0)
-        {
-            query = query
-               .Where(o => o.Price >= new Price(offert.PriceFrom) && o.Price <= new Price(offert.PriceTo));
-        }
-
-        var quantity = await _offertRepository.CountOfferts(query);
-
-        query = query
-            .Skip(ExcludeRecords(pagination.PageNumber, _pageSize))
-            .Take(_pageSize);
-
-        var items = await _offertRepository
-            .GetSmallOfferts(query);
-
-        var results = items
+        var results = smallOffersGroup.Offerts
             .OrderBy(o => o.FullName)
             .ToList();
 
-        var paginationResponse = new PaginationResponse<SmallOffertsReadModel>(results, pagination.PageNumber, _pageSize, quantity, pagination?.SearchString);
+        var paginationResponse = new PaginationResponse<SmallOffertsReadModel>(results, pagination.PageNumber, _pageSize, smallOffersGroup.Count, pagination?.SearchString);
         var filter = new OffertsFilterDto(offert.IsRemotely, offert.IsRemotelyFiltered, offert.PriceFrom, offert.PriceTo);
 
         return new GetSmallOffertsResponse(paginationResponse, filter);
     }
-
 
     private int ExcludeRecords(int pageNumber, int pageSize)
         => pageSize * (pageNumber - 1);
