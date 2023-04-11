@@ -36,9 +36,9 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var tutorDto = await _mediator.Send(new GetTutorByUserId(userId));
+            var response = await _mediator.Send(new GetTutorByUserId(userId));
 
-            return View("Tutor", tutorDto);
+            return View("Tutor", response.TutorDetailsVm);
         }
 
         [HttpGet("Edit")]
