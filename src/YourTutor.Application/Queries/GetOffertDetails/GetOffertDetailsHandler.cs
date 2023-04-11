@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using YourTutor.Core.ReadModels;
+using YourTutor.Application.ViewModels;
 using YourTutor.Core.Repositories;
 
 namespace YourTutor.Application.Queries.GetOffertDetails;
 
-public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, OffertDetailsReadModel>
+public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, GetOffertDetailsResponse>
 {
     private readonly ILogger<GetOffertDetailsHandler> _logger;
     private readonly IOffertRepository _offertRepository;
@@ -16,7 +16,7 @@ public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, 
         _offertRepository = offertRepository;
     }
 
-    public async Task<OffertDetailsReadModel> Handle(GetOffertDetails request, CancellationToken cancellationToken)
+    public async Task<GetOffertDetailsResponse> Handle(GetOffertDetails request, CancellationToken cancellationToken)
     {
         var offert = await _offertRepository.GetOffertDetails(request.id);
 
@@ -26,7 +26,10 @@ public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, 
             return default;
         }
 
-        return offert;
+        var (id, description, subject, price, location, isRemotely, fullName,
+            email, country, speakingLang, tutorId) = offert;
+
+        return new (new OffertDetailsVm(id, description, subject, price, location, isRemotely, fullName, email, country, speakingLang, tutorId));
     }
 }
 

@@ -48,7 +48,7 @@ namespace YourTutor.Mvc.Controllers
             if (response is null)
                 return RedirectToAction(nameof(Index));
 
-            return View(response);
+            return View(response.OffertDetailsVm);
         }
 
         [Authorize]
