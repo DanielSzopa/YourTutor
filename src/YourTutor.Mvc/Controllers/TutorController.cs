@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
 using YourTutor.Application.Commands.EditTutor;
 using YourTutor.Application.Helpers;
-using YourTutor.Application.Queries;
 using YourTutor.Application.Queries.GetTutorByUserId;
 using YourTutor.Application.ViewModels;
 
@@ -36,9 +35,9 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var response = await _mediator.Send(new GetTutorByUserId(userId));
+            var details = await _mediator.Send(new GetTutorByUserId(userId));
 
-            return View("Tutor", response.TutorDetailsVm);
+            return View("Tutor", details);
         }
 
         [HttpGet("Edit")]
