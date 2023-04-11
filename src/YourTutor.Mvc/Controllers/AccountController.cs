@@ -29,11 +29,11 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register(Register command)
+        public async Task<IActionResult> Register(RegisterVm vm)
         {
             if (ModelState.IsValid)
             {
-                var response = await _mediator.Send(command);
+                var response = await _mediator.Send(new Register(vm));
 
                 if (response.Errors.Count > 0)
                 {

@@ -36,11 +36,12 @@ namespace YourTutor.Application.Commands.SignUp
 
         public async Task<RegisterResponse> Handle(Register command, CancellationToken cancellationToken)
         {
+            var registerVm = command.RegisterVm;
             var response = new RegisterResponse();
-            if (await _userRepository.IsEmailAlreadyExistsAsync(command.Email))
+            if (await _userRepository.IsEmailAlreadyExistsAsync(registerVm.Email))
             {
-                response.Errors.Add($"Email already exists: {command.Email}");
-                _logger.LogError(AppLogEvent.SignUp, "Problem with registering user, email already exists, email {@email}", command.Email);
+                response.Errors.Add($"Email already exists: {registerVm.Email}");
+                _logger.LogError(AppLogEvent.SignUp, "Problem with registering user, email already exists, email {@email}", registerVm.Email);
             }
 
 
@@ -48,12 +49,12 @@ namespace YourTutor.Application.Commands.SignUp
 
             try
             {
-                var password = new Password(command.Password);
-                password.CheckIfPasswordsMatch(command.PasswordConfirmation);
+                var password = new Password(registerVm.Password);
+                password.CheckIfPasswordsMatch(registerVm.PasswordConfirmation);
 
                 var hashPassword = new HashPassword(_hashService.HashPassword(password));
 
-                user = new User(Guid.NewGuid(), command.Email, command.FirstName, command.LastName, hashPassword);
+                user = new User(Guid.NewGuid(), registerVm.Email, registerVm.FirstName, registerVm.LastName, hashPassword);
 
                 user.CreateTutor();
             }
