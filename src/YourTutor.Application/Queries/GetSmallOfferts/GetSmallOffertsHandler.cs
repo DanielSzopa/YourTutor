@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using YourTutor.Application.Dtos;
 using YourTutor.Application.Dtos.Pagination;
-using YourTutor.Application.Dtos.Responses;
+using YourTutor.Application.ViewModels;
 using YourTutor.Core.ReadModels;
 using YourTutor.Core.Repositories;
 
 namespace YourTutor.Application.Queries.GetSmallOfferts;
 
-public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, GetSmallOffertsResponse>
+public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, SmallOffertsListViewModel>
 {
     private readonly int _pageSize = 10;
     private readonly int _defaultPage = 1;
@@ -19,7 +19,7 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Ge
         _offertRepository = offertRepository;
     }
 
-    public async Task<GetSmallOffertsResponse> Handle(GetSmallOfferts request, CancellationToken cancellationToken)
+    public async Task<SmallOffertsListViewModel> Handle(GetSmallOfferts request, CancellationToken cancellationToken)
     {
         var (pagination, offert) = request;
         pagination = pagination.PageNumber == 0
@@ -37,7 +37,7 @@ public sealed class GetSmallOffertsHandler : IRequestHandler<GetSmallOfferts, Ge
         var paginationResponse = new PaginationResponse<SmallOffertsReadModel>(results, pagination.PageNumber, _pageSize, smallOffersGroup.Count, pagination?.SearchString);
         var filter = new OffertsFilterDto(offert.IsRemotely, offert.IsRemotelyFiltered, offert.PriceFrom, offert.PriceTo);
 
-        return new GetSmallOffertsResponse(paginationResponse, filter);
+        return new SmallOffertsListViewModel(paginationResponse, filter);
     }
 
     private int ExcludeRecords(int pageNumber, int pageSize)
