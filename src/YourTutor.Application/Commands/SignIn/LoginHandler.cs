@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Abstractions.UserManager;
-using YourTutor.Application.Dtos;
 using YourTutor.Application.Helpers;
 using YourTutor.Core.Repositories;
 
@@ -26,24 +25,24 @@ namespace YourTutor.Application.Commands.SignIn
         public async Task<LoginResponse> Handle(Login request, CancellationToken cancellationToken)
         {
             var loginResponse = new LoginResponse();
-            var user = await _userRepository.GetUserByEmailAsync(request.Email.ToLower());
+            var user = await _userRepository.GetUserByEmailAsync(request.LoginVm.Email.ToLower());
             if (user is null)
             {
                 loginResponse.Errors.Add("Invalid credentials");
-                _logger.LogError(AppLogEvent.SignIn, "Can not found user {@email}", request.Email);
+                _logger.LogError(AppLogEvent.SignIn, "Can not found user {@email}", request.LoginVm.Email);
                 return loginResponse;
             }
 
-            var result = _hashService.VerifyPassword(request.Password, user.HashPassword);
+            var result = _hashService.VerifyPassword(request.LoginVm.Password, user.HashPassword);
 
             if (result is false)
             {
                 loginResponse.Errors.Add("Invalid credentials");
-                _logger.LogError(AppLogEvent.SignIn, "Password is incorrect for: {@email}", request.Email);
+                _logger.LogError(AppLogEvent.SignIn, "Password is incorrect for: {@email}", request.LoginVm.Email);
                 return loginResponse;
             }
 
-            await _signInManager.SignInAsync(request.RememberMe, user.Id, $"{user.FirstName.Value} {user.LastName.Value}");
+            await _signInManager.SignInAsync(request.LoginVm.RememberMe, user.Id, $"{user.FirstName.Value} {user.LastName.Value}");
 
             return loginResponse;
         }

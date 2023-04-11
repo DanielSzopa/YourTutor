@@ -1,19 +1,8 @@
 ﻿using MediatR;
-using System.ComponentModel.DataAnnotations;
+using YourTutor.Application.ViewModels;
 
-namespace YourTutor.Application.Commands.SignIn
-{
-    public sealed class Login : IRequest<LoginResponse>
-    {
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Email address is invalid")]
-        public string Email { get; set; }
+namespace YourTutor.Application.Commands.SignIn;
 
-        [Required(ErrorMessage = "Password is required")]
-        public string Password { get; set; }
-
-        public bool RememberMe { get; set; }
-    }
-}
+public sealed record Login(LoginVm LoginVm) : IRequest<LoginResponse>;
 
 
