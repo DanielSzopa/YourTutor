@@ -43,12 +43,12 @@ namespace YourTutor.Mvc.Controllers
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var response = await _mediator.Send(new GetOffertDetails(id));
+            var details = await _mediator.Send(new GetOffertDetails(id));
 
-            if (response is null)
+            if (details is null)
                 return RedirectToAction(nameof(Index));
 
-            return View(response.OffertDetailsVm);
+            return View(details);
         }
 
         [Authorize]

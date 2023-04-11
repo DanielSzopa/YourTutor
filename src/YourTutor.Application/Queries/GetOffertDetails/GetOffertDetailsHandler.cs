@@ -5,7 +5,7 @@ using YourTutor.Core.Repositories;
 
 namespace YourTutor.Application.Queries.GetOffertDetails;
 
-public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, GetOffertDetailsResponse>
+public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, OffertDetailsVm>
 {
     private readonly ILogger<GetOffertDetailsHandler> _logger;
     private readonly IOffertRepository _offertRepository;
@@ -16,7 +16,7 @@ public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, 
         _offertRepository = offertRepository;
     }
 
-    public async Task<GetOffertDetailsResponse> Handle(GetOffertDetails request, CancellationToken cancellationToken)
+    public async Task<OffertDetailsVm> Handle(GetOffertDetails request, CancellationToken cancellationToken)
     {
         var offert = await _offertRepository.GetOffertDetails(request.id);
 
@@ -29,7 +29,7 @@ public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, 
         var (id, description, subject, price, location, isRemotely, fullName,
             email, country, speakingLang, tutorId) = offert;
 
-        return new (new OffertDetailsVm(id, description, subject, price, location, isRemotely, fullName, email, country, speakingLang, tutorId));
+        return new OffertDetailsVm(id, description, subject, price, location, isRemotely, fullName, email, country, speakingLang, tutorId);
     }
 }
 
