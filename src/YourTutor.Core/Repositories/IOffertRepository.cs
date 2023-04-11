@@ -8,14 +8,11 @@ public interface IOffertRepository
 {
     Task CreateOffert(Offert offert);
 
-    Task<int> CountOfferts(IQueryable<Offert> offerts);
-
     Task RemoveOffertById(OffertId id);
 
-    Task<IReadOnlyCollection<SmallOffertsReadModel>> GetSmallOfferts(IQueryable<Offert> offertsQuery);
-
-    IQueryable<Offert> GetOffertsAsQueryable();
-    Task<OffertDetailsReadmodel> GetOffertDetails(OffertId id);
+    Task<OffertDetailsReadModel> GetOffertDetails(OffertId id);
 
     Task<bool> CheckIfUserHasAccessToOffert(OffertId offertId, UserId userId);
+
+    Task<SmallOffertPaginationReadModel> GetSmallOfferts(bool isRemotely, bool isRemotelyFiltered, int priceFrom, int priceTo, int pageSize, int excludeRecords, string searchString);
 }

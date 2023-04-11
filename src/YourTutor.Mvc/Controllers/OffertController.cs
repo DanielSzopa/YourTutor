@@ -2,11 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
-using YourTutor.Application.Commands;
+using YourTutor.Application.Commands.CreateOffert;
+using YourTutor.Application.Commands.DeleteOffert;
 using YourTutor.Application.Dtos;
 using YourTutor.Application.Dtos.Pagination;
 using YourTutor.Application.Helpers;
-using YourTutor.Application.Queries;
+using YourTutor.Application.Queries.GetOffertDetails;
+using YourTutor.Application.Queries.GetSmallOfferts;
+using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.Constans;
 
 namespace YourTutor.Mvc.Controllers
@@ -40,12 +43,12 @@ namespace YourTutor.Mvc.Controllers
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var response = await _mediator.Send(new GetOffertDetails(id));
+            var details = await _mediator.Send(new GetOffertDetails(id));
 
-            if (response is null)
+            if (details is null)
                 return RedirectToAction(nameof(Index));
 
-            return View(response);
+            return View(details);
         }
 
         [Authorize]
@@ -57,7 +60,7 @@ namespace YourTutor.Mvc.Controllers
 
         [Authorize]
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(CreateOffertDto dto)
+        public async Task<IActionResult> Create(CreateOffertVm vm)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
@@ -66,9 +69,9 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var id = await _mediator.Send(new CreateOffert(dto, userId));
+            var offertId = await _mediator.Send(new CreateOffert(vm, userId));
 
-            return RedirectToAction(nameof(Details), new { id = id.Value });
+            return RedirectToAction(nameof(Details), new { id = offertId });
         }
 
 

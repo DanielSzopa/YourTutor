@@ -1,6 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using YourTutor.Application.Commands;
+using YourTutor.Application.Commands.SignIn;
+using YourTutor.Application.Commands.SignOut;
+using YourTutor.Application.Commands.SignUp;
+using YourTutor.Application.ViewModels;
 
 namespace YourTutor.Mvc.Controllers
 {
@@ -26,11 +29,11 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register(Register command)
+        public async Task<IActionResult> Register(RegisterVm vm)
         {
             if (ModelState.IsValid)
             {
-                var response = await _mediator.Send(command);
+                var response = await _mediator.Send(new Register(vm));
 
                 if (response.Errors.Count > 0)
                 {
@@ -56,11 +59,11 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(Login command)
+        public async Task<IActionResult> Login(LoginVm vm)
         {          
             if (ModelState.IsValid)
             {
-                var response = await _mediator.Send(command);
+                var response = await _mediator.Send(new Login(vm));
 
                 if (response.Errors.Count > 0)
                 {
