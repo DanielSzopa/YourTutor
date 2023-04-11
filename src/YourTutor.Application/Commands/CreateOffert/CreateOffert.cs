@@ -4,7 +4,7 @@ using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Application.Commands.CreateOffert;
 
-public sealed record CreateOffert(CreateOffertVm CreateOffertVm, UserId UserId) : IRequest<OffertId>;
+public sealed record CreateOffert(CreateOffertVm CreateOffertVm, UserId UserId) : IRequest<CreateOffertResponse>;
 
 
 

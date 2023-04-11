@@ -6,7 +6,7 @@ using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Application.Commands.CreateOffert
 {
-    public sealed class CreateOffertHandler : IRequestHandler<CreateOffert, OffertId>
+    public sealed class CreateOffertHandler : IRequestHandler<CreateOffert, CreateOffertResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IOffertRepository _offertRepository;
@@ -17,7 +17,7 @@ namespace YourTutor.Application.Commands.CreateOffert
             _offertRepository = offertRepository;
         }
 
-        public async Task<OffertId> Handle(CreateOffert request, CancellationToken cancellationToken)
+        public async Task<CreateOffertResponse> Handle(CreateOffert request, CancellationToken cancellationToken)
         {
             var vm = request.CreateOffertVm;
             var offert = new Offert(Guid.NewGuid(), vm.Description, vm.Subject, vm.Price, vm.IsRemotely, vm.Location, request.UserId);
@@ -25,7 +25,7 @@ namespace YourTutor.Application.Commands.CreateOffert
             await _offertRepository.CreateOffert(offert);
             await _unitOfWork.SaveChangesAsync();
 
-            return offert.Id;
+            return new CreateOffertResponse(offert.Id);
         }
     }
 }

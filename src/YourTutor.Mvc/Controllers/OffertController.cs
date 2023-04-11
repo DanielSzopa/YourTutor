@@ -69,9 +69,9 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var id = await _mediator.Send(new CreateOffert(vm, userId));
+            var response = await _mediator.Send(new CreateOffert(vm, userId));
 
-            return RedirectToAction(nameof(Details), new { id = id.Value });
+            return RedirectToAction(nameof(Details), new { id = response.OffertId });
         }
 
 
