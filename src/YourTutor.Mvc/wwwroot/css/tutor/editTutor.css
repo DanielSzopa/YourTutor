@@ -1,0 +1,22 @@
+﻿.edit-tutor-group {
+    padding: 8px 0;
+}
+
+.edit-tutor-group > label {
+    padding: 2px 0px;
+    font-weight: bold
+}
+
+#edit-btn {
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    font-weight: 500;
+    letter-spacing: 1px;
+    width: 100%;
+    margin-top: 10px;
+    border: none
+}
+
+    #edit-btn:hover {
+        background-color: var(--button-background-hover-color);
+    }
