@@ -9,3 +9,13 @@
 #edit-btn {
     padding: 5px 20px
 }
+
+.tutor-picture {
+    height: 350px;
+}
+
+@media (max-width: 991px) {
+    .picture-col {
+        display: none;
+    }
+}
