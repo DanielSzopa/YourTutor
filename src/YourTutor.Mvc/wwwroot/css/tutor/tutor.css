@@ -1,0 +1,7 @@
+﻿.tutor-row-container {
+    margin-left: 0px;
+}
+
+.tutor-row-container > dt, .tutor-row-container > dd{
+    padding: 5px 0;
+}
