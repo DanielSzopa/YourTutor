@@ -19,6 +19,7 @@ using YourTutor.Infrastructure.Email;
 using YourTutor.Infrastructure.Logging;
 using YourTutor.Infrastructure.Security;
 using YourTutor.Infrastructure.Services;
+using YourTutor.Infrastructure.Settings;
 
 namespace YourTutor.Infrastructure
 {
@@ -30,6 +31,7 @@ namespace YourTutor.Infrastructure
                 .AddAuthorizationPolicies()
                 .AddAuthenticationExtension(configuration)
                 .AddRepositories()
+                .AddSeeders()
                 .AddHttpContextAccessor()
                 .AddScoped<ISignInManager, SignInManager>()
                 .AddScoped<ISignOutManager, SignOutManager>()
@@ -52,7 +54,8 @@ namespace YourTutor.Infrastructure
                 .RegisterSettings<IdentitySettings>(configuration)
                 .RegisterSettings<ConnectionStringsSettings>(configuration)
                 .RegisterSettings<SendGridSettings>(configuration)
-                .RegisterSettings<EmailSettings>(configuration);
+                .RegisterSettings<EmailSettings>(configuration)
+                .RegisterSettings<SeederSettings>(configuration);
 
             return services;
         }
