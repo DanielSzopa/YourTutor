@@ -40,7 +40,8 @@ namespace YourTutor.Mvc.Controllers
             return View("Tutor", details);
         }
 
-        [HttpGet("Edit")]
+        [HttpGet]
+        [Route("Edit")]
         public IActionResult Edit()
         {           
             return View();
