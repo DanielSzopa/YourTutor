@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using YourTutor.Application.Helpers;
+using YourTutor.Infrastructure.DAL.Seeds;
 
 namespace YourTutor.Infrastructure.DAL;
 
@@ -10,11 +11,14 @@ internal sealed class DatabaseInitializer : IHostedService
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<DatabaseInitializer> _logger;
+    private readonly IYourTutorSeeder _seeder;
 
-    public DatabaseInitializer(IServiceProvider serviceProvider, ILogger<DatabaseInitializer> logger)
+    public DatabaseInitializer(IServiceProvider serviceProvider, ILogger<DatabaseInitializer> logger,
+        IYourTutorSeeder seeder)
     {
         _serviceProvider = serviceProvider;
         _logger = logger;
+        _seeder = seeder;
     }
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -29,6 +33,16 @@ internal sealed class DatabaseInitializer : IHostedService
             {
                 await dbContext.Database.MigrateAsync();
                 _logger.LogInformation(AppLogEvent.DbInit, "Migrations have been added to database");
+
+                if(!await dbContext.Users.AnyAsync())
+                {
+                    _logger.LogInformation(AppLogEvent.DbInit, "Database need to be seeded");
+                    _logger.LogInformation(AppLogEvent.DbInit, "Seeding...");
+                    var users = _seeder.GetSeedData();
+                    await dbContext.Users.AddRangeAsync(users);
+                    await dbContext.SaveChangesAsync();
+                    _logger.LogInformation(AppLogEvent.DbInit, "Database has been seeded");
+                }
             }
             else
             {

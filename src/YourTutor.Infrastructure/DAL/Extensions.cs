@@ -5,6 +5,7 @@ using YourTutor.Application.Abstractions.UnitOfWork;
 using YourTutor.Application.Settings;
 using YourTutor.Core.Repositories;
 using YourTutor.Infrastructure.DAL.Repositories;
+using YourTutor.Infrastructure.DAL.Seeds;
 
 namespace YourTutor.Infrastructure.DAL
 {
@@ -25,6 +26,12 @@ namespace YourTutor.Infrastructure.DAL
                     .AddScoped<ITutorRepository, TutorRepository>()
                     .AddScoped<IOffertRepository, OffertRepository>()
                     .AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+        }
+
+        internal static IServiceCollection AddSeeders(this IServiceCollection services)
+        {
+            return services
+                    .AddSingleton<IYourTutorSeeder, YourTutorSeeder>();
         }
     }
 }
