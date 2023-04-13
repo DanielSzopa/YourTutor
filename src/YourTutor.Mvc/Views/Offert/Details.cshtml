@@ -4,80 +4,84 @@
     ViewData["Title"] = "Details";
 }
 
+<link rel="stylesheet" href="~/css/offert/offert.css" />
+
 <h1>Details</h1>
 
 <div>
-    <h4>OffertDetailsReadmodel</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OffertId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OffertId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Subject)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Subject)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsRemotely)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsRemotely)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SpeakingLanguage)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SpeakingLanguage)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TutorId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TutorId)
-        </dd>
+        <div class="col-lg-6 col-group">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Subject)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Subject)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Price) zł/h
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+            <dt class="col-sm-4">
+                Remotely
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.IsRemotely)
+            </dd>
+            <dt class="col-sm-4">
+                Name
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FullName)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Country)
+            </dd>
+            <dt class="col-sm-4">
+                Speaking language
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.SpeakingLanguage)
+            </dd>
+        </div>
+        <div class="col-lg-6 offert-details-group"><img class="offert-details-picture" src="~/img/tutor/detailsPicture.png" alt="picture" /></div>
     </dl>
 </div>
-<div>
-    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OffertId">Delete</a>
+
+<div class="buttons-group">
+
+    @if (ViewBag.IsHisOffer)
+    {
+        <div>
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OffertId">Delete</a>
+        </div>
+    }
+
+    <div>
+        <a class="btn btn-primary" asp-controller="Tutor" asp-action="Details" asp-route-id="@Model.TutorId">Tutor</a>
+    </div>
+
 </div>

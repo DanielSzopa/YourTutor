@@ -43,10 +43,16 @@ namespace YourTutor.Mvc.Controllers
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var details = await _mediator.Send(new GetOffertDetails(id));
+            var details = await _mediator.Send(new GetOffertDetails(id));        
 
             if (details is null)
                 return RedirectToAction(nameof(Index));
+
+            var result = _httpContextService.GetUserIdFromClaims()  == details.TutorId 
+                ? true 
+                : false;
+
+            ViewBag.IsHisOffer = result;
 
             return View(details);
         }

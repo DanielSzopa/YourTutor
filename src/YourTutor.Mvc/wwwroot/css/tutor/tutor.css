@@ -1,0 +1,21 @@
+﻿.tutor-row-container {
+    margin-left: 0px;
+}
+
+    .tutor-row-container > dt, .tutor-row-container > dd {
+        padding: 5px 0;
+    }
+
+#edit-btn {
+    padding: 5px 20px
+}
+
+.tutor-picture {
+    height: 350px;
+}
+
+@media (max-width: 991px) {
+    .picture-col {
+        display: none;
+    }
+}

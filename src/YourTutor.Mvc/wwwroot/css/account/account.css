@@ -18,3 +18,24 @@
 #password-small-text {
     display: block;
 }
+
+.tutor-cap-picture {
+    height: 400px;
+}
+
+.tutor-cap-picture-login {
+    height: 320px;
+}
+
+.picture-tutor-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 991px) {
+    .tutor-cap-picture,
+    .tutor-cap-picture-login {
+        display: none;
+    }
+}

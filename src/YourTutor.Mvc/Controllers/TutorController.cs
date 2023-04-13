@@ -5,6 +5,7 @@ using YourTutor.Application.Abstractions;
 using YourTutor.Application.Commands.EditTutor;
 using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries.GetTutorByUserId;
+using YourTutor.Application.Queries.GetTutorEditDetails;
 using YourTutor.Application.ViewModels;
 
 namespace YourTutor.Mvc.Controllers
@@ -37,16 +38,37 @@ namespace YourTutor.Mvc.Controllers
 
             var details = await _mediator.Send(new GetTutorByUserId(userId));
 
+            ViewBag.IsHisAccount = true;
+
+            return View("Tutor", details);
+        }
+       
+        [HttpGet]
+        [Route("{id:Guid}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var details = await _mediator.Send(new GetTutorByUserId(id));
+
+            var result = _httpContextService.GetUserIdFromClaims() == id
+                ? true
+                : false;
+
+            ViewBag.IsHisAccount = result;
+
             return View("Tutor", details);
         }
 
-        [HttpGet("Edit")]
-        public IActionResult Edit()
-        {           
-            return View();
+        [HttpGet]
+        [Route("Edit")]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var details = await _mediator.Send(new GetTutorEditDetails(id));
+            return View(details);
         }
 
-        [HttpPost("Edit")]
+        [HttpPost]
+        [Route("Edit")]
         public async Task<IActionResult> Edit(EditTutorVm vm)
         {
             var userId = _httpContextService.GetUserIdFromClaims();

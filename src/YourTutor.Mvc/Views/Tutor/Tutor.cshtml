@@ -1,48 +1,59 @@
 ﻿@model YourTutor.Application.ViewModels.TutorDetailsVm
 
 @{
-    ViewData["Title"] = "Tutor";
+    ViewData["Title"] = $"Tutor: {Model.FullName}";
 }
 
-<h1>Tutor</h1>
+<link rel="stylesheet" href="~/css/tutor/tutor.css" />
+
+<h1 class="">@Model.FullName</h1>
 
 <div>
-    <h4>TutorDto</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            Name
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Language)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Language)
-        </dd>
-    </dl>
+    <div class="row">
+        <div class="col-lg-8">
+            <dl class="row tutor-row-container">
+                <dt class="col-sm-4">
+                    Name
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Country)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Country)
+                </dd>
+                <dt class="col-sm-4">
+                    Native Language
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Language)
+                </dd>
+            </dl>
+
+            @if (ViewBag.IsHisAccount)
+            {
+                <div>
+                    <a class="btn btn-primary" id="edit-btn" asp-controller="Tutor" asp-action="Edit" asp-route-id="@Model.TutorId">Edit tutor</a>
+                </div>
+            }   
+            
+        </div>
+        <div class="col-lg-4 picture-col"><img class="tutor-picture" src="~/img/tutor/books.png" alt="books" /></div>
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit") |
-    <a asp-action="Index">Back to List</a>
-</div>
+

@@ -20,7 +20,7 @@ namespace YourTutor.Infrastructure.DAL.Repositories
             var details = await _dbContext.Tutor
                 .Include(t => t.User)
                 .Where(t => t.UserId == new UserId(userId))
-                .Select(t => new TutorDetailsReadModel($"{t.User.FirstName.Value} {t.User.LastName.Value}", t.User.Email, t.Description, t.Country, t.Language))
+                .Select(t => new TutorDetailsReadModel(t.UserId, $"{t.User.FirstName.Value} {t.User.LastName.Value}", t.User.Email, t.Description, t.Country, t.Language))
                 .FirstOrDefaultAsync();
 
             return details;
@@ -32,6 +32,17 @@ namespace YourTutor.Infrastructure.DAL.Repositories
                 .Tutor
                 .FirstOrDefaultAsync(t => t.UserId == new UserId(userId));
             return tutor;
+        }
+
+        public async Task<TutorDetailsForEditReadModel> GetTutorDetailsForEdit(UserId userId)
+        {
+            var details = await _dbContext
+                .Tutor
+                .Where(t => t.UserId == userId)
+                .Select(t => new TutorDetailsForEditReadModel(t.Description, t.Country, t.Language))
+                .FirstOrDefaultAsync();
+
+            return details;
         }
     }
 }
