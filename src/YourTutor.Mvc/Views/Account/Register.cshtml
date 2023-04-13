@@ -10,7 +10,7 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+    <div class="col-md-12 col-lg-6 col-xl-5 col-xxl-4">
         <form asp-action="Register">
             @if (ViewBag.ErrorMessages is not null && ViewBag.ErrorMessages.Count > 0)
             {
@@ -50,6 +50,7 @@
             </div>
         </form>
     </div>
+    <div class="col-lg-6 col-xl-7 col-xxl-8 picture-tutor-col"><img class="tutor-cap-picture" src="~/img/tutor/tutorCap.png" alt="tutor-cap" /></div>
 </div>
 
 @section Scripts {
