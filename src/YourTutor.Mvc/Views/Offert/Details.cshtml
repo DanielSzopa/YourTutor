@@ -70,6 +70,10 @@
         <div class="col-lg-6 offert-details-group"><img class="offert-details-picture" src="~/img/tutor/detailsPicture.png" alt="picture" /></div>
     </dl>
 </div>
-<div>
-    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OffertId">Delete</a>
-</div>
+
+@if (ViewBag.IsHisOffer)
+{
+    <div>
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OffertId">Delete</a>
+    </div>
+}
