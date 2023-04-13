@@ -5,6 +5,7 @@ using YourTutor.Application.Abstractions;
 using YourTutor.Application.Commands.EditTutor;
 using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries.GetTutorByUserId;
+using YourTutor.Application.Queries.GetTutorEditDetails;
 using YourTutor.Application.ViewModels;
 
 namespace YourTutor.Mvc.Controllers
@@ -60,12 +61,14 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpGet]
         [Route("Edit")]
-        public IActionResult Edit()
-        {           
-            return View();
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var details = await _mediator.Send(new GetTutorEditDetails(id));
+            return View(details);
         }
 
-        [HttpPost("Edit")]
+        [HttpPost]
+        [Route("Edit")]
         public async Task<IActionResult> Edit(EditTutorVm vm)
         {
             var userId = _httpContextService.GetUserIdFromClaims();

@@ -48,7 +48,7 @@
             @if (ViewBag.IsHisAccount)
             {
                 <div>
-                    <a class="btn btn-primary" id="edit-btn" asp-controller="Tutor" asp-action="Edit">Edit tutor</a>
+                    <a class="btn btn-primary" id="edit-btn" asp-controller="Tutor" asp-action="Edit" asp-route-id="@Model.TutorId">Edit tutor</a>
                 </div>
             }   
             
