@@ -44,9 +44,14 @@
                     @Html.DisplayFor(model => model.Language)
                 </dd>
             </dl>
-            <div>
-                <a class="btn btn-primary" id="edit-btn" asp-controller="Tutor" asp-action="Edit">Edit tutor</a>
-            </div>
+
+            @if (ViewBag.IsHisAccount)
+            {
+                <div>
+                    <a class="btn btn-primary" id="edit-btn" asp-controller="Tutor" asp-action="Edit">Edit tutor</a>
+                </div>
+            }   
+            
         </div>
         <div class="col-lg-4 picture-col"><img class="tutor-picture" src="~/img/tutor/books.png" alt="books" /></div>
     </div>

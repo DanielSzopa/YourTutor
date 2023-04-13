@@ -37,15 +37,23 @@ namespace YourTutor.Mvc.Controllers
 
             var details = await _mediator.Send(new GetTutorByUserId(userId));
 
+            ViewBag.IsHisAccount = true;
+
             return View("Tutor", details);
         }
        
         [HttpGet]
-        [Route("id:Guid")]
+        [Route("{id:Guid}")]
         [AllowAnonymous]
         public async Task<IActionResult> Details(Guid id)
         {
             var details = await _mediator.Send(new GetTutorByUserId(id));
+
+            var result = _httpContextService.GetUserIdFromClaims() == id
+                ? true
+                : false;
+
+            ViewBag.IsHisAccount = result;
 
             return View("Tutor", details);
         }
