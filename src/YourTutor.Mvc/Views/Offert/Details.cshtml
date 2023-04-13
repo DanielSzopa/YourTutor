@@ -71,9 +71,17 @@
     </dl>
 </div>
 
-@if (ViewBag.IsHisOffer)
-{
+<div class="buttons-group">
+
+    @if (ViewBag.IsHisOffer)
+    {
+        <div>
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OffertId">Delete</a>
+        </div>
+    }
+
     <div>
-        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OffertId">Delete</a>
+        <a class="btn btn-primary" asp-controller="Tutor" asp-action="Details" asp-route-id="@Model.TutorId">Tutor</a>
     </div>
-}
+
+</div>

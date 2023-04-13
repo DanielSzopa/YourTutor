@@ -39,6 +39,16 @@ namespace YourTutor.Mvc.Controllers
 
             return View("Tutor", details);
         }
+       
+        [HttpGet]
+        [Route("id:Guid")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var details = await _mediator.Send(new GetTutorByUserId(id));
+
+            return View("Tutor", details);
+        }
 
         [HttpGet]
         [Route("Edit")]
