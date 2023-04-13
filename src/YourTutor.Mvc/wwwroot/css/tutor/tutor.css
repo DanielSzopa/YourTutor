@@ -2,9 +2,9 @@
     margin-left: 0px;
 }
 
-.tutor-row-container > dt, .tutor-row-container > dd{
-    padding: 5px 0;
-}
+    .tutor-row-container > dt, .tutor-row-container > dd {
+        padding: 5px 0;
+    }
 
 #edit-btn {
     padding: 5px 20px
