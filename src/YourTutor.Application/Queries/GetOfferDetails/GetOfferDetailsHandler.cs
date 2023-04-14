@@ -3,20 +3,20 @@ using Microsoft.Extensions.Logging;
 using YourTutor.Application.ViewModels;
 using YourTutor.Core.Repositories;
 
-namespace YourTutor.Application.Queries.GetOffertDetails;
+namespace YourTutor.Application.Queries.GetOfferDetails;
 
-public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, OffertDetailsVm>
+public sealed class GetOfferDetailsHandler : IRequestHandler<GetOfferDetails, OfferDetailsVm>
 {
-    private readonly ILogger<GetOffertDetailsHandler> _logger;
+    private readonly ILogger<GetOfferDetailsHandler> _logger;
     private readonly IOffertRepository _offertRepository;
 
-    public GetOffertDetailsHandler(ILogger<GetOffertDetailsHandler> logger, IOffertRepository offertRepository)
+    public GetOfferDetailsHandler(ILogger<GetOfferDetailsHandler> logger, IOffertRepository offertRepository)
     {
         _logger = logger;
         _offertRepository = offertRepository;
     }
 
-    public async Task<OffertDetailsVm> Handle(GetOffertDetails request, CancellationToken cancellationToken)
+    public async Task<OfferDetailsVm> Handle(GetOfferDetails request, CancellationToken cancellationToken)
     {
         var offert = await _offertRepository.GetOffertDetails(request.id);
 
@@ -29,7 +29,7 @@ public sealed class GetOffertDetailsHandler : IRequestHandler<GetOffertDetails, 
         var (id, description, subject, price, location, isRemotely, fullName,
             email, country, speakingLang, tutorId) = offert;
 
-        return new OffertDetailsVm(id, description, subject, price, location, isRemotely, fullName, email, country, speakingLang, tutorId);
+        return new OfferDetailsVm(id, description, subject, price, location, isRemotely, fullName, email, country, speakingLang, tutorId);
     }
 }
 

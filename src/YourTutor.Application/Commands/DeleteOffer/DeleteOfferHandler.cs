@@ -3,23 +3,23 @@ using Microsoft.Extensions.Logging;
 using YourTutor.Application.Abstractions.UnitOfWork;
 using YourTutor.Core.Repositories;
 
-namespace YourTutor.Application.Commands.DeleteOffert;
+namespace YourTutor.Application.Commands.DeleteOffer;
 
-public sealed class DeleteOffertHandler : IRequestHandler<DeleteOffert, Unit>
+public sealed class DeleteOfferHandler : IRequestHandler<DeleteOffer, Unit>
 {
     private readonly IOffertRepository _offertRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ILogger<DeleteOffertHandler> _logger;
+    private readonly ILogger<DeleteOfferHandler> _logger;
 
-    public DeleteOffertHandler(IOffertRepository offertRepository, IUnitOfWork unitOfWork,
-        ILogger<DeleteOffertHandler> logger)
+    public DeleteOfferHandler(IOffertRepository offertRepository, IUnitOfWork unitOfWork,
+        ILogger<DeleteOfferHandler> logger)
     {
         _offertRepository = offertRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
-    public async Task<Unit> Handle(DeleteOffert request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteOffer request, CancellationToken cancellationToken)
     {
         await _offertRepository.RemoveOffertById(request.Id);
         await _unitOfWork.SaveChangesAsync();

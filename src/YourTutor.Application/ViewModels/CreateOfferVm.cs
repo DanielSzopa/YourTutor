@@ -2,7 +2,7 @@
 
 namespace YourTutor.Application.ViewModels
 {
-    public class CreateOffertVm
+    public class CreateOfferVm
     {
         [Required(ErrorMessage = "Description is required")]
         [StringLength(350, MinimumLength = 2, ErrorMessage = "Must be between 2 and 350 characters")]

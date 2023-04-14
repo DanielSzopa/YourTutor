@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using YourTutor.Application.Abstractions;
-using YourTutor.Application.Commands.DeleteOffert;
+using YourTutor.Application.Commands.DeleteOffer;
 using YourTutor.Core.Repositories;
 using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Infrastructure.Authorization;
 
-public sealed class CanRemoveOffertRequirementHandler : AuthorizationHandler<CanRemoveOffertRequirement, DeleteOffert>
+public sealed class CanRemoveOffertRequirementHandler : AuthorizationHandler<CanRemoveOffertRequirement, DeleteOffer>
 {
     private readonly IHttpContextService _httpContextService;
     private readonly IOffertRepository _offertRepository;
@@ -17,7 +17,7 @@ public sealed class CanRemoveOffertRequirementHandler : AuthorizationHandler<Can
         _offertRepository = offertRepository;
     }
 
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CanRemoveOffertRequirement requirement, DeleteOffert resource)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CanRemoveOffertRequirement requirement, DeleteOffer resource)
     {
         var userId = _httpContextService.GetUserIdFromClaims();
 

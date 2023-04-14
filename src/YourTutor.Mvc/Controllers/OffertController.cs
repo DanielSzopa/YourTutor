@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
-using YourTutor.Application.Commands.CreateOffert;
-using YourTutor.Application.Commands.DeleteOffert;
+using YourTutor.Application.Commands.CreateOffer;
+using YourTutor.Application.Commands.DeleteOffer;
 using YourTutor.Application.Dtos;
 using YourTutor.Application.Dtos.Pagination;
 using YourTutor.Application.Helpers;
-using YourTutor.Application.Queries.GetOffertDetails;
-using YourTutor.Application.Queries.GetSmallOfferts;
+using YourTutor.Application.Queries.GetOfferDetails;
+using YourTutor.Application.Queries.GetSmallOffers;
 using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.Constans;
 
@@ -32,9 +32,9 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffertsFilterDto offertsDto)
+        public async Task<IActionResult> Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffersFilterDto offertsDto)
         {
-            var query = new GetSmallOfferts(paginationDto, offertsDto);
+            var query = new GetSmallOffers(paginationDto, offertsDto);
             var response = await _mediator.Send(query);
             return View(response);
         }
@@ -43,7 +43,7 @@ namespace YourTutor.Mvc.Controllers
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var details = await _mediator.Send(new GetOffertDetails(id));        
+            var details = await _mediator.Send(new GetOfferDetails(id));        
 
             if (details is null)
                 return RedirectToAction(nameof(Index));
@@ -66,7 +66,7 @@ namespace YourTutor.Mvc.Controllers
 
         [Authorize]
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(CreateOffertVm vm)
+        public async Task<IActionResult> Create(CreateOfferVm vm)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
@@ -75,7 +75,7 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var offertId = await _mediator.Send(new CreateOffert(vm, userId));
+            var offertId = await _mediator.Send(new CreateOffer(vm, userId));
 
             return RedirectToAction(nameof(Details), new { id = offertId });
         }
@@ -86,12 +86,12 @@ namespace YourTutor.Mvc.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var authorizationResult = await _authorizationService.AuthorizeAsync(_httpContextService.GetUser(),
-                new DeleteOffert(id), CustomAuthorizationPolicy.DeleteOffert);
+                new DeleteOffer(id), CustomAuthorizationPolicy.DeleteOffert);
 
             if (!authorizationResult.Succeeded)
                 return new ForbidResult();
 
-            await _mediator.Send(new DeleteOffert(id));
+            await _mediator.Send(new DeleteOffer(id));
 
             return RedirectToAction(nameof(Index));
         }
