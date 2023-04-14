@@ -8,26 +8,26 @@ namespace YourTutor.Application.Queries.GetOfferDetails;
 public sealed class GetOfferDetailsHandler : IRequestHandler<GetOfferDetails, OfferDetailsVm>
 {
     private readonly ILogger<GetOfferDetailsHandler> _logger;
-    private readonly IOffertRepository _offertRepository;
+    private readonly IOfferRepository _offerRepository;
 
-    public GetOfferDetailsHandler(ILogger<GetOfferDetailsHandler> logger, IOffertRepository offertRepository)
+    public GetOfferDetailsHandler(ILogger<GetOfferDetailsHandler> logger, IOfferRepository offerRepository)
     {
         _logger = logger;
-        _offertRepository = offertRepository;
+        _offerRepository = offerRepository;
     }
 
     public async Task<OfferDetailsVm> Handle(GetOfferDetails request, CancellationToken cancellationToken)
     {
-        var offert = await _offertRepository.GetOffertDetails(request.id);
+        var offer = await _offerRepository.GetOfferDetails(request.id);
 
-        if (offert == null)
+        if (offer == null)
         {
-            _logger.LogError("Can not find offert with id: {0}", request.id);
+            _logger.LogError("Can not find offer with id: {0}", request.id);
             return default;
         }
 
         var (id, description, subject, price, location, isRemotely, fullName,
-            email, country, speakingLang, tutorId) = offert;
+            email, country, speakingLang, tutorId) = offer;
 
         return new OfferDetailsVm(id, description, subject, price, location, isRemotely, fullName, email, country, speakingLang, tutorId);
     }

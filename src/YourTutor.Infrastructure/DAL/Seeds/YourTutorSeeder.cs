@@ -34,7 +34,7 @@ public sealed class YourTutorSeeder : IYourTutorSeeder
             user.Tutor.UpdateDescription(faker.PickRandom(GetTutorDescriptions()));
             user.Tutor.UpdateLanguage(faker.PickRandom(GetLanguages()));
 
-            user.Tutor.AddOffert(new Offert(Guid.NewGuid(), faker.PickRandom(GetOffersDescriptions()), faker.PickRandom(GetSubjects()), faker.Random.Number(50, 150), faker.Random.Bool(), faker.PickRandom(GetLocations()), user.Id));
+            user.Tutor.AddOffer(new Offer(Guid.NewGuid(), faker.PickRandom(GetOffersDescriptions()), faker.PickRandom(GetSubjects()), faker.Random.Number(50, 150), faker.Random.Bool(), faker.PickRandom(GetLocations()), user.Id));
             users.Add(user);
         }
 

@@ -2,7 +2,7 @@
 
 namespace YourTutor.Infrastructure.Authorization;
 
-public class CanRemoveOffertRequirement : IAuthorizationRequirement
+public class CanRemoveOfferRequirement : IAuthorizationRequirement
 {
 }
 

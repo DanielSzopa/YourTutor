@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<link rel="stylesheet" href="~/css/offert/offert.css" />
+<link rel="stylesheet" href="~/css/offer/offer.css" />
 
 <h1>Details</h1>
 
@@ -67,7 +67,7 @@
                 @Html.DisplayFor(model => model.SpeakingLanguage)
             </dd>
         </div>
-        <div class="col-lg-6 offert-details-group"><img class="offert-details-picture" src="~/img/tutor/detailsPicture.png" alt="picture" /></div>
+        <div class="col-lg-6 offer-details-group"><img class="offer-details-picture" src="~/img/tutor/detailsPicture.png" alt="picture" /></div>
     </dl>
 </div>
 
@@ -76,7 +76,7 @@
     @if (ViewBag.IsHisOffer)
     {
         <div>
-            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OffertId">Delete</a>
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OfferId">Delete</a>
         </div>
     }
 

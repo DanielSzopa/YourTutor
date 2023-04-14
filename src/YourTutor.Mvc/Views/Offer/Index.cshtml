@@ -17,7 +17,7 @@
     <thead>
         <tr>
             <th>
-                OffertId
+                OfferId
             </th>
             <th>
                 Subject
@@ -44,7 +44,7 @@
 @foreach (var item in Model.PaginationResponse.Items) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.OffertId)
+                @Html.DisplayFor(modelItem => item.OfferId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Subject)
@@ -65,7 +65,7 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.OffertId }) 
+                @Html.ActionLink("Details", "Details", new { id = item.OfferId }) 
             </td>
         </tr>
 }

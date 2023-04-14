@@ -6,18 +6,18 @@ using YourTutor.Core.ValueObjects;
 
 namespace YourTutor.Infrastructure.Authorization;
 
-public sealed class CanRemoveOffertRequirementHandler : AuthorizationHandler<CanRemoveOffertRequirement, DeleteOffer>
+public sealed class CanRemoveOfferRequirementHandler : AuthorizationHandler<CanRemoveOfferRequirement, DeleteOffer>
 {
     private readonly IHttpContextService _httpContextService;
-    private readonly IOffertRepository _offertRepository;
+    private readonly IOfferRepository _offerRepository;
 
-    public CanRemoveOffertRequirementHandler(IHttpContextService httpContextService, IOffertRepository offertRepository)
+    public CanRemoveOfferRequirementHandler(IHttpContextService httpContextService, IOfferRepository offerRepository)
     {
         _httpContextService = httpContextService;
-        _offertRepository = offertRepository;
+        _offerRepository = offerRepository;
     }
 
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CanRemoveOffertRequirement requirement, DeleteOffer resource)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CanRemoveOfferRequirement requirement, DeleteOffer resource)
     {
         var userId = _httpContextService.GetUserIdFromClaims();
 
@@ -28,7 +28,7 @@ public sealed class CanRemoveOffertRequirementHandler : AuthorizationHandler<Can
         }
        
 
-        if(await _offertRepository.CheckIfUserHasAccessToOffert(new OffertId(resource.Id), new UserId(userId)))
+        if(await _offerRepository.CheckIfUserHasAccessToOffer(new OfferId(resource.Id), new UserId(userId)))
         {
             context.Succeed(requirement);
             return;

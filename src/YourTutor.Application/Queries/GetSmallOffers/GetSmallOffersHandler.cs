@@ -12,30 +12,30 @@ public sealed class GetSmallOffersHandler : IRequestHandler<GetSmallOffers, Smal
     private readonly int _pageSize = 10;
     private readonly int _defaultPage = 1;
 
-    private readonly IOffertRepository _offertRepository;
+    private readonly IOfferRepository _offerRepository;
 
-    public GetSmallOffersHandler(IOffertRepository offertRepository)
+    public GetSmallOffersHandler(IOfferRepository offerRepository)
     {
-        _offertRepository = offertRepository;
+        _offerRepository = offerRepository;
     }
 
     public async Task<SmallOffersListViewModel> Handle(GetSmallOffers request, CancellationToken cancellationToken)
     {
-        var (pagination, offert) = request;
+        var (pagination, offer) = request;
         pagination = pagination.PageNumber == 0
             ? pagination with { PageNumber = _defaultPage }
             : pagination;
 
-        var smallOffersGroup = await _offertRepository.GetSmallOfferts(offert.IsRemotely, offert.IsRemotelyFiltered, offert.PriceFrom, offert.PriceTo,
+        var smallOffersGroup = await _offerRepository.GetSmallOffers(offer.IsRemotely, offer.IsRemotelyFiltered, offer.PriceFrom, offer.PriceTo,
             _pageSize, ExcludeRecords(pagination.PageNumber, _pageSize), pagination.SearchString);
 
 
-        var results = smallOffersGroup.Offerts
+        var results = smallOffersGroup.Offers
             .OrderBy(o => o.FullName)
             .ToList();
 
-        var paginationResponse = new PaginationResponse<SmallOffertsReadModel>(results, pagination.PageNumber, _pageSize, smallOffersGroup.Count, pagination?.SearchString);
-        var filter = new OffersFilterDto(offert.IsRemotely, offert.IsRemotelyFiltered, offert.PriceFrom, offert.PriceTo);
+        var paginationResponse = new PaginationResponse<SmallOffersReadModel>(results, pagination.PageNumber, _pageSize, smallOffersGroup.Count, pagination?.SearchString);
+        var filter = new OffersFilterDto(offer.IsRemotely, offer.IsRemotelyFiltered, offer.PriceFrom, offer.PriceTo);
 
         return new SmallOffersListViewModel(paginationResponse, filter);
     }

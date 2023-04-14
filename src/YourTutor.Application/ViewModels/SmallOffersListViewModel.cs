@@ -4,6 +4,6 @@ using YourTutor.Core.ReadModels;
 
 namespace YourTutor.Application.ViewModels;
 
-public sealed record SmallOffersListViewModel(PaginationResponse<SmallOffertsReadModel> PaginationResponse, OffersFilterDto OffertsFilterDto);
+public sealed record SmallOffersListViewModel(PaginationResponse<SmallOffersReadModel> PaginationResponse, OffersFilterDto OffersFilterDto);
 
 

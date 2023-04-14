@@ -41,7 +41,7 @@ namespace YourTutor.Infrastructure
                 .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingHandler<,>))
                 .AddSingleton<IHashService, HashService>()
                 .AddHostedService<DatabaseInitializer>()
-                .AddScoped<IAuthorizationHandler, CanRemoveOffertRequirementHandler>()
+                .AddScoped<IAuthorizationHandler, CanRemoveOfferRequirementHandler>()
                 .RegisterAllSettings(configuration)
                 .AddYourTutorDbContext(configuration);
 
@@ -64,9 +64,9 @@ namespace YourTutor.Infrastructure
         {
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(CustomAuthorizationPolicy.DeleteOffert, policy =>
+                options.AddPolicy(CustomAuthorizationPolicy.DeleteOffer, policy =>
                 {
-                    policy.Requirements.Add(new CanRemoveOffertRequirement());
+                    policy.Requirements.Add(new CanRemoveOfferRequirement());
 
                 });
             });

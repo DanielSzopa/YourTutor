@@ -7,24 +7,24 @@ namespace YourTutor.Application.Commands.DeleteOffer;
 
 public sealed class DeleteOfferHandler : IRequestHandler<DeleteOffer, Unit>
 {
-    private readonly IOffertRepository _offertRepository;
+    private readonly IOfferRepository _offerRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<DeleteOfferHandler> _logger;
 
-    public DeleteOfferHandler(IOffertRepository offertRepository, IUnitOfWork unitOfWork,
+    public DeleteOfferHandler(IOfferRepository offerRepository, IUnitOfWork unitOfWork,
         ILogger<DeleteOfferHandler> logger)
     {
-        _offertRepository = offertRepository;
+        _offerRepository = offerRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
     public async Task<Unit> Handle(DeleteOffer request, CancellationToken cancellationToken)
     {
-        await _offertRepository.RemoveOffertById(request.Id);
+        await _offerRepository.RemoveOfferById(request.Id);
         await _unitOfWork.SaveChangesAsync();
 
-        _logger.LogInformation("Offert with id: {0} has been removed", request.Id.ToString());
+        _logger.LogInformation("Offer with id: {0} has been removed", request.Id.ToString());
         return Unit.Value;
     }
 }

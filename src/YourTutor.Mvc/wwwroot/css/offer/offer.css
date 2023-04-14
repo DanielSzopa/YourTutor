@@ -1,10 +1,10 @@
-﻿.offert-details-group {
+﻿.offer-details-group {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.offert-details-picture {
+.offer-details-picture {
     height: 400px;
 }
 
@@ -23,7 +23,7 @@
 }
 
 @media (max-width: 991px) {
-    .offert-details-group {
+    .offer-details-group {
         display: none;
     }
 }

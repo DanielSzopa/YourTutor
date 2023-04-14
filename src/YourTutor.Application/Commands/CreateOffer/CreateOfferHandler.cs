@@ -8,23 +8,23 @@ namespace YourTutor.Application.Commands.CreateOffer
     public sealed class CreateOfferHandler : IRequestHandler<CreateOffer, Guid>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IOffertRepository _offertRepository;
+        private readonly IOfferRepository _offerRepository;
 
-        public CreateOfferHandler(IUnitOfWork unitOfWork, IOffertRepository offertRepository)
+        public CreateOfferHandler(IUnitOfWork unitOfWork, IOfferRepository offerRepository)
         {
             _unitOfWork = unitOfWork;
-            _offertRepository = offertRepository;
+            _offerRepository = offerRepository;
         }
 
         public async Task<Guid> Handle(CreateOffer request, CancellationToken cancellationToken)
         {
-            var vm = request.CreateOffertVm;
-            var offert = new Offert(Guid.NewGuid(), vm.Description, vm.Subject, vm.Price, vm.IsRemotely, vm.Location, request.UserId);
+            var vm = request.CreateOfferVm;
+            var offer = new Offer(Guid.NewGuid(), vm.Description, vm.Subject, vm.Price, vm.IsRemotely, vm.Location, request.UserId);
 
-            await _offertRepository.CreateOffert(offert);
+            await _offerRepository.CreateOffer(offer);
             await _unitOfWork.SaveChangesAsync();
 
-            return offert.Id;
+            return offer.Id;
         }
     }
 }

@@ -15,14 +15,14 @@ using YourTutor.Infrastructure.Constans;
 namespace YourTutor.Mvc.Controllers
 {
     [Route("[controller]")]
-    public class OffertController : Controller
+    public class OfferController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<OffertController> _logger;
+        private readonly ILogger<OfferController> _logger;
         private readonly IHttpContextService _httpContextService;
         private readonly IAuthorizationService _authorizationService;
 
-        public OffertController(IMediator mediator, ILogger<OffertController> logger, IHttpContextService httpContextService,
+        public OfferController(IMediator mediator, ILogger<OfferController> logger, IHttpContextService httpContextService,
             IAuthorizationService authorizationService)
         {
             _mediator = mediator;
@@ -32,9 +32,9 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffersFilterDto offertsDto)
+        public async Task<IActionResult> Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffersFilterDto offersDto)
         {
-            var query = new GetSmallOffers(paginationDto, offertsDto);
+            var query = new GetSmallOffers(paginationDto, offersDto);
             var response = await _mediator.Send(query);
             return View(response);
         }
@@ -75,9 +75,9 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var offertId = await _mediator.Send(new CreateOffer(vm, userId));
+            var offerId = await _mediator.Send(new CreateOffer(vm, userId));
 
-            return RedirectToAction(nameof(Details), new { id = offertId });
+            return RedirectToAction(nameof(Details), new { id = offerId });
         }
 
 
@@ -86,7 +86,7 @@ namespace YourTutor.Mvc.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var authorizationResult = await _authorizationService.AuthorizeAsync(_httpContextService.GetUser(),
-                new DeleteOffer(id), CustomAuthorizationPolicy.DeleteOffert);
+                new DeleteOffer(id), CustomAuthorizationPolicy.DeleteOffer);
 
             if (!authorizationResult.Succeeded)
                 return new ForbidResult();

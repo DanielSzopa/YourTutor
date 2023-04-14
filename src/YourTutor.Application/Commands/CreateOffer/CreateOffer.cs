@@ -3,7 +3,7 @@ using YourTutor.Application.ViewModels;
 
 namespace YourTutor.Application.Commands.CreateOffer;
 
-public sealed record CreateOffer(CreateOfferVm CreateOffertVm, Guid UserId) : IRequest<Guid>;
+public sealed record CreateOffer(CreateOfferVm CreateOfferVm, Guid UserId) : IRequest<Guid>;
 
 
 

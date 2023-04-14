@@ -2,7 +2,7 @@
 
 public class CustomAuthorizationPolicy
 {
-    public const string DeleteOffert = "DeleteOffert";
+    public const string DeleteOffer = "DeleteOffer";
 }
 
 

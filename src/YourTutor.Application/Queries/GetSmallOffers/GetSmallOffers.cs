@@ -5,7 +5,7 @@ using YourTutor.Application.ViewModels;
 
 namespace YourTutor.Application.Queries.GetSmallOffers;
 
-public sealed record GetSmallOffers(PaginationDto paginationDto, OffersFilterDto offertsDto) : IRequest<SmallOffersListViewModel>;
+public sealed record GetSmallOffers(PaginationDto paginationDto, OffersFilterDto OffersDto) : IRequest<SmallOffersListViewModel>;
 
 
 

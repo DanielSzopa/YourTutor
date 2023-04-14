@@ -2,11 +2,11 @@
 
 namespace YourTutor.Core.Entities;
 
-public sealed class Offert
+public sealed class Offer
 {
-    public OffertId Id { get; private set; }
+    public OfferId Id { get; private set; }
 
-    public Offert(OffertId id, string description, string subject, Price price,
+    public Offer(OfferId id, string description, string subject, Price price,
         bool isRemotely, string location, UserId tutorId)
     {
         Id = id;
