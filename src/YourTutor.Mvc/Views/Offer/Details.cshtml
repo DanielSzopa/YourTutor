@@ -1,0 +1,87 @@
+﻿@model YourTutor.Application.ViewModels.OfferDetailsVm
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<link rel="stylesheet" href="~/css/offer/offer.css" />
+
+<h1>Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <div class="col-lg-6 col-group">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Subject)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Subject)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Price) zł/h
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+            <dt class="col-sm-4">
+                Remotely
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.IsRemotely)
+            </dd>
+            <dt class="col-sm-4">
+                Name
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FullName)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Country)
+            </dd>
+            <dt class="col-sm-4">
+                Speaking language
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.SpeakingLanguage)
+            </dd>
+        </div>
+        <div class="col-lg-6 offer-details-group"><img class="offer-details-picture" src="~/img/tutor/detailsPicture.png" alt="picture" /></div>
+    </dl>
+</div>
+
+<div class="buttons-group">
+
+    @if (ViewBag.IsHisOffer)
+    {
+        <div>
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OfferId">Delete</a>
+        </div>
+    }
+
+    <div>
+        <a class="btn btn-primary" asp-controller="Tutor" asp-action="Details" asp-route-id="@Model.TutorId">Tutor</a>
+    </div>
+
+</div>

@@ -1,0 +1,29 @@
+﻿.offer-details-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.offer-details-picture {
+    height: 400px;
+}
+
+.col-group > dt,
+.col-group > dd {
+    padding: 2px 0;
+}
+
+.buttons-group {
+    display: flex;
+}
+
+.buttons-group > div > a {
+    padding: 5px 15px;
+    margin: 0px 5px;
+}
+
+@media (max-width: 991px) {
+    .offer-details-group {
+        display: none;
+    }
+}

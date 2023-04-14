@@ -1,0 +1,73 @@
+﻿@model YourTutor.Application.ViewModels.SmallOffersListViewModel;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+    <a asp-action="Create">Create New</a>
+</p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                OfferId
+            </th>
+            <th>
+                Subject
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                IsRemotely
+            </th>
+            <th>
+                FullName
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.PaginationResponse.Items) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfferId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRemotely)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.OfferId }) 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

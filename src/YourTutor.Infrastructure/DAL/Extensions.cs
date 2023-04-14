@@ -24,7 +24,7 @@ namespace YourTutor.Infrastructure.DAL
             return services
                     .AddScoped<IUserRepository, UserRepository>()
                     .AddScoped<ITutorRepository, TutorRepository>()
-                    .AddScoped<IOffertRepository, OffertRepository>()
+                    .AddScoped<IOfferRepository, OfferRepository>()
                     .AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
 

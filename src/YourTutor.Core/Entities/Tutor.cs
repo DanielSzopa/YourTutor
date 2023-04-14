@@ -4,7 +4,7 @@ namespace YourTutor.Core.Entities
 {
     public sealed class Tutor
     {
-        private readonly List<Offert> _offerts = new();
+        private readonly List<Offer> _offers = new();
 
         public UserId UserId { get; private set; }
         public string Description { get; private set; }
@@ -13,7 +13,7 @@ namespace YourTutor.Core.Entities
 
         public User User { get; private set; }
 
-        public IReadOnlyCollection<Offert> Offerts => _offerts;
+        public IReadOnlyCollection<Offer> Offers => _offers;
 
         internal Tutor(UserId userId, string description, string country, string language)
         {
@@ -32,9 +32,9 @@ namespace YourTutor.Core.Entities
         public void UpdateLanguage(string language)
             => Language = language;
 
-        public void AddOffert(Offert offert)
+        public void AddOffer(Offer offer)
         {
-            _offerts.Add(offert);
+            _offers.Add(offer);
         }
     }
 }
