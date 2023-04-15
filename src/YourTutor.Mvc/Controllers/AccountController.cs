@@ -10,12 +10,12 @@ namespace YourTutor.Mvc.Controllers
     [Route("[controller]")]
     public sealed class AccountController : Controller
     {
-        private readonly IMediator _mediator;
+        private readonly ISender _sender;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
+        public AccountController(ISender sender, IHttpContextAccessor httpContextAccessor)
         {
-            _mediator = mediator;
+            _sender = sender;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -33,7 +33,7 @@ namespace YourTutor.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await _mediator.Send(new Register(vm));
+                var response = await _sender.Send(new Register(vm));
 
                 if (response.Errors.Count > 0)
                 {
@@ -63,7 +63,7 @@ namespace YourTutor.Mvc.Controllers
         {          
             if (ModelState.IsValid)
             {
-                var response = await _mediator.Send(new Login(vm));
+                var response = await _sender.Send(new Login(vm));
 
                 if (response.Errors.Count > 0)
                 {
@@ -88,7 +88,7 @@ namespace YourTutor.Mvc.Controllers
         [Route("logout")]
         public async Task<IActionResult> Logout(SignOut command)
         {
-            await _mediator.Send(command);
+            await _sender.Send(command);
             return RedirectToAction("Index", "Home");
         }
 
