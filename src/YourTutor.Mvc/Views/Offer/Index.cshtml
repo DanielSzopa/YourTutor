@@ -80,7 +80,9 @@
                             }
                         }
                         @{
-                            int next = @Model.PaginationResponse.PageNumber + 1;
+                            int next = @Model.PaginationResponse.PageNumber >= Model.PaginationResponse.TotalPages 
+                            ? @Model.PaginationResponse.PageNumber : @Model.PaginationResponse.PageNumber + 1;
+
                             <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@next">Next</a></li>
                         }
 
