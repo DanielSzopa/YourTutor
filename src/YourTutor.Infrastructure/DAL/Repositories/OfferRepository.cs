@@ -91,7 +91,7 @@ internal class OfferRepository : IOfferRepository
             .Take(pageSize);
 
         var items = await query
-            .Select(o => new SmallOffersReadModel(o.Id, o.Subject, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName, o.Tutor.User.Email))
+            .Select(o => new SmallOffersReadModel(o.Id, o.Subject, o.Description, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName, o.Tutor.User.Email))
             .ToListAsync();
 
         return new SmallOfferPaginationReadModel(items, quantity);
