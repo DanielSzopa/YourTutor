@@ -61,6 +61,36 @@
     color: white;
 }
 
+.input-row {
+    margin-top: 20px;
+}
+
+.input-container {
+    margin: 10px 0px;
+}
+
+.filter-btns {
+    display: flex;
+    justify-content: right;
+    margin-right: 50px;
+}
+
+    .filter-btns > a {
+        margin-right: 3px;
+        margin-left: 3px;
+    }
+
+    .filter-btns > a,
+    #create-btn {
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        padding: 5px 15px;
+    }
+
+#create-btn {
+    margin-top: 8px;
+}
+
 @media (max-width: 991px) {
     .offer-details-group {
         display: none;

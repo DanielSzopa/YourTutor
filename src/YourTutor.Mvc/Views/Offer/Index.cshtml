@@ -13,9 +13,48 @@
 @if (User.Identity.IsAuthenticated)
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a class="btn btn-primary" id="create-btn" asp-action="Create">Create offer</a>
     </p>
 }
+
+<div class="row input-row">
+    <div class="col-xl-2 input-container">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+            </div>
+            <input type="number" class="form-control" placeholder="Price From">
+        </div>
+    </div>
+
+    <div class="col-xl-2 input-container">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+            </div>
+            <input type="number" class="form-control" placeholder="Price To">
+        </div>
+    </div>
+
+    <div class="col-xl-5 input-container">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Filter by, subject, location, email, first name or last name">
+        </div>
+    </div>
+
+    <div class="col-xl-2 input-container">
+        <input class="form-check-input" type="checkbox" value="" id="remotelyCheck">
+        <label class="form-check-label" for="remotelyCheck">
+            Remotely
+        </label>
+    </div>
+</div>
+
+<div class="filter-btns">
+    <a class="btn btn-primary">Filter</a>
+    <a class="btn btn-primary">Clear</a>
+</div>
+
 
 <div>
 
@@ -44,7 +83,7 @@
     </div>
 
     @{
-        if(Model.PaginationResponse.TotalPages > 1)
+        if (Model.PaginationResponse.TotalPages > 1)
         {
             <div class="pagination-container">
                 <nav aria-label="Page navigation">
@@ -80,7 +119,7 @@
                             }
                         }
                         @{
-                            int next = @Model.PaginationResponse.PageNumber >= Model.PaginationResponse.TotalPages 
+                            int next = @Model.PaginationResponse.PageNumber >= Model.PaginationResponse.TotalPages
                             ? @Model.PaginationResponse.PageNumber : @Model.PaginationResponse.PageNumber + 1;
 
                             <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@next">Next</a></li>
@@ -91,5 +130,5 @@
             </div>
         }
     }
-    
+
 </div>
