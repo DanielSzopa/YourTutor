@@ -6,14 +6,17 @@
 
 <h1>Index</h1>
 
+
+<link rel="stylesheet" href="~/css/offer/offer.css" />
+
 @if (User.Identity.IsAuthenticated)
 {
     <p>
-    <a asp-action="Create">Create New</a>
-</p>
+        <a asp-action="Create">Create New</a>
+    </p>
 }
 
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -40,34 +43,26 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model.PaginationResponse.Items) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfferId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsRemotely)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.OfferId }) 
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <tbody>*@
+<div class="row card-row">
+    @foreach (var item in Model.PaginationResponse.Items)
+    {
+        <div class="card offer-card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+
+
+    }
+</div>

@@ -22,6 +22,14 @@
     margin: 0px 5px;
 }
 
+.card-row {
+    justify-content: center;
+}
+
+.offer-card {
+    margin: 20px;
+}
+
 @media (max-width: 991px) {
     .offer-details-group {
         display: none;
