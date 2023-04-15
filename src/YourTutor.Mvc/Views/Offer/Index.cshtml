@@ -4,10 +4,11 @@
     ViewData["Title"] = "Offers";
 }
 
-<h1>Find the right <span class="tutor-text">offer</span> for you!!!</h1>
+<h1>Find the right <span class="tutor-text">Offers</span> for you!!!</h1>
 
 
 <link rel="stylesheet" href="~/css/offer/offer.css" />
+<script src="~/js/offers.js"></script>
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -16,25 +17,77 @@
     </p>
 }
 
-<div class="row card-row">
-    @foreach (var item in Model.PaginationResponse.Items)
-    {       
-        <div class="card offer-card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">@item.Subject</h5>
-                <p class="card-text">@item.Description</p>
+<div>
+
+
+    <div class="row card-row">
+        @foreach (var item in Model.PaginationResponse.Items)
+        {
+            <div class="card offer-card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Subject</h5>
+                    <p class="card-text">@item.Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item fullName">@item.FullName</li>
+                    <li class="list-group-item">@item.Price zł/h</li>
+                    @{
+                        string location = item.IsRemotely is true ? "Remotely" : item.Location;
+                        <li class="list-group-item">@location</li>
+                    }
+                </ul>
+                <div class="card-body">
+                    <a class="btn card-btn" asp-action="Details" asp-controller="Offer" asp-route-id="@item.OfferId">Details</a>
+                </div>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item fullName">@item.FullName</li>
-                <li class="list-group-item">@item.Price zł/h</li>
-                @{
-                    string location = item.IsRemotely is true ? "Remotely" : item.Location;
-                    <li class="list-group-item">@location</li>
-                }               
-            </ul>
-            <div class="card-body">
-                <a class="btn card-btn" asp-action="Details" asp-controller="Offer" asp-route-id="@item.OfferId">Details</a>
+        }
+    </div>
+
+    @{
+        if(Model.PaginationResponse.TotalPages > 1)
+        {
+            <div class="pagination-container">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        @{
+                            var previous = Model.PaginationResponse.PageNumber > 1 ? Model.PaginationResponse.PageNumber - 1 : 1;
+                            <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@previous">Previous</a></li>
+                        }
+
+                        @{
+                            int counter = 0;
+                            for (int i = Model.PaginationResponse.PageNumber; i <= Model.PaginationResponse.TotalPages; i++)
+                            {
+                                if (counter == 3)
+                                {
+                                    <li class="page-item"><a class="page-link">...</a></li>
+                                    <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@Model.PaginationResponse.TotalPages">@Model.PaginationResponse.TotalPages</a></li>
+                                    break;
+                                }
+                                else
+                                {
+                                    if (counter == 0)
+                                    {
+                                        <li class="page-item"><a class="page-link number-page" id="currentlyPage" asp-action="Index" asp-route-PageNumber="@i">@i</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@i">@i</a></li>
+                                    }
+                                }
+
+                                counter++;
+                            }
+                        }
+                        @{
+                            int next = @Model.PaginationResponse.PageNumber + 1;
+                            <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@next">Next</a></li>
+                        }
+
+                    </ul>
+                </nav>
             </div>
-        </div>
+        }
     }
+    
 </div>
