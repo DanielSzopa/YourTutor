@@ -13,6 +13,8 @@ const filter = () => {
     '&searchString=',
     search,
     '&isRemotely=',
+    remotely,
+    '&isRemotelyFiltered=',
     remotely
   );
 
