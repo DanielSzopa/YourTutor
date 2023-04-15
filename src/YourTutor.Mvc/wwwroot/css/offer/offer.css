@@ -72,7 +72,6 @@
 .filter-btns {
     display: flex;
     justify-content: right;
-    margin-right: 50px;
 }
 
     .filter-btns > a {
