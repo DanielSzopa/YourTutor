@@ -1,10 +1,10 @@
 ﻿@model YourTutor.Application.ViewModels.SmallOffersListViewModel;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Offers";
 }
 
-<h1>Index</h1>
+<h1>Find the right <span class="tutor-text">offer</span> for you!!!</h1>
 
 
 <link rel="stylesheet" href="~/css/offer/offer.css" />
@@ -16,53 +16,25 @@
     </p>
 }
 
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                OfferId
-            </th>
-            <th>
-                Subject
-            </th>
-            <th>
-                Price
-            </th>
-            <th>
-                Location
-            </th>
-            <th>
-                IsRemotely
-            </th>
-            <th>
-                FullName
-            </th>
-            <th>
-                Email
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>*@
 <div class="row card-row">
     @foreach (var item in Model.PaginationResponse.Items)
-    {
+    {       
         <div class="card offer-card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title">@item.Subject</h5>
+                <p class="card-text">Prowadzę zajęcia w miłej atmosferze, moim zadaniem jest abyś na zajęciach czuł się jak w domu</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
+                <li class="list-group-item fullName">@item.FullName</li>
+                <li class="list-group-item">@item.Price zł/h</li>
+                @{
+                    string location = item.IsRemotely is true ? "Remotely" : item.Location;
+                    <li class="list-group-item">@location</li>
+                }               
             </ul>
             <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <a class="btn card-btn" asp-action="Details" asp-controller="Offer" asp-route-id="@item.OfferId">Details</a>
             </div>
         </div>
-
-
     }
 </div>
