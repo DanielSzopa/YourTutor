@@ -14,14 +14,14 @@ namespace YourTutor.Mvc.Controllers
     [Authorize]
     public sealed class TutorController : Controller
     {
-        private readonly IMediator _mediator;
+        private readonly ISender _sender;
         private readonly IHttpContextService _httpContextService;
         private readonly ILogger<TutorController> _logger;
 
-        public TutorController(IMediator mediator, IHttpContextService httpContextService
+        public TutorController(ISender sender, IHttpContextService httpContextService
             , ILogger<TutorController> logger)
         {
-            _mediator = mediator;
+            _sender = sender;
             _httpContextService = httpContextService;
             _logger = logger;
         }
@@ -36,7 +36,7 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var details = await _mediator.Send(new GetTutorByUserId(userId));
+            var details = await _sender.Send(new GetTutorByUserId(userId));
 
             ViewBag.IsHisAccount = true;
 
@@ -48,7 +48,7 @@ namespace YourTutor.Mvc.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(Guid id)
         {
-            var details = await _mediator.Send(new GetTutorByUserId(id));
+            var details = await _sender.Send(new GetTutorByUserId(id));
 
             var result = _httpContextService.GetUserIdFromClaims() == id
                 ? true
@@ -63,7 +63,7 @@ namespace YourTutor.Mvc.Controllers
         [Route("Edit")]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var details = await _mediator.Send(new GetTutorEditDetails(id));
+            var details = await _sender.Send(new GetTutorEditDetails(id));
             return View(details);
         }
 
@@ -78,7 +78,7 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            await _mediator.Send(new EditTutor(vm,userId));
+            await _sender.Send(new EditTutor(vm,userId));
             return RedirectToAction(nameof(MyAccount));
         }
     }

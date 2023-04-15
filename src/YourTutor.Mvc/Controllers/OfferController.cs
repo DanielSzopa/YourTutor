@@ -17,15 +17,15 @@ namespace YourTutor.Mvc.Controllers
     [Route("[controller]")]
     public class OfferController : Controller
     {
-        private readonly IMediator _mediator;
+        private readonly ISender _sender;
         private readonly ILogger<OfferController> _logger;
         private readonly IHttpContextService _httpContextService;
         private readonly IAuthorizationService _authorizationService;
 
-        public OfferController(IMediator mediator, ILogger<OfferController> logger, IHttpContextService httpContextService,
+        public OfferController(ISender sender, ILogger<OfferController> logger, IHttpContextService httpContextService,
             IAuthorizationService authorizationService)
         {
-            _mediator = mediator;
+            _sender = sender;
             _logger = logger;
             _httpContextService = httpContextService;
             _authorizationService = authorizationService;
@@ -35,7 +35,7 @@ namespace YourTutor.Mvc.Controllers
         public async Task<IActionResult> Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffersFilterDto offersDto)
         {
             var query = new GetSmallOffers(paginationDto, offersDto);
-            var response = await _mediator.Send(query);
+            var response = await _sender.Send(query);
             return View(response);
         }
 
@@ -43,7 +43,7 @@ namespace YourTutor.Mvc.Controllers
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var details = await _mediator.Send(new GetOfferDetails(id));        
+            var details = await _sender.Send(new GetOfferDetails(id));        
 
             if (details is null)
                 return RedirectToAction(nameof(Index));
@@ -75,7 +75,7 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var offerId = await _mediator.Send(new CreateOffer(vm, userId));
+            var offerId = await _sender.Send(new CreateOffer(vm, userId));
 
             return RedirectToAction(nameof(Details), new { id = offerId });
         }
@@ -91,7 +91,7 @@ namespace YourTutor.Mvc.Controllers
             if (!authorizationResult.Succeeded)
                 return new ForbidResult();
 
-            await _mediator.Send(new DeleteOffer(id));
+            await _sender.Send(new DeleteOffer(id));
 
             return RedirectToAction(nameof(Index));
         }
