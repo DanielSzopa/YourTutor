@@ -17,11 +17,16 @@
     display: flex;
 }
 
+
     .buttons-group > div > a {
         padding: 5px 15px;
         margin: 0px 5px;
     }
 
+#tutor-btn {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
 .card-row {
     justify-content: center;
 }

@@ -76,12 +76,12 @@
     @if (ViewBag.IsHisOffer)
     {
         <div>
-            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OfferId">Delete</a>
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OfferId"><img src="~/img//binIcon.png" alt="bin image" /></a>
         </div>
     }
 
     <div>
-        <a class="btn btn-primary" asp-controller="Tutor" asp-action="Details" asp-route-id="@Model.TutorId">Tutor</a>
+        <a class="btn btn-primary" id="tutor-btn" asp-controller="Tutor" asp-action="Details" asp-route-id="@Model.TutorId"><img src="~/img//personIcon.png" alt="person image" /> Tutor</a>
     </div>
 
 </div>
