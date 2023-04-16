@@ -1,73 +1,138 @@
 ﻿@model YourTutor.Application.ViewModels.SmallOffersListViewModel;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Offers";
 }
 
-<h1>Index</h1>
+<h1>Find the right <span class="tutor-text">Offer</span> for you!!!</h1>
+
+
+<link rel="stylesheet" href="~/css/offer/offer.css" />
+<script src="~/js/offers.js"></script>
 
 @if (User.Identity.IsAuthenticated)
 {
     <p>
-    <a asp-action="Create">Create New</a>
-</p>
+        <a class="btn btn-primary" id="create-btn" asp-action="Create">Create offer</a>
+    </p>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                OfferId
-            </th>
-            <th>
-                Subject
-            </th>
-            <th>
-                Price
-            </th>
-            <th>
-                Location
-            </th>
-            <th>
-                IsRemotely
-            </th>
-            <th>
-                FullName
-            </th>
-            <th>
-                Email
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.PaginationResponse.Items) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfferId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsRemotely)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.OfferId }) 
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="row input-row">
+    <div class="col-xl-2 input-container">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+            </div>
+            <input type="number" id="priceFromFilter" class="form-control" placeholder="Price From">
+        </div>
+    </div>
+
+    <div class="col-xl-2 input-container">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+            </div>
+            <input type="number" class="form-control" id="priceToFilter" placeholder="Price To">
+        </div>
+    </div>
+
+    <div class="col-xl-5 input-container">
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchFilter"  placeholder="Filter by, subject, location, email, first name or last name">
+        </div>
+    </div>
+
+    <div class="col-xl-2 input-container">
+        <input class="form-check-input" id="remotelyFilter" type="checkbox" value="">
+        <label class="form-check-label" for="remotelyCheck">
+            Remotely
+        </label>
+    </div>
+</div>
+
+<div class="filter-btns">
+    <a class="btn btn-primary" id="filerBtn" onClick=filter()><img src="~/img//filterIcon.png" alt= "filter image"/></a>
+    <a class="btn btn-primary" asp-action="Index"><img src="~/img//clearIcon.png" alt="clear image" /></a>
+</div>
+
+<script>
+    InputDataFromResponse(@Model.OffersFilterDto.PriceFrom, @Model.OffersFilterDto.PriceTo, '@Model.OffersFilterDto.IsRemotelyFiltered.ToString().ToLower()', '@Model.PaginationResponse.SearchString');
+</script>
+
+
+<div>
+
+
+    <div class="row card-row">
+        @foreach (var item in Model.PaginationResponse.Items)
+        {
+            <div class="card offer-card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Subject</h5>
+                    <p class="card-text">@item.Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item fullName">@item.FullName</li>
+                    <li class="list-group-item">@item.Price zł/h</li>
+                    @{
+                        string location = item.IsRemotely is true ? "Remotely" : item.Location;
+                        <li class="list-group-item">@location</li>
+                    }
+                </ul>
+                <div class="card-body">
+                    <a class="btn card-btn" asp-action="Details" asp-controller="Offer" asp-route-id="@item.OfferId">Details</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    @{
+        if (Model.PaginationResponse.TotalPages > 1)
+        {
+            <div class="pagination-container">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        @{
+                            var previous = Model.PaginationResponse.PageNumber > 1 ? Model.PaginationResponse.PageNumber - 1 : 1;
+                            <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@previous" asp-route-SearchString="@Model.PaginationResponse.SearchString" asp-route-IsRemotely="@Model.OffersFilterDto.IsRemotely" asp-route-IsRemotelyFiltered="@Model.OffersFilterDto.IsRemotelyFiltered" asp-route-PriceFrom="@Model.OffersFilterDto.PriceFrom" asp-route-PriceTo="@Model.OffersFilterDto.PriceTo">Previous</a></li>
+                        }
+
+                        @{
+                            int counter = 0;
+                            for (int i = Model.PaginationResponse.PageNumber; i <= Model.PaginationResponse.TotalPages; i++)
+                            {
+                                if (counter == 3)
+                                {
+                                    <li class="page-item"><a class="page-link">...</a></li>
+                                    <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@Model.PaginationResponse.TotalPages" asp-route-SearchString="@Model.PaginationResponse.SearchString" asp-route-IsRemotely="@Model.OffersFilterDto.IsRemotely" asp-route-IsRemotelyFiltered="@Model.OffersFilterDto.IsRemotelyFiltered" asp-route-PriceFrom="@Model.OffersFilterDto.PriceFrom" asp-route-PriceTo="@Model.OffersFilterDto.PriceTo">@Model.PaginationResponse.TotalPages</a></li>
+                                    break;
+                                }
+                                else
+                                {
+                                    if (counter == 0)
+                                    {
+                                        <li class="page-item"><a class="page-link number-page" id="currentlyPage" asp-action="Index" asp-route-PageNumber="@i" asp-route-SearchString="@Model.PaginationResponse.SearchString" asp-route-IsRemotely="@Model.OffersFilterDto.IsRemotely" asp-route-IsRemotelyFiltered="@Model.OffersFilterDto.IsRemotelyFiltered" asp-route-PriceFrom="@Model.OffersFilterDto.PriceFrom" asp-route-PriceTo="@Model.OffersFilterDto.PriceTo">@i</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@i" asp-route-SearchString="@Model.PaginationResponse.SearchString" asp-route-IsRemotely="@Model.OffersFilterDto.IsRemotely" asp-route-IsRemotelyFiltered="@Model.OffersFilterDto.IsRemotelyFiltered" asp-route-PriceFrom="@Model.OffersFilterDto.PriceFrom" asp-route-PriceTo="@Model.OffersFilterDto.PriceTo">@i</a></li>
+                                    }
+                                }
+
+                                counter++;
+                            }
+                        }
+                        @{
+                            int next = @Model.PaginationResponse.PageNumber >= Model.PaginationResponse.TotalPages
+                            ? @Model.PaginationResponse.PageNumber : @Model.PaginationResponse.PageNumber + 1;
+
+                            <li class="page-item"><a class="page-link number-page" asp-action="Index" asp-route-PageNumber="@next" asp-route-SearchString="@Model.PaginationResponse.SearchString" asp-route-IsRemotely="@Model.OffersFilterDto.IsRemotely" asp-route-IsRemotelyFiltered="@Model.OffersFilterDto.IsRemotelyFiltered" asp-route-PriceFrom="@Model.OffersFilterDto.PriceFrom" asp-route-PriceTo="@Model.OffersFilterDto.PriceTo">Next</a></li>
+                        }
+
+                    </ul>
+                </nav>
+            </div>
+        }
+    }
+
+</div>
