@@ -55,6 +55,10 @@
     <a class="btn btn-primary" asp-action="Index">Clear</a>
 </div>
 
+<script>
+    InputDataFromResponse(@Model.OffersFilterDto.PriceFrom, @Model.OffersFilterDto.PriceTo, '@Model.OffersFilterDto.IsRemotelyFiltered.ToString().ToLower()', '@Model.PaginationResponse.SearchString');
+</script>
+
 
 <div>
 

@@ -35,3 +35,26 @@ const getPriceTo = () => {
 
   return inputElement.value;
 };
+
+const InputDataFromResponse = (
+  priceFrom,
+  priceTo,
+  isRemotelyFiltered,
+  searchString
+) => {
+  if (priceFrom > 0) {
+    document.querySelector('#priceFromFilter').value = priceFrom;
+  }
+
+  if (priceTo > 0) {
+    document.querySelector('#priceToFilter').value = priceTo;
+  }
+
+  if (isRemotelyFiltered === 'true') {
+    document.querySelector('#remotelyFilter').checked = true;
+  }
+
+  if (searchString != null && searchString !== '') {
+    document.querySelector('#searchFilter').value = searchString;
+  }
+};
