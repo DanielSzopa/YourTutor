@@ -43,43 +43,43 @@ public sealed class YourTutorSeeder : IYourTutorSeeder
 
     private string[] GetTutorDescriptions() => new[]
     {
-                "Jestem nauczycielem z dziesięcioletnim stażem, pragnę przekazać ci wiedzę",
-                "Nauczanie jest moją pasją, posiadam doświadczenie, wiedzę oraz chęć do przekazania tobie wiedzy",
-                "Moje doświadczenie: Praca w przedszkolu, szkole oraz prywatne udzielanie korepetycji",
-                "Moje kompetencje: Język angielski, polski, matematyka, fizyka, programowanie"
+                "I am a teacher with ten years of experience, I would like to give you knowledge",
+                "Teaching is my passion, I have the experience, knowledge and willingness to give you the knowledge",
+                "My experience: Working in kindergarten, school and private tutoring",
+                "My competencies: English, Polish, math, physics, programming"
     };
 
     private string[] GetOffersDescriptions() => new[]
     {
-                "Na moich zajęciach, przekazywana wiedza jest z mojego zawodowego doświadczenia",
-                "Prowadzę zajęcia w miłej atmosferze, moim zadaniem jest abyś na zajęciach czuł się jak w domu",
-                "Nauka nie musi być nudna, możemy się uczyć przez zabawę"
+                "In my classes, the knowledge transferred is from my professional experience",
+                "I conduct classes in a relaxed atmosphere, my job is to make you feel at home in my classes",
+                "Learning doesn't have to be boring, we can learn through fun"
     };
 
     private string[] GetCountries() => new[]
     {
-                "Polska"
+                "Poland"
     };
 
     private string[] GetLocations() => new[]
     {
-                "Warszawa",
-                "Kraków"
+                "Warsaw",
+                "Krakow"
     };
 
     private string[] GetLanguages() => new[]
     {
-                "Angielski",
-                "Polski"
+                "English",
+                "Polish"
     };
 
     private string[] GetSubjects() => new[]
     {
-                "Język Polski",
-                "Matematyka",
-                "Programowanie",
-                "Chemia",
-                "Fizyka"
+                "Polish language",
+                "Math",
+                "Programming",
+                "Chemistry",
+                "Physics"
     };
 
 }
