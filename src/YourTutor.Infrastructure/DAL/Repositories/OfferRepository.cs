@@ -78,7 +78,12 @@ internal class OfferRepository : IOfferRepository
             query = query
                 .Where(o => o.IsRemotely == isRemotely);
 
-        if (priceFrom > 0 && priceTo > 0)
+        if(priceFrom <= 0 && priceTo > 0)
+        {
+            query = query
+               .Where(o => o.Price <= new Price(priceTo));
+        }
+        else if(priceFrom > 0 && priceTo > 0)
         {
             query = query
                .Where(o => o.Price >= new Price(priceFrom) && o.Price <= new Price(priceTo));
