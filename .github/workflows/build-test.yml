@@ -10,6 +10,7 @@ jobs:
       - run: echo "build application"
 
   Test:
+    needs: Build
     runs-on: ubuntu-latest
     steps:
       - run: echo "run tests"
