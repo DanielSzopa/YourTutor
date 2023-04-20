@@ -1,0 +1,15 @@
+name: Build and test
+run-name: ${{github.actor}} is running build-test workflow 🚀
+
+on: workflow_dispatch
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "build application"
+
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "run tests"
