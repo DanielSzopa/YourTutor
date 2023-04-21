@@ -4,6 +4,8 @@ run-name: ${{github.actor}} is running build-test workflow 🚀
 on:
   push:
     branches: master
+  pull_request:
+    branches: master
   workflow_dispatch:
 
 jobs:
