@@ -1,0 +1,24 @@
+name: Build and test
+run-name: ${{github.actor}} is running build-test workflow 🚀
+
+on:
+  push:
+    branches: master
+  workflow_dispatch:
+
+jobs:
+  Build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+      - name: Setup .NET 7 SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x.x'
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Run tests
+        run: dotnet test
