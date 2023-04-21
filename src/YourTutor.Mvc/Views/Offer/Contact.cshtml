@@ -1,0 +1,46 @@
+﻿@model YourTutor.Application.ViewModels.ContactVm
+
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<link rel="stylesheet" href="~/css/offer/contact.css" />
+
+<h1>Fill out form to contact with <span class="tutor-text">tutor</span></h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-xl-5 col-xxl-6">
+        <form asp-action="Contact" asp->
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="To" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group contact-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group contact-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group contact-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" id="contact-btn" />
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary" id="back-btn" asp-controller="Offer" asp-action="Details" asp-route-id="@Model.Id">Back</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4 col-lg-6 col-xl-7 col-xxl-6 picture-col"><img class="email-picture" src="~/img/offer/email.png" alt="email" /></div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

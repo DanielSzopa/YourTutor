@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YourTutor.Application.Abstractions;
+using YourTutor.Application.Commands.Contact;
 using YourTutor.Application.Commands.CreateOffer;
 using YourTutor.Application.Commands.DeleteOffer;
 using YourTutor.Application.Dtos;
@@ -94,6 +95,26 @@ namespace YourTutor.Mvc.Controllers
             await _sender.Send(new DeleteOffer(id));
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet("Contact/{id:Guid}")]
+        public IActionResult Contact(Guid id, string to)
+        {
+            return View(new ContactVm()
+            {
+                Id = id,
+                Description = "Tell something about you...",
+                Email = "Your Email...",
+                To = to,
+                Name = "Your Name..."
+            });
+        }
+
+        [HttpPost("Contact/{id:Guid}")]
+        public async Task<IActionResult> Contact(ContactVm contactVm)
+        {
+            await _sender.Send(new Contact(contactVm));
+            return RedirectToAction(nameof(Details), new { id = contactVm.Id });
         }
     }
 }
