@@ -1,7 +1,10 @@
 name: Build and test
 run-name: ${{github.actor}} is running build-test workflow 🚀
 
-on: push
+on:
+  push:
+    branches: master
+  workflow_dispatch:
 
 jobs:
   Build-and-test:
