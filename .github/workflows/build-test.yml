@@ -4,7 +4,7 @@ run-name: ${{github.actor}} is running build-test workflow 🚀
 on: push
 
 jobs:
-  Build:
+  Build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.5.2
@@ -13,9 +13,4 @@ jobs:
           dotnet-version: '7.x.x'
       - run: dotnet restore
       - run: dotnet build --no-restore
-
-  Test:
-    needs: Build
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "run tests"
+      - run: dotnet test
