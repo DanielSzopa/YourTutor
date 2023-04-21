@@ -7,7 +7,12 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "build application"
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x.x'
+      - run: dotnet restore
+      - run: dotnet build --no-restore
 
   Test:
     needs: Build
