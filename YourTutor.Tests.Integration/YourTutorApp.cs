@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace YourTutor.Tests.Integration;
 
@@ -9,7 +10,7 @@ internal sealed class YourTutorApp : WebApplicationFactory<Program>
     {
         Client = WithWebHostBuilder(builder =>
         {
-
+            builder.UseEnvironment("Test");
         })
             .CreateClient();
     }
