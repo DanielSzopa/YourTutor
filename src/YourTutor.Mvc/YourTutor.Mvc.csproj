@@ -18,8 +18,4 @@
     <ProjectReference Include="..\YourTutor.Infrastructure\YourTutor.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <InternalsVisibleTo Include="YourTutor.Tests.Integration" />
-  </ItemGroup>
-
 </Project>
