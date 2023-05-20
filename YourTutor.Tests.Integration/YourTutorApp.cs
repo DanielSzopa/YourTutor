@@ -7,7 +7,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 {
     public HttpClient Client { get; private set; }
 
-    private string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=YourTutor-Test-Db;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+    private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=YourTutor-Test-Db;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
     private Respawner _respawner;
     public YourTutorApp()
@@ -43,7 +43,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
         {
             SchemasToInclude = new[]
             {
-                "public"
+                "dbo"
             }
         });
     }
