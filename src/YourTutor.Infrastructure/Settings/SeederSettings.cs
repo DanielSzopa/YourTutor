@@ -16,8 +16,8 @@ public class SeederSettings : Settings<SeederSettings>, ISettings
     public SeederSettings()
     {
         RuleFor(s => s.Quantity)
-            .GreaterThan(0)
-            .WithMessage($"{nameof(Quantity)} should be greather than 0");
+            .GreaterThan(-1)
+            .WithMessage($"{nameof(Quantity)} should be 0 or greather than 0");
 
         RuleFor(s => s.Password)
             .Length(8, 50)
