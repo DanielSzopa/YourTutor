@@ -2,17 +2,20 @@
 using Respawn;
 using Respawn.Graph;
 using YourTutor.Application.Constants;
+using YourTutor.Application.Settings;
 
 namespace YourTutor.Tests.Integration;
 
 public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private IConfiguration _configuration;
-    public HttpClient Client { get; private set; }
 
-    private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=YourTutor-Test-Db;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+    private string _connectionString;
 
     private Respawner _respawner;
+
+    public HttpClient Client { get; private set; }
+
     public YourTutorApp()
     {
         
@@ -33,17 +36,27 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
         });
     }
 
-    public async Task ResetDbAsync()
-    {
-        await _respawner.ResetAsync(_connectionString);
-    }
+    public T GetSettings<T>()
+        where T : class, Application.Abstractions.Settings.ISettings, new() => 
+        _configuration.GetSettings<T>();
 
+    public string GetSettings(string sectionName)
+        => _configuration.GetSettings(sectionName);
 
+   
     public async Task InitializeAsync()
     {
         Client = CreateClient();
+        _connectionString = GetSettings<ConnectionStringsSettings>().DefaultConnectionString;
         await InitializeRespawner();
     }
+
+
+    async Task IAsyncLifetime.DisposeAsync()
+    {
+        await ResetDbAsync();
+    }
+
 
     private async Task InitializeRespawner()
     {
@@ -60,9 +73,9 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
         });
     }
 
-    async Task IAsyncLifetime.DisposeAsync()
+    public async Task ResetDbAsync()
     {
-        await ResetDbAsync();
+        await _respawner.ResetAsync(_connectionString);
     }
 }
 
