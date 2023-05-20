@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Respawn;
 using Respawn.Graph;
+using YourTutor.Application.Constants;
 
 namespace YourTutor.Tests.Integration;
 
@@ -19,7 +20,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.UseEnvironment("Test");
+        builder.UseEnvironment(EnvironmentService.TestEnvironment);
 
         builder.ConfigureServices(services =>
         {
