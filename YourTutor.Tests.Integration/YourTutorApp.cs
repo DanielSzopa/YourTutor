@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Respawn;
+using Respawn.Graph;
 
 namespace YourTutor.Tests.Integration;
 
@@ -12,7 +13,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     private Respawner _respawner;
     public YourTutorApp()
     {
-        
+
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -21,7 +22,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
         builder.ConfigureServices(services =>
         {
-            
+
         });
     }
 
@@ -44,6 +45,10 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
             SchemasToInclude = new[]
             {
                 "dbo"
+            },
+            TablesToIgnore = new Table[]
+            {
+                new Table("__EFMigrationsHistory") 
             }
         });
     }
