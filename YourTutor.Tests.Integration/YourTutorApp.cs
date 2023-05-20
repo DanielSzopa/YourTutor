@@ -6,6 +6,7 @@ namespace YourTutor.Tests.Integration;
 
 public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 {
+    private IConfiguration _configuration;
     public HttpClient Client { get; private set; }
 
     private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=YourTutor-Test-Db;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
@@ -13,7 +14,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     private Respawner _respawner;
     public YourTutorApp()
     {
-
+        
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -23,6 +24,11 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
         builder.ConfigureServices(services =>
         {
 
+        });
+
+        builder.ConfigureAppConfiguration((context, builder) =>
+        {
+            _configuration = builder.Build();
         });
     }
 
