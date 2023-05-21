@@ -18,7 +18,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
     public HttpClient Client { get; private set; }
     internal YourTutorDbContext YourTutorDbContext { get; private set; }
-    internal TestYourTutorDbContext TestYourTutorDbContext { get; private set; }
+    internal TestDatabase TestDatabase { get; private set; }
 
     public YourTutorApp()
     {
@@ -40,9 +40,9 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        TestYourTutorDbContext = new TestYourTutorDbContext();
-        YourTutorDbContext = TestYourTutorDbContext.YourTutorDbContext;
-        await TestYourTutorDbContext.InitializeDbAsync();
+        TestDatabase = new TestDatabase();
+        YourTutorDbContext = TestDatabase.YourTutorDbContext;
+        await TestDatabase.InitializeDbAsync();
 
         Client = CreateClient();
         _connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>().DefaultConnectionString;      
@@ -51,7 +51,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
     async Task IAsyncLifetime.DisposeAsync()
     {
-        await TestYourTutorDbContext.CustomDisposeAsync();
+        await TestDatabase.CustomDisposeAsync();
     }
 
 

@@ -4,10 +4,10 @@ using YourTutor.Infrastructure.DAL;
 
 namespace YourTutor.Tests.Integration.Helpers;
 
-internal class TestYourTutorDbContext
+internal class TestDatabase
 {
     internal YourTutorDbContext YourTutorDbContext { get; }
-    internal TestYourTutorDbContext()
+    internal TestDatabase()
     {
         var connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>();
         var builder = new DbContextOptionsBuilder<YourTutorDbContext>();
