@@ -7,17 +7,17 @@ using YourTutor.Tests.Integration.Helpers;
 namespace YourTutor.Tests.Integration.Controllers;
 
 [Collection(nameof(YourTutorCollection))]
-public class AccountControllerTests : IAsyncLifetime
+public class AccountControllerTests : IClassFixture<TestYourTutorDbContext>, IAsyncLifetime
 {
     private readonly HttpClient _client;
     private readonly Func<Task> _resetDb;
     private readonly YourTutorDbContext _db;
-    public AccountControllerTests(YourTutorApp app)
+    public AccountControllerTests(YourTutorApp app, TestYourTutorDbContext db)
     {
         _client = app.Client;
         _resetDb = app.ResetDbAsync;
-        _db = app.DbContext;
-
+        var test = new TestYourTutorDbContext();
+        _db = db.DbContext;
     }
 
     [Fact]

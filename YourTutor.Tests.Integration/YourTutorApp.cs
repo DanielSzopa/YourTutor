@@ -1,28 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 using Respawn;
 using Respawn.Graph;
 using YourTutor.Application.Constants;
 using YourTutor.Application.Settings;
-using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
 
 namespace YourTutor.Tests.Integration;
 
 public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    private IConfiguration _configuration;
-
     private string _connectionString;
 
     private Respawner _respawner;
 
     public HttpClient Client { get; private set; }
-    public IServiceProvider ServiceProvider { get; private set; }
-
-    internal YourTutorDbContext DbContext { get; private set; }
 
     public YourTutorApp()
     {
@@ -39,31 +32,13 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
             {
                 options.Filters.Remove(new AutoValidateAntiforgeryTokenAttribute());
             });
-
-            ServiceProvider = services.BuildServiceProvider();
-
-            DbContext = ServiceProvider.GetDbContext();
-
-        });
-
-        builder.ConfigureAppConfiguration((context, builder) =>
-        {
-            _configuration = builder.Build();
         });
     }
-
-    public T GetSettings<T>()
-        where T : class, Application.Abstractions.Settings.ISettings, new() => 
-        _configuration.GetSettings<T>();
-
-    public string GetSettings(string sectionName)
-        => _configuration.GetSettings(sectionName);
-
    
     public async Task InitializeAsync()
     {
         Client = CreateClient();
-        _connectionString = GetSettings<ConnectionStringsSettings>().DefaultConnectionString;
+        _connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>().DefaultConnectionString;
         await InitializeRespawner();
     }
 
