@@ -11,12 +11,12 @@ public class AccountControllerTests : IAsyncLifetime
 {
     private readonly HttpClient _client;
     private readonly Func<Task> _resetDb;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly YourTutorDbContext _db;
     public AccountControllerTests(YourTutorApp app)
     {
         _client = app.Client;
         _resetDb = app.ResetDbAsync;
-        _serviceProvider = app.ServiceProvider;
+        _db = TestDbContext.GetDbContext(app.ServiceProvider);
 
     }
 
@@ -39,8 +39,7 @@ public class AccountControllerTests : IAsyncLifetime
         var response = await _client.PostAsync("/account/register", formContent);
 
         //assert
-        var db = TestDbContext.DbContext(_serviceProvider);
-        var result = await db.Users.AnyAsync();
+        var result = await _db.Users.AnyAsync();
 
         result.Should().BeTrue();
         response.StatusCode.Should().Be(HttpStatusCode.OK);
