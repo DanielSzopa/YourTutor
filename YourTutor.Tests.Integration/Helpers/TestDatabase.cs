@@ -7,11 +7,10 @@ namespace YourTutor.Tests.Integration.Helpers;
 internal class TestDatabase
 {
     internal YourTutorDbContext YourTutorDbContext { get; }
-    internal TestDatabase()
+    internal TestDatabase(string connectionString)
     {
-        var connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>();
         var builder = new DbContextOptionsBuilder<YourTutorDbContext>();
-        var options = builder.UseSqlServer(connectionString.DefaultConnectionString).Options;
+        var options = builder.UseSqlServer(connectionString).Options;
         YourTutorDbContext = new YourTutorDbContext(options);
     }
 

@@ -40,12 +40,12 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        TestDatabase = new TestDatabase();
+        _connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>().DefaultConnectionString;
+        TestDatabase = new TestDatabase(_connectionString);
         YourTutorDbContext = TestDatabase.YourTutorDbContext;
         await TestDatabase.InitializeDbAsync();
 
-        Client = CreateClient();
-        _connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>().DefaultConnectionString;      
+        Client = CreateClient();        
         await InitializeRespawner();
     }
 
