@@ -39,8 +39,7 @@ public class AccountControllerTests : IAsyncLifetime
         var response = await _client.PostAsync("/account/register", formContent);
 
         //assert
-        using var scope = _serviceProvider.CreateAsyncScope();
-        var db = scope.ServiceProvider.GetRequiredService<YourTutorDbContext>();
+        var db = TestDbContext.DbContext(_serviceProvider);
         var result = await db.Users.AnyAsync();
 
         result.Should().BeTrue();
