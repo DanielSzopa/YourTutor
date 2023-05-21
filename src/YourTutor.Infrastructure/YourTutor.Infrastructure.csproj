@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="YourTutor.Tests.Unit" />
+    <InternalsVisibleTo Include="YourTutor.Tests.Integration" />
   </ItemGroup>
 
 </Project>

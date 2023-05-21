@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Respawn;
 using Respawn.Graph;
 using YourTutor.Application.Constants;
@@ -15,6 +17,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     private Respawner _respawner;
 
     public HttpClient Client { get; private set; }
+    public IServiceProvider ServiceProvider { get; private set; }
 
     public YourTutorApp()
     {
@@ -25,9 +28,14 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     {
         builder.UseEnvironment(EnvironmentService.TestEnvironment);
 
-        builder.ConfigureServices(services =>
+        builder.ConfigureTestServices(services =>
         {
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Remove(new AutoValidateAntiforgeryTokenAttribute());
+            });
 
+            ServiceProvider = services.BuildServiceProvider();
         });
 
         builder.ConfigureAppConfiguration((context, builder) =>
