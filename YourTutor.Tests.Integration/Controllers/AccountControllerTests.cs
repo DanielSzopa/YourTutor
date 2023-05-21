@@ -7,7 +7,7 @@ using YourTutor.Tests.Integration.Helpers;
 namespace YourTutor.Tests.Integration.Controllers;
 
 [Collection(nameof(YourTutorCollection))]
-public class AccountControllerTests : IClassFixture<TestYourTutorDbContext>, IAsyncLifetime
+public class AccountControllerTests : IAsyncLifetime
 {
     private readonly HttpClient _client;
     private readonly Func<Task> _resetDb;
