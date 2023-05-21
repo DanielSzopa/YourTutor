@@ -19,7 +19,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
     public YourTutorApp()
     {
-        
+
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -34,7 +34,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
             });
         });
     }
-   
+
     public async Task InitializeAsync()
     {
         Client = CreateClient();
@@ -42,11 +42,8 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
         await InitializeRespawner();
     }
 
-
-    async Task IAsyncLifetime.DisposeAsync()
-    {
-        await ResetDbAsync();
-    }
+    Task IAsyncLifetime.DisposeAsync()
+        => Task.CompletedTask;
 
 
     private async Task InitializeRespawner()
@@ -59,7 +56,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
             },
             TablesToIgnore = new Table[]
             {
-                new Table("__EFMigrationsHistory") 
+                new Table("__EFMigrationsHistory")
             }
         });
     }

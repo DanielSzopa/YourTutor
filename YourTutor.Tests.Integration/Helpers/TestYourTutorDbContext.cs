@@ -17,6 +17,7 @@ public class TestYourTutorDbContext : IDisposable
 
     public void Dispose()
     {
-        DbContext.Dispose();
+        DbContext.Database.EnsureDeleted();
+        DbContext.Dispose();        
     }
 }
