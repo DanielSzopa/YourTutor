@@ -9,7 +9,7 @@ public static class SettingsHelper
 
     public static IConfigurationRoot GetConfigurationRoot()
         => new ConfigurationBuilder()
-        .AddJsonFile(AppSettings)
+        .AddJsonFile(AppSettings, false, false)
         .AddEnvironmentVariables()
         .Build();
 
