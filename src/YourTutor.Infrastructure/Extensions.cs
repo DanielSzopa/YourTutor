@@ -55,7 +55,8 @@ namespace YourTutor.Infrastructure
                 .RegisterSettings<ConnectionStringsSettings>(configuration)
                 .RegisterSettings<SendGridSettings>(configuration)
                 .RegisterSettings<EmailSettings>(configuration)
-                .RegisterSettings<SeederSettings>(configuration);
+                .RegisterSettings<SeederSettings>(configuration)
+                .RegisterSettings<DbInitializerSettings>(configuration);
 
             return services;
         }
