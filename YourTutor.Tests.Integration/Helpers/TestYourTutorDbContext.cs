@@ -4,7 +4,7 @@ using YourTutor.Infrastructure.DAL;
 
 namespace YourTutor.Tests.Integration.Helpers;
 
-public class TestYourTutorDbContext : IDisposable
+public class TestYourTutorDbContext
 {
     internal YourTutorDbContext DbContext { get; }
     public TestYourTutorDbContext()
@@ -13,11 +13,5 @@ public class TestYourTutorDbContext : IDisposable
         var builder = new DbContextOptionsBuilder<YourTutorDbContext>();
         var options = builder.UseSqlServer(connectionString.DefaultConnectionString).Options;
         DbContext = new YourTutorDbContext(options);
-    }
-
-    public void Dispose()
-    {
-        DbContext.Database.EnsureDeleted();
-        DbContext.Dispose();        
     }
 }

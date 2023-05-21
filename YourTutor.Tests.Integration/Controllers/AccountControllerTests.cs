@@ -12,12 +12,11 @@ public class AccountControllerTests : IAsyncLifetime
     private readonly HttpClient _client;
     private readonly Func<Task> _resetDb;
     private readonly YourTutorDbContext _db;
-    public AccountControllerTests(YourTutorApp app, TestYourTutorDbContext db)
+    public AccountControllerTests(YourTutorApp app)
     {
         _client = app.Client;
         _resetDb = app.ResetDbAsync;
-        var test = new TestYourTutorDbContext();
-        _db = db.DbContext;
+        _db = app.DbContext; 
     }
 
     [Fact]

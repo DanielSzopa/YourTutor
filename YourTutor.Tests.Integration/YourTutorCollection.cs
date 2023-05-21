@@ -3,7 +3,7 @@
 namespace YourTutor.Tests.Integration;
 
 [CollectionDefinition(nameof(YourTutorCollection))]
-public class YourTutorCollection : ICollectionFixture<YourTutorApp>, ICollectionFixture<TestYourTutorDbContext>
+public class YourTutorCollection : ICollectionFixture<YourTutorApp>
 {
 }
 

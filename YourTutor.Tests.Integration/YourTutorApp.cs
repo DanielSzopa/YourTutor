@@ -5,6 +5,7 @@ using Respawn;
 using Respawn.Graph;
 using YourTutor.Application.Constants;
 using YourTutor.Application.Settings;
+using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
 
 namespace YourTutor.Tests.Integration;
@@ -16,6 +17,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     private Respawner _respawner;
 
     public HttpClient Client { get; private set; }
+    internal YourTutorDbContext DbContext { get; private set; }
 
     public YourTutorApp()
     {
@@ -39,11 +41,15 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     {
         Client = CreateClient();
         _connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>().DefaultConnectionString;
+        DbContext = new TestYourTutorDbContext().DbContext;
         await InitializeRespawner();
     }
 
-    Task IAsyncLifetime.DisposeAsync()
-        => Task.CompletedTask;
+    async Task IAsyncLifetime.DisposeAsync()
+    {
+        await DbContext.Database.EnsureDeletedAsync();
+        await DbContext.DisposeAsync();
+    }
 
 
     private async Task InitializeRespawner()
