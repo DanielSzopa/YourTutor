@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Respawn;
 using Respawn.Graph;
 using YourTutor.Application.Constants;
 using YourTutor.Application.Settings;
+using YourTutor.Infrastructure.DAL;
+using YourTutor.Tests.Integration.Helpers;
 
 namespace YourTutor.Tests.Integration;
 
@@ -18,6 +21,8 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
     public HttpClient Client { get; private set; }
     public IServiceProvider ServiceProvider { get; private set; }
+
+    internal YourTutorDbContext DbContext { get; private set; }
 
     public YourTutorApp()
     {
@@ -36,6 +41,9 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
             });
 
             ServiceProvider = services.BuildServiceProvider();
+
+            DbContext = ServiceProvider.GetDbContext();
+
         });
 
         builder.ConfigureAppConfiguration((context, builder) =>

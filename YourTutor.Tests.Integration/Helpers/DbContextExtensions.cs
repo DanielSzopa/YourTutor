@@ -2,9 +2,9 @@
 
 namespace YourTutor.Tests.Integration.Helpers;
 
-internal static class TestDbContext
+internal static class DbContextExtensions
 {
-    internal static YourTutorDbContext GetDbContext(IServiceProvider serviceProvider)
+    internal static YourTutorDbContext GetDbContext(this IServiceProvider serviceProvider)
     {
         var scope = serviceProvider.CreateAsyncScope();
         var db =  scope.ServiceProvider.GetRequiredService<YourTutorDbContext>();

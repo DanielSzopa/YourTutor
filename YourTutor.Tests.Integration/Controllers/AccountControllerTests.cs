@@ -16,7 +16,7 @@ public class AccountControllerTests : IAsyncLifetime
     {
         _client = app.Client;
         _resetDb = app.ResetDbAsync;
-        _db = TestDbContext.GetDbContext(app.ServiceProvider);
+        _db = app.DbContext;
 
     }
 
