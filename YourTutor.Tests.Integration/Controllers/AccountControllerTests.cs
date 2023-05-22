@@ -50,9 +50,18 @@ public class AccountControllerTests : IAsyncLifetime
         await _client.PostAsync(_registerEndpoint, formContent);
 
         //assert
-        var result = await _db.Users.AnyAsync();
+        var user = await _db.Users
+            .Include(u => u.Tutor)
+            .FirstOrDefaultAsync();
 
-        result.Should().BeTrue();
+        using var scope = new AssertionScope();
+        user.Should().NotBeNull();
+        user.Email.Value.Should().Be(_validRegisterVm.Email);
+        user.FirstName.Value.Should().Be(_validRegisterVm.FirstName);
+        user.LastName.Value.Should().Be(_validRegisterVm.LastName);
+        user.HashPassword.Value.Should().NotBeEmpty();
+        user.Id.Value.Should().NotBe(Guid.Empty);
+        user.Tutor.Should().NotBeNull();
     }
 
     [Fact]
