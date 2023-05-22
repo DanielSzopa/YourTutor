@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentAssertions.Execution;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.DAL;
@@ -16,32 +17,87 @@ public class AccountControllerTests : IAsyncLifetime
     {
         _client = app.Client;
         _resetDb = app.ResetDbAsync;
-        _db = app.YourTutorDbContext; 
+        _db = app.YourTutorDbContext;
     }
 
+    private readonly string _registerEndpoint = "/account/register";
+
+    private readonly RegisterVm _validRegisterVm = new()
+    {
+        Email = "phill@gmail.com",
+        FirstName = "Phill",
+        LastName = "Cash",
+        Password = "Test123!",
+        PasswordConfirmation = "Test123!",
+    };
+
+    private readonly RegisterVm _invalidRegisterVm = new()
+    {
+        Email = "",
+        FirstName = "Phill",
+        LastName = "Cash",
+        Password = "Test123!",
+        PasswordConfirmation = "Test123!",
+    };
+
     [Fact]
-    public async Task Register_WithValidForm_ShouldRegisterAccount()
+    public async Task Register_WithValidVm_Should_AddUserToDb()
     {
         //arrange
-        var vm = new RegisterVm()
-        {
-            Email = "phill@gmail.com",
-            FirstName = "Phill",
-            LastName = "Cash",
-            Password = "Test123!",
-            PasswordConfirmation = "Test123!",
-        };
-
-        var formContent = vm.ToFormContent();
+        var formContent = _validRegisterVm.ToFormContent();
 
         //act
-        var response = await _client.PostAsync("/account/register", formContent);
+        await _client.PostAsync(_registerEndpoint, formContent);
 
         //assert
         var result = await _db.Users.AnyAsync();
 
         result.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task Register_WithValidVm_Should_Return302Found_SetLocationHeader()
+    {
+        //arrange
+        var formContent = _validRegisterVm.ToFormContent();
+
+        //act
+        var response = await _client.PostAsync(_registerEndpoint, formContent);
+
+        //assert
+        using var scope = new AssertionScope();
+        response.StatusCode.Should().Be(HttpStatusCode.Found);
+        response.Headers.Location?.OriginalString.Should().Be("/");
+    }
+
+    [Fact]
+    public async Task Register_WithInvalidVm_Should_Return200Ok_WithoutLocationHeader()
+    {
+        //arrange
+        var formContent = _invalidRegisterVm.ToFormContent();
+
+        //act
+        var response = await _client.PostAsync(_registerEndpoint, formContent);
+
+        //assert
+        using var scope = new AssertionScope();
         response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.Headers.Location.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task Register_WithInvalidVm_Should_NotAddUserToDb()
+    {
+        //arrange
+        var formContent = _invalidRegisterVm.ToFormContent();
+
+        //act
+        await _client.PostAsync(_registerEndpoint, formContent);
+
+        //assert
+        var result = await _db.Users.AnyAsync();
+
+        result.Should().BeFalse();
     }
 
     public Task DisposeAsync() => _resetDb();

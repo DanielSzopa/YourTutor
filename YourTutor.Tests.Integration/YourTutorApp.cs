@@ -45,7 +45,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
         YourTutorDbContext = TestDatabase.YourTutorDbContext;
         await TestDatabase.InitializeDbAsync();
 
-        Client = CreateClient();        
+        Client = CreateClient(new WebApplicationFactoryClientOptions() { AllowAutoRedirect = false });
         await InitializeRespawner();
     }
 
