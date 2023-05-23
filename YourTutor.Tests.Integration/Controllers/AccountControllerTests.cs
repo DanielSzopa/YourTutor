@@ -3,6 +3,7 @@ using YourTutor.Application.Settings;
 using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
+using YourTutor.Tests.Integration.Helpers.Fixtures;
 using YourTutor.Tests.Integration.TestFactories;
 
 namespace YourTutor.Tests.Integration.Controllers;
@@ -14,12 +15,14 @@ public class AccountControllerTests : IAsyncLifetime
     private readonly Func<Task> _resetDb;
     private readonly YourTutorDbContext _db;
     private readonly IServiceProvider _serviceProvider;
-    public AccountControllerTests(YourTutorApp app)
+    private readonly Faker _faker;
+    public AccountControllerTests(YourTutorApp app, FakerFixture faker)
     {
         _client = app.Client;
         _resetDb = app.ResetDbAsync;
         _db = app.YourTutorDbContext;
         _serviceProvider = app.ServiceProvider;
+        _faker = faker.Faker;
     }
 
     private readonly string _identityCookie = SettingsHelper.GetSettings<IdentitySettings>().CookieName;
@@ -184,11 +187,33 @@ public class AccountControllerTests : IAsyncLifetime
         var vm = new LoginVm()
         {
             Email = testUser.UserWithHashedPassword.Email,
-            Password = Guid.NewGuid().ToString(),
+            Password = _faker.Random.String2(8),
         };
 
         await _db.Users.AddAsync(testUser.UserWithHashedPassword);
         await _db.SaveChangesAsync();
+
+        var formContent = vm.ToFormContent();
+
+        //act
+        var response = await _client.PostAsync(_loginPath, formContent);
+
+        //assert
+        using var scope = new AssertionScope();
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.Headers.Location.Should().BeNull();
+        response.ContainsCookie(_identityCookie).Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task Login_WithInvalidCredentials_ShouldReturn200Ok_And_WithoutSetLocation_And_WithoutSetIdentityCookie()
+    {
+        //arrange
+        var vm = new LoginVm()
+        {
+            Email = _faker.Person.Email,
+            Password = _faker.Random.String2(8),
+        };
 
         var formContent = vm.ToFormContent();
 
