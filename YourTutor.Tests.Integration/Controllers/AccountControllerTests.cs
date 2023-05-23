@@ -1,6 +1,7 @@
 ﻿using FluentAssertions.Execution;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using YourTutor.Application.Settings;
 using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
@@ -19,6 +20,8 @@ public class AccountControllerTests : IAsyncLifetime
         _resetDb = app.ResetDbAsync;
         _db = app.YourTutorDbContext;
     }
+
+    private readonly string _identityCookie = SettingsHelper.GetSettings<IdentitySettings>().CookieName;
 
     private readonly string _registerEndpoint = "/account/register";
 
@@ -65,7 +68,7 @@ public class AccountControllerTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task Register_WithValidVm_Should_Return302Found_SetLocationHeader()
+    public async Task Register_WithValidVm_Should_Return302Found_SetLocationHeader_SetIdentityCookie()
     {
         //arrange
         var formContent = _validRegisterVm.ToFormContent();
@@ -77,10 +80,11 @@ public class AccountControllerTests : IAsyncLifetime
         using var scope = new AssertionScope();
         response.StatusCode.Should().Be(HttpStatusCode.Found);
         response.Headers.Location?.OriginalString.Should().Be("/");
+        response.ContainsCookie(_identityCookie).Should().BeTrue();
     }
 
     [Fact]
-    public async Task Register_WithInvalidVm_Should_Return200Ok_WithoutLocationHeader()
+    public async Task Register_WithInvalidVm_Should_Return200Ok_WithoutLocationHeader_WithoutIdentityCookie()
     {
         //arrange
         var formContent = _invalidRegisterVm.ToFormContent();
@@ -92,6 +96,7 @@ public class AccountControllerTests : IAsyncLifetime
         using var scope = new AssertionScope();
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         response.Headers.Location.Should().BeNull();
+        response.ContainsCookie(_identityCookie).Should().BeFalse();
     }
 
     [Fact]
