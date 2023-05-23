@@ -24,8 +24,9 @@ public class AccountControllerTests : IAsyncLifetime
 
     private readonly string _identityCookie = SettingsHelper.GetSettings<IdentitySettings>().CookieName;
 
-    private readonly string _registerEndpoint = "/account/register";
-    private readonly string _loginEndpoint = "/account/login";
+    private readonly string _registerPath = "/account/register";
+    private readonly string _loginPath = "/account/login";
+    private readonly string _homePath = "/";
 
     #region Register
 
@@ -37,7 +38,7 @@ public class AccountControllerTests : IAsyncLifetime
         var formContent = vm.ToFormContent();       
 
         //act
-        var response = await _client.PostAsync(_registerEndpoint, formContent);
+        var response = await _client.PostAsync(_registerPath, formContent);
 
         //assert
         var user = await _db.Users
@@ -55,7 +56,7 @@ public class AccountControllerTests : IAsyncLifetime
         verifyResult.Should().BeTrue();
 
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
-        response.Headers.Location?.OriginalString.Should().Be("/");
+        response.Headers.Location?.OriginalString.Should().Be(_homePath);
         response.ContainsCookie(_identityCookie).Should().BeTrue();
     }
 
@@ -66,7 +67,7 @@ public class AccountControllerTests : IAsyncLifetime
         var formContent = ViewModelFactory.InvalidRegisterVm.ToFormContent();
 
         //act
-        var response = await _client.PostAsync(_registerEndpoint, formContent);
+        var response = await _client.PostAsync(_registerPath, formContent);
 
         //assert
         var result = await _db.Users.AnyAsync();
@@ -86,7 +87,7 @@ public class AccountControllerTests : IAsyncLifetime
         var formContent = vm.ToFormContent();
 
         //act
-        await _client.PostAsync(_registerEndpoint, formContent);
+        await _client.PostAsync(_registerPath, formContent);
 
         //assert
         var hashedPassword = await _db.Users
@@ -118,7 +119,7 @@ public class AccountControllerTests : IAsyncLifetime
         var formContent = vm.ToFormContent();
 
         //act
-        var response = await _client.PostAsync(_registerEndpoint, formContent);
+        var response = await _client.PostAsync(_registerPath, formContent);
 
         //assert
         var result = await _db.Users.CountAsync(x => x.Email == user.Email);
@@ -155,12 +156,12 @@ public class AccountControllerTests : IAsyncLifetime
         var datetime = DateTime.UtcNow;
 
         //act
-        var response = await _client.PostAsync(_loginEndpoint, formContent);
+        var response = await _client.PostAsync(_loginPath, formContent);
 
         //assert
         using var scope = new AssertionScope();
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
-        response.Headers.Location.Should().Be("/");
+        response.Headers.Location.Should().Be(_homePath);
         response.ContainsCookie(_identityCookie).Should().BeTrue();
 
         var cookie = response.GetCookie(_identityCookie);
@@ -171,7 +172,7 @@ public class AccountControllerTests : IAsyncLifetime
         }
         else
         {
-            cookie.Expires.Should().BeBefore(new DateTime(1000, 01, 01));
+            cookie.Expires.Should().BeBefore(new DateTime(0002, 01, 01));
         }
     }
 
