@@ -29,6 +29,7 @@ public class AccountControllerTests : IAsyncLifetime
 
     private readonly string _registerPath = "/account/register";
     private readonly string _loginPath = "/account/login";
+    private readonly string _logoutPath = "/account/logout";
     private readonly string _homePath = "/";
 
     #region Register
@@ -225,6 +226,37 @@ public class AccountControllerTests : IAsyncLifetime
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         response.Headers.Location.Should().BeNull();
         response.ContainsCookie(_identityCookie).Should().BeFalse();
+    }
+
+    #endregion
+
+    #region Logout
+
+    [Fact]
+    public async Task Logout_WhenCallLogout_ShouldReturnExpiredIdentityCookie()
+    {
+        //arrange        
+        var testUser = TestUserFactory.GetTestUserWithHashing(GetHashService());
+        var vm = new LoginVm()
+        {
+            Email = testUser.UserWithHashedPassword.Email,
+            Password = testUser.OrgiginalPassword,
+            RememberMe = true
+        };
+
+        await _db.Users.AddAsync(testUser.UserWithHashedPassword);
+        await _db.SaveChangesAsync();
+
+        var formContent = vm.ToFormContent();
+
+        //act
+        var loginResponse = await _client.PostAsync(_loginPath, formContent);
+        var logoutResponse = await _client.GetAsync(_logoutPath);
+
+        //arrange
+        using var scope = new AssertionScope();
+        loginResponse.ContainsCookie(_identityCookie).Should().BeTrue();
+        logoutResponse.ContainsCookie(_identityCookie).Should().BeFalse();
     }
 
     #endregion
