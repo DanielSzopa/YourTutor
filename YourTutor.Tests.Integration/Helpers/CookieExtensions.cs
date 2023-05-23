@@ -22,6 +22,15 @@ public static class CookieExtensions
         return cookies.GetAllCookies();
     }
 
+    public static Cookie GetCookie(this HttpResponseMessage response, string name)
+    {
+        var cookies = GetAllCookies(response);
+        if(cookies.Count <= 0) 
+            return null;
+
+        return cookies.FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
+    }
+
     public static bool ContainsCookie(this HttpResponseMessage response, string name)
     {
         var cookies = GetAllCookies(response);

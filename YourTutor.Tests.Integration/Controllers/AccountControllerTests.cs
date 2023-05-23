@@ -1,7 +1,6 @@
 ﻿using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Settings;
 using YourTutor.Application.ViewModels;
-using YourTutor.Core.Entities;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
 using YourTutor.Tests.Integration.TestFactories;
@@ -135,22 +134,25 @@ public class AccountControllerTests : IAsyncLifetime
 
     #region Login
 
-    [Fact]
-    public async Task Login_WhenCredentialsAreGood_WithRememberMe_Should_Return302Redirect_And_SetLocationHeader_And_SetIdentityCookieWithSessionExpiration()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Login_WhenCredentialsAreGood_WithDeterminedRememberMe_Should_Return302Redirect_And_SetLocationHeader_And_SetIdentityCookieWithAppropriateExpiration(bool isRememberMe)
     {
-        //arrange
+        //arrange        
         var testUser = TestUserFactory.GetTestUserWithHashing(GetHashService());
         var vm = new LoginVm()
         {
             Email = testUser.UserWithHashedPassword.Email,
             Password = testUser.OrgiginalPassword,
-            RememberMe = true
+            RememberMe = isRememberMe
         };
 
         await _db.Users.AddAsync(testUser.UserWithHashedPassword);
         await _db.SaveChangesAsync();
 
         var formContent = vm.ToFormContent();
+        var datetime = DateTime.UtcNow;
 
         //act
         var response = await _client.PostAsync(_loginEndpoint, formContent);
@@ -160,6 +162,17 @@ public class AccountControllerTests : IAsyncLifetime
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.Should().Be("/");
         response.ContainsCookie(_identityCookie).Should().BeTrue();
+
+        var cookie = response.GetCookie(_identityCookie);
+        if (isRememberMe)
+        {
+            var cookieDatetime = datetime.AddDays(SettingsHelper.GetSettings<IdentitySettings>().ExpiresDays);
+            cookie.Expires.Should().BeCloseTo(cookieDatetime, TimeSpan.FromMinutes(1));
+        }
+        else
+        {
+            cookie.Expires.Should().BeBefore(new DateTime(1000, 01, 01));
+        }
     }
 
     #endregion
