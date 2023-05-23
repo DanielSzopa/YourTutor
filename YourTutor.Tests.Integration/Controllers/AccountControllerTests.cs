@@ -176,6 +176,32 @@ public class AccountControllerTests : IAsyncLifetime
         }
     }
 
+    [Fact]
+    public async Task Login_WithInvalidPassword_ShouldReturn200Ok_And_WithoutSetLocation_And_WithoutSetIdentityCookie()
+    {
+        //arrange
+        var testUser = TestUserFactory.GetTestUserWithHashing(GetHashService());
+        var vm = new LoginVm()
+        {
+            Email = testUser.UserWithHashedPassword.Email,
+            Password = Guid.NewGuid().ToString(),
+        };
+
+        await _db.Users.AddAsync(testUser.UserWithHashedPassword);
+        await _db.SaveChangesAsync();
+
+        var formContent = vm.ToFormContent();
+
+        //act
+        var response = await _client.PostAsync(_loginPath, formContent);
+
+        //assert
+        using var scope = new AssertionScope();
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.Headers.Location.Should().BeNull();
+        response.ContainsCookie(_identityCookie).Should().BeFalse();
+    }
+
     #endregion
 
 
