@@ -1,6 +1,7 @@
 ﻿using FluentAssertions.Execution;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Settings;
 using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.DAL;
@@ -14,11 +15,13 @@ public class AccountControllerTests : IAsyncLifetime
     private readonly HttpClient _client;
     private readonly Func<Task> _resetDb;
     private readonly YourTutorDbContext _db;
+    private readonly IServiceProvider _serviceProvider;
     public AccountControllerTests(YourTutorApp app)
     {
         _client = app.Client;
         _resetDb = app.ResetDbAsync;
         _db = app.YourTutorDbContext;
+        _serviceProvider = app.ServiceProvider;
     }
 
     private readonly string _identityCookie = SettingsHelper.GetSettings<IdentitySettings>().CookieName;
@@ -114,6 +117,28 @@ public class AccountControllerTests : IAsyncLifetime
         result.Should().BeFalse();
     }
 
+    [Fact]
+    public async Task Register_WithValidVm_ShouldHashPassword()
+    {
+        //arrange
+        var formContent = _validRegisterVm.ToFormContent();
+
+        //act
+        await _client.PostAsync(_registerEndpoint, formContent);
+
+        //assert
+        var hashedPassword = await _db.Users
+            .Select(u => u.HashPassword)
+            .FirstOrDefaultAsync();
+
+        var verifyResult = GetHashService().VerifyPassword(_validRegisterVm.Password, hashedPassword);
+
+        verifyResult.Should().BeTrue();
+    }
+
+
+    private IHashService GetHashService()
+        => _serviceProvider.GetRequiredService<IHashService>();
     public Task DisposeAsync() => _resetDb();
 
     public Task InitializeAsync() => Task.CompletedTask;

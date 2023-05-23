@@ -17,6 +17,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     private Respawner _respawner;
 
     public HttpClient Client { get; private set; }
+    public IServiceProvider ServiceProvider { get; private set; }
     internal YourTutorDbContext YourTutorDbContext { get; private set; }
     internal TestDatabase TestDatabase { get; private set; }
 
@@ -35,6 +36,8 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
             {
                 options.Filters.Remove(new AutoValidateAntiforgeryTokenAttribute());
             });
+
+            ServiceProvider = services.BuildServiceProvider();
         });
     }
 
