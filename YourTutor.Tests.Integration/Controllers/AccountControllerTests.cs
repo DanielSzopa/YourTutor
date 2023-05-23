@@ -1,9 +1,7 @@
-﻿using FluentAssertions.Execution;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
-using YourTutor.Application.Abstractions.Security;
+﻿using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Settings;
 using YourTutor.Application.ViewModels;
+using YourTutor.Core.Entities;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
 using YourTutor.Tests.Integration.TestFactories;
@@ -28,11 +26,12 @@ public class AccountControllerTests : IAsyncLifetime
     private readonly string _identityCookie = SettingsHelper.GetSettings<IdentitySettings>().CookieName;
 
     private readonly string _registerEndpoint = "/account/register";
+    private readonly string _loginEndpoint = "/account/login";
 
     #region Register
 
     [Fact]
-    public async Task Register_WithValidVm_Should_AddUserToDbWithHashedPassword_And_Return302Found_And_SetLocationHeader_And_SetIdentityCookie()
+    public async Task Register_WithValidVm_Should_AddUserToDbWithHashedPassword_And_Return302Redirect_And_SetLocationHeader_And_SetIdentityCookie()
     {
         //arrange
         var vm = ViewModelFactory.ValidRegisterVm;
@@ -56,7 +55,7 @@ public class AccountControllerTests : IAsyncLifetime
         user.Tutor.Should().NotBeNull();
         verifyResult.Should().BeTrue();
 
-        response.StatusCode.Should().Be(HttpStatusCode.Found);
+        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location?.OriginalString.Should().Be("/");
         response.ContainsCookie(_identityCookie).Should().BeTrue();
     }
@@ -130,6 +129,37 @@ public class AccountControllerTests : IAsyncLifetime
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         response.Headers.Location.Should().BeNull();
         response.ContainsCookie(_identityCookie).Should().BeFalse();
+    }
+
+    #endregion
+
+    #region Login
+
+    [Fact]
+    public async Task Login_WhenCredentialsAreGood_WithRememberMe_Should_Return302Redirect_And_SetLocationHeader_And_SetIdentityCookieWithSessionExpiration()
+    {
+        //arrange
+        var testUser = TestUserFactory.GetTestUserWithHashing(GetHashService());
+        var vm = new LoginVm()
+        {
+            Email = testUser.UserWithHashedPassword.Email,
+            Password = testUser.OrgiginalPassword,
+            RememberMe = true
+        };
+
+        await _db.Users.AddAsync(testUser.UserWithHashedPassword);
+        await _db.SaveChangesAsync();
+
+        var formContent = vm.ToFormContent();
+
+        //act
+        var response = await _client.PostAsync(_loginEndpoint, formContent);
+
+        //assert
+        using var scope = new AssertionScope();
+        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+        response.Headers.Location.Should().Be("/");
+        response.ContainsCookie(_identityCookie).Should().BeTrue();
     }
 
     #endregion

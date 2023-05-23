@@ -33,9 +33,19 @@ namespace YourTutor.Application.Commands.SignIn
                 return loginResponse;
             }
 
-            var result = _hashService.VerifyPassword(request.LoginVm.Password, user.HashPassword);
+            bool verifyPasswordResult = false;
+            try
+            {
+                verifyPasswordResult = _hashService.VerifyPassword(request.LoginVm.Password, user.HashPassword);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(AppLogEvent.SignIn,"Problem with verify password, hashedPassword: {0} , inputPassword: {1}, exception: {2}",
+                    user.HashPassword.Value, request.LoginVm.Password, ex.ToString());
+            }
+            
 
-            if (result is false)
+            if (verifyPasswordResult is false)
             {
                 loginResponse.Errors.Add("Invalid credentials");
                 _logger.LogError(AppLogEvent.SignIn, "Password is incorrect for: {@email}", request.LoginVm.Email);
