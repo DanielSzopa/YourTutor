@@ -29,31 +29,14 @@ public class AccountControllerTests : IAsyncLifetime
 
     private readonly string _registerEndpoint = "/account/register";
 
-    private readonly RegisterVm _validRegisterVm = new()
-    {
-        Email = "phill@gmail.com",
-        FirstName = "Phill",
-        LastName = "Cash",
-        Password = "Test123!",
-        PasswordConfirmation = "Test123!",
-    };
-
-    private readonly RegisterVm _invalidRegisterVm = new()
-    {
-        Email = "",
-        FirstName = "Phill",
-        LastName = "Cash",
-        Password = "Test123!",
-        PasswordConfirmation = "Test123!",
-    };
-
     #region Register
 
     [Fact]
     public async Task Register_WithValidVm_Should_AddUserToDbWithHashedPassword_And_Return302Found_And_SetLocationHeader_And_SetIdentityCookie()
     {
         //arrange
-        var formContent = _validRegisterVm.ToFormContent();
+        var vm = ViewModelFactory.ValidRegisterVm;
+        var formContent = vm.ToFormContent();       
 
         //act
         var response = await _client.PostAsync(_registerEndpoint, formContent);
@@ -62,13 +45,13 @@ public class AccountControllerTests : IAsyncLifetime
         var user = await _db.Users
             .Include(u => u.Tutor)
             .FirstOrDefaultAsync();
-        var verifyResult = GetHashService().VerifyPassword(_validRegisterVm.Password, user.HashPassword);
+        var verifyResult = GetHashService().VerifyPassword(vm.Password, user.HashPassword);
 
         using var scope = new AssertionScope();
         user.Should().NotBeNull();
-        user.Email.Value.Should().Be(_validRegisterVm.Email);
-        user.FirstName.Value.Should().Be(_validRegisterVm.FirstName);
-        user.LastName.Value.Should().Be(_validRegisterVm.LastName);
+        user.Email.Value.Should().Be(vm.Email);
+        user.FirstName.Value.Should().Be(vm.FirstName);
+        user.LastName.Value.Should().Be(vm.LastName);
         user.Id.Value.Should().NotBe(Guid.Empty);
         user.Tutor.Should().NotBeNull();
         verifyResult.Should().BeTrue();
@@ -82,7 +65,7 @@ public class AccountControllerTests : IAsyncLifetime
     public async Task Register_WithInvalidVm_Should_DoNotAddUserToDb_And_Return200Ok_And_WithoutSetLocationHeader_And_WithoutIdentityCookie()
     {
         //arrange
-        var formContent = _invalidRegisterVm.ToFormContent();
+        var formContent = ViewModelFactory.InvalidRegisterVm.ToFormContent();
 
         //act
         var response = await _client.PostAsync(_registerEndpoint, formContent);
@@ -101,7 +84,8 @@ public class AccountControllerTests : IAsyncLifetime
     public async Task Register_WithValidVm_ShouldHashPassword()
     {
         //arrange
-        var formContent = _validRegisterVm.ToFormContent();
+        var vm = ViewModelFactory.ValidRegisterVm;
+        var formContent = vm.ToFormContent();
 
         //act
         await _client.PostAsync(_registerEndpoint, formContent);
@@ -111,7 +95,7 @@ public class AccountControllerTests : IAsyncLifetime
             .Select(u => u.HashPassword)
             .FirstOrDefaultAsync();
 
-        var verifyResult = GetHashService().VerifyPassword(_validRegisterVm.Password, hashedPassword);
+        var verifyResult = GetHashService().VerifyPassword(vm.Password, hashedPassword);
 
         verifyResult.Should().BeTrue();
     }
