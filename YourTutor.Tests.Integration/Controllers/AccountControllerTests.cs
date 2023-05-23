@@ -4,7 +4,6 @@ using System.Net;
 using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Settings;
 using YourTutor.Application.ViewModels;
-using YourTutor.Core.ValueObjects;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
 using YourTutor.Tests.Integration.TestFactories;
