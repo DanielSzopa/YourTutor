@@ -6,6 +6,7 @@ using YourTutor.Application.Settings;
 using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
+using YourTutor.Tests.Integration.TestFactories;
 
 namespace YourTutor.Tests.Integration.Controllers;
 
@@ -134,6 +135,33 @@ public class AccountControllerTests : IAsyncLifetime
         var verifyResult = GetHashService().VerifyPassword(_validRegisterVm.Password, hashedPassword);
 
         verifyResult.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task Register_WhenEmailIsAlreadyExist_ShouldNotAddUserToDb()
+    {
+        //arrange
+        var user = TestUserFactory.User;
+        var vm = new RegisterVm
+        {
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Password = user.HashPassword,
+            PasswordConfirmation = user.HashPassword
+        };
+
+        await _db.Users.AddAsync(user);
+
+        var formContent = vm.ToFormContent();
+
+        //act
+        await _client.PostAsync(_registerEndpoint, formContent);
+
+        //assert
+        var result = await _db.Users.CountAsync(x => x.Email == user.Email);
+
+        result.Should().Be(1);
     }
 
 
