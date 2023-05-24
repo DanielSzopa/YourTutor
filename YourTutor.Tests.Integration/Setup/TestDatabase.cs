@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using YourTutor.Application.Settings;
-using YourTutor.Infrastructure.DAL;
+﻿using YourTutor.Infrastructure.DAL;
 
 namespace YourTutor.Tests.Integration.Setup;
 
@@ -10,7 +8,9 @@ internal class TestDatabase
     internal TestDatabase(string connectionString)
     {
         var builder = new DbContextOptionsBuilder<YourTutorDbContext>();
-        var options = builder.UseSqlServer(connectionString).Options;
+        var options = builder.UseSqlServer(connectionString,
+            x => x.MigrationsHistoryTable(ConstantsDAL.MigrationsHistoryTable, ConstantsDAL.DefaultSchema))
+            .Options;
         YourTutorDbContext = new YourTutorDbContext(options);
     }
 

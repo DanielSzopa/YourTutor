@@ -5,6 +5,7 @@ using Respawn;
 using Respawn.Graph;
 using YourTutor.Application.Constants;
 using YourTutor.Application.Settings;
+using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
 using YourTutor.Tests.Integration.Setup.Authentication;
 
@@ -84,11 +85,11 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
         {
             SchemasToInclude = new[]
             {
-                "dbo"
+                ConstantsDAL.DefaultSchema
             },
             TablesToIgnore = new Table[]
             {
-                new Table("__EFMigrationsHistory")
+                new Table(ConstantsDAL.MigrationsHistoryTable)
             }
         });
     }
