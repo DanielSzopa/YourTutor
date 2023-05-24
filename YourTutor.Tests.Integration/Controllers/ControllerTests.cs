@@ -15,7 +15,7 @@ public abstract class ControllerTests
     {
         Client = app.Client;
         Faker = faker.Faker;
-        Db = app.YourTutorDbContext;
+        Db = app.TestDatabase.YourTutorDbContext;
         ResetDb = app.ResetDbAsync;
     }
 }

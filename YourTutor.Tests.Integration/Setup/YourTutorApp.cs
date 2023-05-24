@@ -5,7 +5,6 @@ using Respawn;
 using Respawn.Graph;
 using YourTutor.Application.Constants;
 using YourTutor.Application.Settings;
-using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
 using YourTutor.Tests.Integration.Setup.Authentication;
 
@@ -17,10 +16,10 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
     private Respawner _respawner;
 
+    private IServiceProvider _serviceProvider;
+
     public HttpClient Client { get; private set; }
-    public HttpClient AuthenticatedClient { get; private set; }
-    public IServiceProvider ServiceProvider { get; private set; }
-    internal YourTutorDbContext YourTutorDbContext { get; private set; }
+    public HttpClient AuthenticatedClient { get; private set; }  
     internal TestDatabase TestDatabase { get; private set; }
 
     public YourTutorApp()
@@ -39,15 +38,17 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
                 options.Filters.Remove(new AutoValidateAntiforgeryTokenAttribute());
             });
 
-            ServiceProvider = services.BuildServiceProvider();
+            _serviceProvider = services.BuildServiceProvider();
         });
     }
+
+    public T GetRequiredService<T>() =>
+        _serviceProvider.GetRequiredService<T>();
 
     public async Task InitializeAsync()
     {
         _connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>().DefaultConnectionString;
         TestDatabase = new TestDatabase(_connectionString);
-        YourTutorDbContext = TestDatabase.YourTutorDbContext;
         await TestDatabase.InitializeDbAsync();
 
         InitializeClients();
@@ -96,9 +97,6 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     {
         await _respawner.ResetAsync(_connectionString);
     }
-
-    public T GetRequiredService<T>() =>
-        ServiceProvider.GetRequiredService<T>();
 }
 
 
