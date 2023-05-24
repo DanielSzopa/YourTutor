@@ -2,7 +2,7 @@
 using YourTutor.Application.Settings;
 using YourTutor.Infrastructure.DAL;
 
-namespace YourTutor.Tests.Integration.Helpers;
+namespace YourTutor.Tests.Integration.Setup;
 
 internal class TestDatabase
 {

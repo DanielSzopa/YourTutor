@@ -4,6 +4,7 @@ using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
 using YourTutor.Tests.Integration.Helpers.Fixtures;
+using YourTutor.Tests.Integration.Setup;
 using YourTutor.Tests.Integration.TestFactories;
 
 namespace YourTutor.Tests.Integration.Controllers;

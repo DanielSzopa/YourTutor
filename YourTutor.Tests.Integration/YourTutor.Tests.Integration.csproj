@@ -28,4 +28,8 @@
     <ProjectReference Include="..\src\YourTutor.Mvc\YourTutor.Mvc.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Setup\Authentication\" />
+  </ItemGroup>
+
 </Project>

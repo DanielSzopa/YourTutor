@@ -6,9 +6,10 @@ using Respawn.Graph;
 using YourTutor.Application.Constants;
 using YourTutor.Application.Settings;
 using YourTutor.Infrastructure.DAL;
+using YourTutor.Mvc;
 using YourTutor.Tests.Integration.Helpers;
 
-namespace YourTutor.Tests.Integration;
+namespace YourTutor.Tests.Integration.Setup;
 
 public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 {
@@ -17,6 +18,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     private Respawner _respawner;
 
     public HttpClient Client { get; private set; }
+    public HttpClient ClientWithAuthentication { get; private set; }
     public IServiceProvider ServiceProvider { get; private set; }
     internal YourTutorDbContext YourTutorDbContext { get; private set; }
     internal TestDatabase TestDatabase { get; private set; }
@@ -48,8 +50,25 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
         YourTutorDbContext = TestDatabase.YourTutorDbContext;
         await TestDatabase.InitializeDbAsync();
 
-        Client = CreateClient(new WebApplicationFactoryClientOptions() { AllowAutoRedirect = false });
+        InitializeClients();
+
         await InitializeRespawner();
+    }
+
+    private void InitializeClients()
+    {
+        var clientOptions = new WebApplicationFactoryClientOptions() { AllowAutoRedirect = false };
+
+        Client = CreateClient(clientOptions);
+
+        ClientWithAuthentication = WithWebHostBuilder(builder =>
+        {
+            builder.ConfigureTestServices(services =>
+            {
+
+            });
+
+        }).CreateClient(clientOptions);
     }
 
     async Task IAsyncLifetime.DisposeAsync()
