@@ -6,8 +6,8 @@ using Respawn.Graph;
 using YourTutor.Application.Constants;
 using YourTutor.Application.Settings;
 using YourTutor.Infrastructure.DAL;
-using YourTutor.Mvc;
 using YourTutor.Tests.Integration.Helpers;
+using YourTutor.Tests.Integration.Setup.Authentication;
 
 namespace YourTutor.Tests.Integration.Setup;
 
@@ -65,7 +65,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
         {
             builder.ConfigureTestServices(services =>
             {
-
+                services.AddTestAuthentication();
             });
 
         }).CreateClient(clientOptions);
