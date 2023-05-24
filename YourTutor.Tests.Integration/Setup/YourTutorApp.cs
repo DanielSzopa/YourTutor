@@ -18,7 +18,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     private Respawner _respawner;
 
     public HttpClient Client { get; private set; }
-    public HttpClient ClientWithAuthentication { get; private set; }
+    public HttpClient AuthenticatedClient { get; private set; }
     public IServiceProvider ServiceProvider { get; private set; }
     internal YourTutorDbContext YourTutorDbContext { get; private set; }
     internal TestDatabase TestDatabase { get; private set; }
@@ -61,7 +61,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
         Client = CreateClient(clientOptions);
 
-        ClientWithAuthentication = WithWebHostBuilder(builder =>
+        AuthenticatedClient = WithWebHostBuilder(builder =>
         {
             builder.ConfigureTestServices(services =>
             {
