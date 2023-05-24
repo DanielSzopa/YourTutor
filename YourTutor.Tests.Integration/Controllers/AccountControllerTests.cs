@@ -14,16 +14,16 @@ public class AccountControllerTests : IAsyncLifetime
 {
     private readonly HttpClient _client;
     private readonly Func<Task> _resetDb;
+    private readonly Func<IHashService> _hashService;
     private readonly YourTutorDbContext _db;
-    private readonly IServiceProvider _serviceProvider;
     private readonly Faker _faker;
     public AccountControllerTests(YourTutorApp app, FakerFixture faker)
     {
         _client = app.Client;
         _resetDb = app.ResetDbAsync;
         _db = app.YourTutorDbContext;
-        _serviceProvider = app.ServiceProvider;
         _faker = faker.Faker;
+        _hashService = app.GetRequiredService<IHashService>;
     }
 
     private readonly string _identityCookie = SettingsHelper.GetSettings<IdentitySettings>().CookieName;
@@ -49,7 +49,7 @@ public class AccountControllerTests : IAsyncLifetime
         var user = await _db.Users
             .Include(u => u.Tutor)
             .FirstOrDefaultAsync();
-        var verifyResult = GetHashService().VerifyPassword(vm.Password, user.HashPassword);
+        var verifyResult = _hashService().VerifyPassword(vm.Password, user.HashPassword);
 
         using var scope = new AssertionScope();
         user.Should().NotBeNull();
@@ -99,7 +99,7 @@ public class AccountControllerTests : IAsyncLifetime
             .Select(u => u.HashPassword)
             .FirstOrDefaultAsync();
 
-        var verifyResult = GetHashService().VerifyPassword(vm.Password, hashedPassword);
+        var verifyResult = _hashService().VerifyPassword(vm.Password, hashedPassword);
 
         verifyResult.Should().BeTrue();
     }
@@ -146,7 +146,7 @@ public class AccountControllerTests : IAsyncLifetime
     public async Task Login_WhenCredentialsAreGood_WithDeterminedRememberMe_Should_Return302Redirect_And_SetLocationHeader_And_SetIdentityCookieWithAppropriateExpiration(bool isRememberMe)
     {
         //arrange        
-        var testUser = TestUserFactory.GetTestUserWithHashing(GetHashService());
+        var testUser = TestUserFactory.GetTestUserWithHashing(_hashService());
         var vm = new LoginVm()
         {
             Email = testUser.UserWithHashedPassword.Email,
@@ -185,7 +185,7 @@ public class AccountControllerTests : IAsyncLifetime
     public async Task Login_WithInvalidPassword_ShouldReturn200Ok_And_WithoutSetLocation_And_WithoutSetIdentityCookie()
     {
         //arrange
-        var testUser = TestUserFactory.GetTestUserWithHashing(GetHashService());
+        var testUser = TestUserFactory.GetTestUserWithHashing(_hashService());
         var vm = new LoginVm()
         {
             Email = testUser.UserWithHashedPassword.Email,
@@ -237,7 +237,7 @@ public class AccountControllerTests : IAsyncLifetime
     public async Task Logout_WhenCallLogout_ShouldReturnExpiredIdentityCookie()
     {
         //arrange        
-        var testUser = TestUserFactory.GetTestUserWithHashing(GetHashService());
+        var testUser = TestUserFactory.GetTestUserWithHashing(_hashService());
         var vm = new LoginVm()
         {
             Email = testUser.UserWithHashedPassword.Email,
@@ -262,9 +262,6 @@ public class AccountControllerTests : IAsyncLifetime
 
     #endregion
 
-
-    private IHashService GetHashService()
-        => _serviceProvider.GetRequiredService<IHashService>();
     public Task DisposeAsync() => _resetDb();
 
     public Task InitializeAsync() => Task.CompletedTask;

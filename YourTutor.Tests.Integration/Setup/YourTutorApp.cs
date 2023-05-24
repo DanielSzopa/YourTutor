@@ -96,6 +96,9 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     {
         await _respawner.ResetAsync(_connectionString);
     }
+
+    public T GetRequiredService<T>() =>
+        ServiceProvider.GetRequiredService<T>();
 }
 
 
