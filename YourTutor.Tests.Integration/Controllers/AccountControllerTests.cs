@@ -1,7 +1,6 @@
 ﻿using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Settings;
 using YourTutor.Application.ViewModels;
-using YourTutor.Infrastructure.DAL;
 using YourTutor.Tests.Integration.Helpers;
 using YourTutor.Tests.Integration.Helpers.Fixtures;
 using YourTutor.Tests.Integration.Setup;
@@ -9,23 +8,8 @@ using YourTutor.Tests.Integration.TestFactories;
 
 namespace YourTutor.Tests.Integration.Controllers;
 
-[Collection(nameof(YourTutorCollection))]
-public class AccountControllerTests : IAsyncLifetime
-{
-    private readonly HttpClient _client;
-    private readonly Func<Task> _resetDb;
-    private readonly Func<IHashService> _hashService;
-    private readonly YourTutorDbContext _db;
-    private readonly Faker _faker;
-    public AccountControllerTests(YourTutorApp app, FakerFixture faker)
-    {
-        _client = app.Client;
-        _resetDb = app.ResetDbAsync;
-        _db = app.YourTutorDbContext;
-        _faker = faker.Faker;
-        _hashService = app.GetRequiredService<IHashService>;
-    }
-
+public class AccountControllerTests : ControllerTests, IAsyncLifetime
+{   
     private readonly string _identityCookie = SettingsHelper.GetSettings<IdentitySettings>().CookieName;
 
     private readonly string _registerPath = "/account/register";
@@ -33,6 +17,13 @@ public class AccountControllerTests : IAsyncLifetime
     private readonly string _logoutPath = "/account/logout";
     private readonly string _homePath = "/";
 
+    private readonly Func<IHashService> _hashService;
+
+    public AccountControllerTests(YourTutorApp app, FakerFixture faker) : base(app, faker)
+    {
+        _hashService = app.GetRequiredService<IHashService>;
+    }
+   
     #region Register
 
     [Fact]
@@ -43,10 +34,10 @@ public class AccountControllerTests : IAsyncLifetime
         var formContent = vm.ToFormContent();       
 
         //act
-        var response = await _client.PostAsync(_registerPath, formContent);
+        var response = await Client.PostAsync(_registerPath, formContent);
 
         //assert
-        var user = await _db.Users
+        var user = await Db.Users
             .Include(u => u.Tutor)
             .FirstOrDefaultAsync();
         var verifyResult = _hashService().VerifyPassword(vm.Password, user.HashPassword);
@@ -72,10 +63,10 @@ public class AccountControllerTests : IAsyncLifetime
         var formContent = ViewModelFactory.InvalidRegisterVm.ToFormContent();
 
         //act
-        var response = await _client.PostAsync(_registerPath, formContent);
+        var response = await Client.PostAsync(_registerPath, formContent);
 
         //assert
-        var result = await _db.Users.AnyAsync();
+        var result = await Db.Users.AnyAsync();
       
         using var scope = new AssertionScope();
         result.Should().BeFalse();
@@ -92,10 +83,10 @@ public class AccountControllerTests : IAsyncLifetime
         var formContent = vm.ToFormContent();
 
         //act
-        await _client.PostAsync(_registerPath, formContent);
+        await Client.PostAsync(_registerPath, formContent);
 
         //assert
-        var hashedPassword = await _db.Users
+        var hashedPassword = await Db.Users
             .Select(u => u.HashPassword)
             .FirstOrDefaultAsync();
 
@@ -118,16 +109,16 @@ public class AccountControllerTests : IAsyncLifetime
             PasswordConfirmation = user.HashPassword
         };
 
-        await _db.Users.AddAsync(user);
-        await _db.SaveChangesAsync();
+        await Db.Users.AddAsync(user);
+        await Db.SaveChangesAsync();
 
         var formContent = vm.ToFormContent();
 
         //act
-        var response = await _client.PostAsync(_registerPath, formContent);
+        var response = await Client.PostAsync(_registerPath, formContent);
 
         //assert
-        var result = await _db.Users.CountAsync(x => x.Email == user.Email);
+        var result = await Db.Users.CountAsync(x => x.Email == user.Email);
 
         using var scope = new AssertionScope();
         result.Should().Be(1);
@@ -154,14 +145,14 @@ public class AccountControllerTests : IAsyncLifetime
             RememberMe = isRememberMe
         };
 
-        await _db.Users.AddAsync(testUser.UserWithHashedPassword);
-        await _db.SaveChangesAsync();
+        await Db.Users.AddAsync(testUser.UserWithHashedPassword);
+        await Db.SaveChangesAsync();
 
         var formContent = vm.ToFormContent();
         var datetime = DateTime.UtcNow;
 
         //act
-        var response = await _client.PostAsync(_loginPath, formContent);
+        var response = await Client.PostAsync(_loginPath, formContent);
 
         //assert
         using var scope = new AssertionScope();
@@ -189,16 +180,16 @@ public class AccountControllerTests : IAsyncLifetime
         var vm = new LoginVm()
         {
             Email = testUser.UserWithHashedPassword.Email,
-            Password = _faker.Random.String2(8),
+            Password = Faker.Random.String2(8),
         };
 
-        await _db.Users.AddAsync(testUser.UserWithHashedPassword);
-        await _db.SaveChangesAsync();
+        await Db.Users.AddAsync(testUser.UserWithHashedPassword);
+        await Db.SaveChangesAsync();
 
         var formContent = vm.ToFormContent();
 
         //act
-        var response = await _client.PostAsync(_loginPath, formContent);
+        var response = await Client.PostAsync(_loginPath, formContent);
 
         //assert
         using var scope = new AssertionScope();
@@ -213,14 +204,14 @@ public class AccountControllerTests : IAsyncLifetime
         //arrange
         var vm = new LoginVm()
         {
-            Email = _faker.Person.Email,
-            Password = _faker.Random.String2(8),
+            Email = Faker.Person.Email,
+            Password = Faker.Random.String2(8),
         };
 
         var formContent = vm.ToFormContent();
 
         //act
-        var response = await _client.PostAsync(_loginPath, formContent);
+        var response = await Client.PostAsync(_loginPath, formContent);
 
         //assert
         using var scope = new AssertionScope();
@@ -245,14 +236,14 @@ public class AccountControllerTests : IAsyncLifetime
             RememberMe = true
         };
 
-        await _db.Users.AddAsync(testUser.UserWithHashedPassword);
-        await _db.SaveChangesAsync();
+        await Db.Users.AddAsync(testUser.UserWithHashedPassword);
+        await Db.SaveChangesAsync();
 
         var formContent = vm.ToFormContent();
 
         //act
-        var loginResponse = await _client.PostAsync(_loginPath, formContent);
-        var logoutResponse = await _client.GetAsync(_logoutPath);
+        var loginResponse = await Client.PostAsync(_loginPath, formContent);
+        var logoutResponse = await Client.GetAsync(_logoutPath);
 
         //arrange
         using var scope = new AssertionScope();
@@ -262,7 +253,7 @@ public class AccountControllerTests : IAsyncLifetime
 
     #endregion
 
-    public Task DisposeAsync() => _resetDb();
+    public Task DisposeAsync() => ResetDb();
 
     public Task InitializeAsync() => Task.CompletedTask;
 }
