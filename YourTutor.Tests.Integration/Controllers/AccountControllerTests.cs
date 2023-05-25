@@ -1,8 +1,10 @@
 ﻿using YourTutor.Application.Abstractions.Security;
 using YourTutor.Application.Settings;
 using YourTutor.Application.ViewModels;
+using YourTutor.Core.Entities;
 using YourTutor.Tests.Integration.Helpers;
 using YourTutor.Tests.Integration.Helpers.Fixtures;
+using YourTutor.Tests.Integration.Helpers.Repositories;
 using YourTutor.Tests.Integration.Setup;
 using YourTutor.Tests.Integration.TestFactories;
 
@@ -18,10 +20,12 @@ public class AccountControllerTests : ControllerTests, IAsyncLifetime
     private readonly string _homePath = "/";
 
     private readonly Func<IHashService> _hashService;
+    private readonly TestUserRepository _userRepository;
 
     public AccountControllerTests(YourTutorApp app, FakerFixture faker) : base(app, faker)
     {
         _hashService = app.GetRequiredService<IHashService>;
+        _userRepository = new TestUserRepository(Db);
     }
    
     #region Register
@@ -37,9 +41,7 @@ public class AccountControllerTests : ControllerTests, IAsyncLifetime
         var response = await Client.PostAsync(_registerPath, formContent);
 
         //assert
-        var user = await Db.Users
-            .Include(u => u.Tutor)
-            .FirstOrDefaultAsync();
+        var user = await _userRepository.GetFirstUserAsync();
         var verifyResult = _hashService().VerifyPassword(vm.Password, user.HashPassword);
 
         using var scope = new AssertionScope();
@@ -66,7 +68,7 @@ public class AccountControllerTests : ControllerTests, IAsyncLifetime
         var response = await Client.PostAsync(_registerPath, formContent);
 
         //assert
-        var result = await Db.Users.AnyAsync();
+        var result = await _userRepository.AnyAsync();
       
         using var scope = new AssertionScope();
         result.Should().BeFalse();
@@ -109,8 +111,7 @@ public class AccountControllerTests : ControllerTests, IAsyncLifetime
             PasswordConfirmation = user.HashPassword
         };
 
-        await Db.Users.AddAsync(user);
-        await Db.SaveChangesAsync();
+        await _userRepository.AddUserAsync(user);
 
         var formContent = vm.ToFormContent();
 
@@ -145,8 +146,7 @@ public class AccountControllerTests : ControllerTests, IAsyncLifetime
             RememberMe = isRememberMe
         };
 
-        await Db.Users.AddAsync(testUser.UserWithHashedPassword);
-        await Db.SaveChangesAsync();
+        await _userRepository.AddUserAsync(testUser.UserWithHashedPassword);
 
         var formContent = vm.ToFormContent();
         var datetime = DateTime.UtcNow;
@@ -183,8 +183,7 @@ public class AccountControllerTests : ControllerTests, IAsyncLifetime
             Password = Faker.Random.String2(8),
         };
 
-        await Db.Users.AddAsync(testUser.UserWithHashedPassword);
-        await Db.SaveChangesAsync();
+        await _userRepository.AddUserAsync(testUser.UserWithHashedPassword);
 
         var formContent = vm.ToFormContent();
 
@@ -236,8 +235,7 @@ public class AccountControllerTests : ControllerTests, IAsyncLifetime
             RememberMe = true
         };
 
-        await Db.Users.AddAsync(testUser.UserWithHashedPassword);
-        await Db.SaveChangesAsync();
+        await _userRepository.AddUserAsync(testUser.UserWithHashedPassword);
 
         var formContent = vm.ToFormContent();
 
