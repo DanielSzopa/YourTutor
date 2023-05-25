@@ -78,6 +78,7 @@ public class TutorControllerTests : ControllerTests, IAsyncLifetime
         response.Headers.Location.Should().Be(_offerPath);
     }
 
+
     public async Task DisposeAsync()
     {
         AuthClient.CleanClaimHeaders();

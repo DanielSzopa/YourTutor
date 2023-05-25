@@ -67,7 +67,7 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpGet]
-        [Route("Edit")]
+        [Route("edit")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var details = await _sender.Send(new GetTutorEditDetails(id));
@@ -75,7 +75,7 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpPost]
-        [Route("Edit")]
+        [Route("edit")]
         public async Task<IActionResult> Edit(EditTutorVm vm)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
