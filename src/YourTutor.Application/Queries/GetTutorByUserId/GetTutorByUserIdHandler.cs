@@ -17,6 +17,9 @@ namespace YourTutor.Application.Queries.GetTutorByUserId
         {
             var details = await _tutorRepository.GetTutorDetailsByUserId(request.UserId) ?? default;
 
+            if (details is null)
+                return default;
+
             var (id, fullName, email, description, country, language) = details;
 
             return new TutorDetailsVm(id, fullName, email, description, country, language);

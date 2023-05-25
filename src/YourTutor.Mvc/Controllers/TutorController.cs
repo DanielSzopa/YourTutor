@@ -18,8 +18,9 @@ namespace YourTutor.Mvc.Controllers
         private readonly IHttpContextService _httpContextService;
         private readonly ILogger<TutorController> _logger;
 
-        private readonly string errorEndpoint = nameof(HomeController.Error).ToLower();
-        private readonly string homeController = nameof(HomeController).Replace("Controller", "").ToLower();
+        private readonly string _errorEndpoint = nameof(HomeController.Error).ToLower();
+        private readonly string _homeController = nameof(HomeController).Replace("Controller", "").ToLower();
+        private readonly string _offerController = nameof(OfferController).Replace("Controller", "").ToLower();
 
         public TutorController(ISender sender, IHttpContextService httpContextService
             , ILogger<TutorController> logger)
@@ -36,7 +37,7 @@ namespace YourTutor.Mvc.Controllers
             if (userId == Guid.Empty)
             {
                 _logger.LogError(AppLogEvent.IndicateUser, "Problem with indicating user");
-                return RedirectToAction(errorEndpoint, homeController);
+                return RedirectToAction(_errorEndpoint, _homeController);
             }
 
             var details = await _sender.Send(new GetTutorByUserId(userId));
@@ -52,6 +53,9 @@ namespace YourTutor.Mvc.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             var details = await _sender.Send(new GetTutorByUserId(id));
+
+            if(details is null)
+                return RedirectToAction("", _offerController);
 
             var result = _httpContextService.GetUserIdFromClaims() == id
                 ? true
@@ -78,7 +82,7 @@ namespace YourTutor.Mvc.Controllers
             if (userId == Guid.Empty)
             {
                 _logger.LogError(AppLogEvent.IndicateUser, "Problem with indicating user");
-                return RedirectToAction(errorEndpoint, homeController);
+                return RedirectToAction(_errorEndpoint, _homeController);
             }
 
             await _sender.Send(new EditTutor(vm,userId));
