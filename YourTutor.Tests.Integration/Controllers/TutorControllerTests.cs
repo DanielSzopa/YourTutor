@@ -50,6 +50,23 @@ public class TutorControllerTests : ControllerTests, IAsyncLifetime
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
+    [Fact]
+    public async Task Details_WhenTutorExist_Should_Return200Ok()
+    {
+        //arrange
+        var user = TestUserFactory.User;
+        user.CreateTutor();
+        await _userRepository.AddUserAsync(user);
+
+        AuthClient.AddUserIdClaimHeader(user.Id.Value.ToString());
+
+        //act
+        var response = await AuthClient.GetAsync($"{_tutorPath}/{user.Id.Value}");
+
+        //assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
     public async Task DisposeAsync()
     {
         AuthClient.CleanClaimHeaders();
