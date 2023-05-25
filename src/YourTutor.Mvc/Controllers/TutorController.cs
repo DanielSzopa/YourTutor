@@ -18,6 +18,9 @@ namespace YourTutor.Mvc.Controllers
         private readonly IHttpContextService _httpContextService;
         private readonly ILogger<TutorController> _logger;
 
+        private readonly string errorEndpoint = nameof(HomeController.Error).ToLower();
+        private readonly string homeController = nameof(HomeController).Replace("Controller", "").ToLower();
+
         public TutorController(ISender sender, IHttpContextService httpContextService
             , ILogger<TutorController> logger)
         {
@@ -33,7 +36,7 @@ namespace YourTutor.Mvc.Controllers
             if (userId == Guid.Empty)
             {
                 _logger.LogError(AppLogEvent.IndicateUser, "Problem with indicating user");
-                return RedirectToAction(nameof(HomeController.Error), "Home");
+                return RedirectToAction(errorEndpoint, homeController);
             }
 
             var details = await _sender.Send(new GetTutorByUserId(userId));
@@ -75,7 +78,7 @@ namespace YourTutor.Mvc.Controllers
             if (userId == Guid.Empty)
             {
                 _logger.LogError(AppLogEvent.IndicateUser, "Problem with indicating user");
-                return RedirectToAction(nameof(HomeController.Error), "Home");
+                return RedirectToAction(errorEndpoint, homeController);
             }
 
             await _sender.Send(new EditTutor(vm,userId));

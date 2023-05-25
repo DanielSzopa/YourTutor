@@ -8,12 +8,14 @@ namespace YourTutor.Tests.Integration.Controllers;
 public abstract class ControllerTests
 {
     protected HttpClient Client { get; }
+    protected HttpClient AuthClient { get; }
     protected Faker Faker { get; }
     internal YourTutorDbContext Db { get; }
     protected Func<Task> ResetDb { get; }
     protected ControllerTests(YourTutorApp app, FakerFixture faker)
     {
         Client = app.Client;
+        AuthClient = app.AuthenticatedClient;
         Faker = faker.Faker;
         Db = app.TestDatabase.YourTutorDbContext;
         ResetDb = app.ResetDbAsync;
