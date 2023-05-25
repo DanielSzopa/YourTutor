@@ -21,8 +21,8 @@ internal static class AuthenticationExtensions
                     HttpOnly = true,
                     SecurePolicy = CookieSecurePolicy.Always
                 };
-                options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.LoginPath = "/account/login";
+                options.AccessDeniedPath = "/account/accessDenied";
             });
 
         return services;

@@ -93,7 +93,7 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpGet]
-        [Route("AccessDenied")]
+        [Route("accessDenied")]
         public IActionResult AccessDenied()
         {
             return View();
