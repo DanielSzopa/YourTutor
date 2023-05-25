@@ -1,20 +1,25 @@
 ﻿using YourTutor.Tests.Integration.Helpers.Fixtures;
+using YourTutor.Tests.Integration.Helpers.Repositories;
 using YourTutor.Tests.Integration.Setup;
 using YourTutor.Tests.Integration.Setup.Authentication;
+using YourTutor.Tests.Integration.TestFactories;
 
 namespace YourTutor.Tests.Integration.Controllers;
 
 public class TutorControllerTests : ControllerTests, IAsyncLifetime
 {
-    public TutorControllerTests(YourTutorApp app, FakerFixture faker) : base(app, faker)
-    {
-    }
+    private readonly TestUserRepository _userRepository;
 
     private readonly string _tutorPath = "/tutor";
     private readonly string _errorPath = "/home/error";
 
+    public TutorControllerTests(YourTutorApp app, FakerFixture faker) : base(app, faker)
+    {
+        _userRepository = new TestUserRepository(Db);
+    }
+
     [Fact]
-    public async Task MyAccount_WhenUserCanNotBeDetermined_Should_Return302Redirect_And_SetErrorToLocation()
+    public async Task MyAccount_WhenTutorCanNotBeDetermined_Should_Return302Redirect_And_SetErrorToLocation()
     {
         //arrange
         AuthClient.AddUserIdClaimHeader(Guid.Empty.ToString());
@@ -26,6 +31,23 @@ public class TutorControllerTests : ControllerTests, IAsyncLifetime
         using var scope = new AssertionScope();
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.Should().Be(_errorPath);
+    }
+
+    [Fact]
+    public async Task MyAccount_WhenTutorExist_Should_Return200Ok()
+    {
+        //arrange
+        var user = TestUserFactory.User;
+        user.CreateTutor();
+        await _userRepository.AddUserAsync(user);
+
+        AuthClient.AddUserIdClaimHeader(user.Id.Value.ToString());
+
+        //act
+        var response = await AuthClient.GetAsync(_tutorPath);
+
+        //assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
     public async Task DisposeAsync()
