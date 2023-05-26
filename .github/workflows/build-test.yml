@@ -22,8 +22,10 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
+      - name: Test ls
+        run: ls
       - name: Run unit tests
-        run: dotnet test ${{ env.UNIT_TESTS_PATH }}
+        run: dotnet test ${{ env.UNIT_TESTS_PATH }}/YourTutor.Tests.Unit.csproj
       - name: Run integration tests
         if: ${{env.CAN_RUN_INTEGRATION_TESTS == 'true'}}
         run: dotnet test ${{ env.INTEGRATION_TESTS_PATH }}
