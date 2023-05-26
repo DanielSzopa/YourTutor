@@ -11,6 +11,7 @@ public class TutorControllerTests : ControllerTests, IAsyncLifetime
     private readonly TestUserRepository _userRepository;
 
     private readonly string _tutorPath = "/tutor";
+    private readonly string _tutorEditPath = "/Tutor/edit";
     private readonly string _errorPath = "/home/error";
     private readonly string _offerPath = "/offer";
 
@@ -76,6 +77,19 @@ public class TutorControllerTests : ControllerTests, IAsyncLifetime
         using var scope = new AssertionScope();
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.Should().Be(_offerPath);
+    }
+
+    [Fact]
+    public async Task Edit_WhenUserWantToEditOtherTutor_ShouldReturn403Forbidden()
+    {
+        //arrange
+        AuthClient.AddUserIdClaimHeader(Guid.NewGuid().ToString());
+
+        //act
+        var response = await AuthClient.GetAsync($"{_tutorEditPath}?id={Guid.NewGuid()}");
+
+        //assert
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
 
 
