@@ -13,7 +13,8 @@ using YourTutor.Application.Settings.Email;
 using YourTutor.Core.Services.SignInManager;
 using YourTutor.Infrastructure.Authentication;
 using YourTutor.Infrastructure.Authorization;
-using YourTutor.Infrastructure.Constans;
+using YourTutor.Infrastructure.Authorization.CanEditTutor;
+using YourTutor.Infrastructure.Authorization.CanRemoveOffer;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Infrastructure.Email;
 using YourTutor.Infrastructure.Logging;
@@ -58,26 +59,6 @@ namespace YourTutor.Infrastructure
                 .RegisterSettings<EmailSettings>(configuration)
                 .RegisterSettings<SeederSettings>(configuration)
                 .RegisterSettings<DbInitializerSettings>(configuration);
-
-            return services;
-        }
-
-        private static IServiceCollection AddAuthorizationPolicies(this IServiceCollection services)
-        {
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(CustomAuthorizationPolicy.DeleteOffer, policy =>
-                {
-                    policy.Requirements.Add(new CanRemoveOfferRequirement());
-
-                });
-
-                options.AddPolicy(CustomAuthorizationPolicy.EditTutor, policy =>
-                {
-                    policy.Requirements.Add(new CanEditTutorRequirement());
-
-                });
-            });
 
             return services;
         }

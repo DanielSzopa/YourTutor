@@ -11,7 +11,7 @@ using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries.GetOfferDetails;
 using YourTutor.Application.Queries.GetSmallOffers;
 using YourTutor.Application.ViewModels;
-using YourTutor.Infrastructure.Constans;
+using YourTutor.Infrastructure.Authorization;
 
 namespace YourTutor.Mvc.Controllers
 {

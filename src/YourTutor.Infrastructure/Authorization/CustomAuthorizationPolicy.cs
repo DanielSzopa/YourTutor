@@ -1,4 +1,4 @@
-﻿namespace YourTutor.Infrastructure.Constans;
+﻿namespace YourTutor.Infrastructure.Authorization;
 
 public class CustomAuthorizationPolicy
 {

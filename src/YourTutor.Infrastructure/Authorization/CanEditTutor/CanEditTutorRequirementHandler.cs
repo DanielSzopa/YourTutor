@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using YourTutor.Application.Abstractions;
 
-namespace YourTutor.Infrastructure.Authorization;
+namespace YourTutor.Infrastructure.Authorization.CanEditTutor;
 
 public class CanEditTutorRequirementHandler : AuthorizationHandler<CanEditTutorRequirement, CanEditTutorRequest>
 {

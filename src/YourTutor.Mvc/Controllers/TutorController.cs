@@ -8,7 +8,7 @@ using YourTutor.Application.Queries.GetTutorByUserId;
 using YourTutor.Application.Queries.GetTutorEditDetails;
 using YourTutor.Application.ViewModels;
 using YourTutor.Infrastructure.Authorization;
-using YourTutor.Infrastructure.Constans;
+using YourTutor.Infrastructure.Authorization.CanEditTutor;
 
 namespace YourTutor.Mvc.Controllers
 {
