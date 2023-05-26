@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Run unit tests
-        run: dotnet test ${{ vars.UNIT_TESTS_PATH }}
+        run: dotnet test '${{ vars.UNIT_TESTS_PATH }}'
       - name: Run integration tests
         if: ${{vars.CAN_RUN_INTEGRATION_TESTS == 'true'}}
-        run: dotnet test ${{ vars.INTEGRATION_TESTS_PATH }}
+        run: dotnet test '${{ vars.INTEGRATION_TESTS_PATH }}'
