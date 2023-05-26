@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "YourTutor.Tests.Integration": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:49999;http://localhost:50000"
+    }
+  }
+}

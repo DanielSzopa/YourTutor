@@ -1,4 +1,5 @@
-﻿using YourTutor.Tests.Integration.Helpers.Fixtures;
+﻿using YourTutor.Tests.Integration.Helpers;
+using YourTutor.Tests.Integration.Helpers.Fixtures;
 using YourTutor.Tests.Integration.Helpers.Repositories;
 using YourTutor.Tests.Integration.Setup;
 using YourTutor.Tests.Integration.Setup.Authentication;
@@ -11,6 +12,7 @@ public class TutorControllerTests : ControllerTests, IAsyncLifetime
     private readonly TestUserRepository _userRepository;
 
     private readonly string _tutorPath = "/tutor";
+    private readonly string _myAccountPath = "/Tutor";
     private readonly string _tutorEditPath = "/Tutor/edit";
     private readonly string _errorPath = "/home/error";
     private readonly string _offerPath = "/offer";
@@ -90,6 +92,35 @@ public class TutorControllerTests : ControllerTests, IAsyncLifetime
 
         //assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+    [Fact]
+    public async Task Edit_WhenPostData_ShouldUpdateTutorInDb_Return302Redirect_SetLocationToMyAccount()
+    {
+        //arrange
+        var user = TestUserFactory.User;
+        user.CreateTutor();
+        AuthClient.AddUserIdClaimHeader(user.Id.Value.ToString());
+
+        await _userRepository.AddUserAsync(user);
+
+        var vm = ViewModelFactory.EditTutorVm;
+        var formContent = vm.ToFormContent();
+
+        //act
+        var response = await AuthClient.PostAsync(_tutorEditPath, formContent);
+
+        //assert
+        var addedUser = await _userRepository.GetFirstUserAsync();
+        var tutor = addedUser.Tutor;
+
+        using var scope = new AssertionScope();
+        tutor.Country.Should().Be(vm.Country);
+        tutor.Language.Should().Be(vm.Language);
+        tutor.Description.Should().Be(vm.Description);
+
+        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+        response.Headers.Location.Should().Be(_myAccountPath);
     }
 
 

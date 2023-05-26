@@ -26,4 +26,11 @@ public static class ViewModelFactory
         Password = _password,
         PasswordConfirmation = _password
     };
+
+    public static EditTutorVm EditTutorVm => new()
+    {
+        Country = _faker.Random.String2(6),
+        Language = _faker.Random.String2(6),
+        Description = _faker.Random.String2(6),
+    };
 }

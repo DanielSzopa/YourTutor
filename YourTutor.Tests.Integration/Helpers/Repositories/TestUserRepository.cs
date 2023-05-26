@@ -20,6 +20,7 @@ internal class TestUserRepository
 
     public async Task<User> GetFirstUserAsync() => 
         await _db.Users
+        .AsNoTracking()
             .Include(u => u.Tutor)
             .FirstOrDefaultAsync();
 
