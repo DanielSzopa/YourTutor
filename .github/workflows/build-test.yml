@@ -3,7 +3,7 @@ run-name: ${{github.actor}} is running build-test workflow 🚀
 
 on:
   push:
-    branches: master
+    branches: new_ci_cd
   pull_request:
     branches: master
   workflow_dispatch:
@@ -22,5 +22,8 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
-      - name: Run tests
-        run: dotnet test
+      - name: Run unit tests
+        run: dotnet test ${{ env.UNIT_TESTS_PATH }}
+      - name: Run integration tests
+        if: ${{env.CAN_RUN_INTEGRATION_TESTS == 'true'}}
+        run: dotnet test ${{ env.INTEGRATION_TESTS_PATH }}
