@@ -55,6 +55,11 @@ public class AccountControllerTests : ControllerTests, IAsyncLifetime
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location?.OriginalString.Should().Be(_homePath);
         response.ContainsCookie(_identityCookie).Should().BeTrue();
+
+        var cookie = response.GetCookie(_identityCookie);
+        cookie.Path.Should().Be("/");
+        cookie.HttpOnly.Should().BeTrue();
+        cookie.Secure.Should().BeTrue();
     }
 
     [Fact]
