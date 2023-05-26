@@ -42,6 +42,7 @@ namespace YourTutor.Infrastructure
                 .AddSingleton<IHashService, HashService>()
                 .AddHostedService<DatabaseInitializer>()
                 .AddScoped<IAuthorizationHandler, CanRemoveOfferRequirementHandler>()
+                .AddScoped<IAuthorizationHandler, CanEditTutorRequirementHandler>()
                 .RegisterAllSettings(configuration)
                 .AddYourTutorDbContext(configuration);
 
@@ -68,6 +69,12 @@ namespace YourTutor.Infrastructure
                 options.AddPolicy(CustomAuthorizationPolicy.DeleteOffer, policy =>
                 {
                     policy.Requirements.Add(new CanRemoveOfferRequirement());
+
+                });
+
+                options.AddPolicy(CustomAuthorizationPolicy.EditTutor, policy =>
+                {
+                    policy.Requirements.Add(new CanEditTutorRequirement());
 
                 });
             });

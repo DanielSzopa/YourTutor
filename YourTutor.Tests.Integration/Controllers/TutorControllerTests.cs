@@ -60,7 +60,7 @@ public class TutorControllerTests : ControllerTests, IAsyncLifetime
         await _userRepository.AddUserAsync(user);
 
         //act
-        var response = await AuthClient.GetAsync($"{_tutorPath}/{user.Id.Value}");
+        var response = await Client.GetAsync($"{_tutorPath}/{user.Id.Value}");
 
         //assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -70,7 +70,7 @@ public class TutorControllerTests : ControllerTests, IAsyncLifetime
     public async Task Details_WhenTutorDoesNotExist_Should_Return302Redirect_And_SetOfferToLocation()
     {
         //act
-        var response = await AuthClient.GetAsync($"{_tutorPath}/{Guid.NewGuid()}");
+        var response = await Client.GetAsync($"{_tutorPath}/{Guid.NewGuid()}");
 
         //assert
         using var scope = new AssertionScope();
