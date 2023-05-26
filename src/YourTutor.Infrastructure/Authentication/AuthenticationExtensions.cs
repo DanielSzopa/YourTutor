@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YourTutor.Application.Settings;
-using YourTutor.Infrastructure.Constans;
 
 namespace YourTutor.Infrastructure.Authentication;
 
@@ -13,7 +12,7 @@ internal static class AuthenticationExtensions
         var identitySettings = config.GetSettings<IdentitySettings>();
 
         services.AddAuthentication()
-            .AddCookie(Schemes.IdentityScheme, options =>
+            .AddCookie(AuthenticationSchemes.IdentityScheme, options =>
             {
                 options.Cookie = new CookieBuilder()
                 {
