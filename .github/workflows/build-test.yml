@@ -3,7 +3,7 @@ run-name: ${{github.actor}} is running build-test workflow 🚀
 
 on:
   push:
-    branches: master
+    branches: integration_tests
   pull_request:
     branches: master
   workflow_dispatch:
