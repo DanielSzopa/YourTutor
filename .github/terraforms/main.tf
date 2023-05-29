@@ -51,6 +51,14 @@ resource "azurerm_mssql_database" "sql_db" {
   storage_account_type = "Local"
 }
 
+resource "azurerm_mssql_database" "sql_db_test" {
+  name                 = local.sql_db_test_name
+  server_id            = azurerm_mssql_server.sql_server.id
+  max_size_gb          = 40
+  sku_name             = "S0"
+  storage_account_type = "Local"
+}
+
 resource "azurerm_app_service_plan" "service_plan" {
   name                = local.app_service_name
   resource_group_name = azurerm_resource_group.rg.name

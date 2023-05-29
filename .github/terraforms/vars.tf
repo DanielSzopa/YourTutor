@@ -26,6 +26,7 @@ locals {
   resource_group_name = "${local.yourtutor}rg"
   sql_server_name     = "${local.yourtutor}sqlserver"
   sql_db_name         = "${local.yourtutor}sqldb"
+  sql_db_test_name    = "${local.yourtutor}sqldbtest"
   app_service_name    = "${local.yourtutor}appservice"
   web_app_name        = "${local.yourtutor}webapp"
 }
