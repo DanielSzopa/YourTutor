@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using YourTutor.Application.Abstractions.UserManager;
 using YourTutor.Application.Settings;
-using YourTutor.Infrastructure.Constans;
+using YourTutor.Infrastructure.Authentication;
 
 namespace YourTutor.Core.Services.SignInManager
 {
@@ -27,7 +27,7 @@ namespace YourTutor.Core.Services.SignInManager
                 new Claim(ClaimTypes.Name, fullName)
             };
 
-            var claimIdentity = new ClaimsPrincipal(new ClaimsIdentity(claims, Schemes.IdentityScheme));
+            var claimIdentity = new ClaimsPrincipal(new ClaimsIdentity(claims, AuthenticationSchemes.IdentityScheme));
 
             var authProps = new AuthenticationProperties()
             {
@@ -35,7 +35,7 @@ namespace YourTutor.Core.Services.SignInManager
                 ExpiresUtc = DateTimeOffset.UtcNow.AddDays(_identitySettings.ExpiresDays),
             };
 
-            await _httpContextAccessor.HttpContext.SignInAsync(Schemes.IdentityScheme, claimIdentity, authProps);
+            await _httpContextAccessor.HttpContext.SignInAsync(AuthenticationSchemes.IdentityScheme, claimIdentity, authProps);
         }
     }
 }

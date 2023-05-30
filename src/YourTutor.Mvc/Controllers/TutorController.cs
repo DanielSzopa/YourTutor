@@ -7,6 +7,8 @@ using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries.GetTutorByUserId;
 using YourTutor.Application.Queries.GetTutorEditDetails;
 using YourTutor.Application.ViewModels;
+using YourTutor.Infrastructure.Authorization;
+using YourTutor.Infrastructure.Authorization.CanEditTutor;
 
 namespace YourTutor.Mvc.Controllers
 {
@@ -17,13 +19,18 @@ namespace YourTutor.Mvc.Controllers
         private readonly ISender _sender;
         private readonly IHttpContextService _httpContextService;
         private readonly ILogger<TutorController> _logger;
+        private readonly IAuthorizationService _authorizationService;
+        private readonly string _errorEndpoint = nameof(HomeController.Error).ToLower();
+        private readonly string _homeController = nameof(HomeController).Replace("Controller", "").ToLower();
+        private readonly string _offerController = nameof(OfferController).Replace("Controller", "").ToLower();
 
         public TutorController(ISender sender, IHttpContextService httpContextService
-            , ILogger<TutorController> logger)
+            , ILogger<TutorController> logger, IAuthorizationService authorizationService)
         {
             _sender = sender;
             _httpContextService = httpContextService;
             _logger = logger;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]      
@@ -33,7 +40,7 @@ namespace YourTutor.Mvc.Controllers
             if (userId == Guid.Empty)
             {
                 _logger.LogError(AppLogEvent.IndicateUser, "Problem with indicating user");
-                return RedirectToAction(nameof(HomeController.Error), "Home");
+                return RedirectToAction(_errorEndpoint, _homeController);
             }
 
             var details = await _sender.Send(new GetTutorByUserId(userId));
@@ -50,6 +57,9 @@ namespace YourTutor.Mvc.Controllers
         {
             var details = await _sender.Send(new GetTutorByUserId(id));
 
+            if(details is null)
+                return RedirectToAction("", _offerController);
+
             var result = _httpContextService.GetUserIdFromClaims() == id
                 ? true
                 : false;
@@ -60,22 +70,28 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpGet]
-        [Route("Edit")]
+        [Route("edit")]
         public async Task<IActionResult> Edit(Guid id)
         {
+            var authorizationResult = await _authorizationService
+                .AuthorizeAsync(_httpContextService.GetUser(), new CanEditTutorRequest(id), CustomAuthorizationPolicy.EditTutor);
+
+            if (!authorizationResult.Succeeded)
+                return new ForbidResult();
+
             var details = await _sender.Send(new GetTutorEditDetails(id));
             return View(details);
         }
 
         [HttpPost]
-        [Route("Edit")]
+        [Route("edit")]
         public async Task<IActionResult> Edit(EditTutorVm vm)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
             {
                 _logger.LogError(AppLogEvent.IndicateUser, "Problem with indicating user");
-                return RedirectToAction(nameof(HomeController.Error), "Home");
+                return RedirectToAction(_errorEndpoint, _homeController);
             }
 
             await _sender.Send(new EditTutor(vm,userId));

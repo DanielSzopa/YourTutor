@@ -11,7 +11,7 @@ using YourTutor.Application.Helpers;
 using YourTutor.Application.Queries.GetOfferDetails;
 using YourTutor.Application.Queries.GetSmallOffers;
 using YourTutor.Application.ViewModels;
-using YourTutor.Infrastructure.Constans;
+using YourTutor.Infrastructure.Authorization;
 
 namespace YourTutor.Mvc.Controllers
 {
@@ -59,14 +59,14 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [Authorize]
-        [HttpGet("Create")]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View();
         }
 
         [Authorize]
-        [HttpPost("Create")]
+        [HttpPost("create")]
         public async Task<IActionResult> Create(CreateOfferVm vm)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
@@ -97,7 +97,7 @@ namespace YourTutor.Mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("Contact/{id:Guid}")]
+        [HttpGet("contact/{id:Guid}")]
         public IActionResult Contact(Guid id, string to)
         {
             return View(new ContactVm()
@@ -110,7 +110,7 @@ namespace YourTutor.Mvc.Controllers
             });
         }
 
-        [HttpPost("Contact/{id:Guid}")]
+        [HttpPost("contact/{id:Guid}")]
         public async Task<IActionResult> Contact(ContactVm contactVm)
         {
             await _sender.Send(new Contact(contactVm));

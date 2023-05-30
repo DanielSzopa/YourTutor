@@ -14,7 +14,8 @@ namespace YourTutor.Infrastructure.DAL
         internal static IServiceCollection AddYourTutorDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetSettings<ConnectionStringsSettings>();
-            services.AddDbContext<YourTutorDbContext>(x => x.UseSqlServer(connectionString.DefaultConnectionString));
+            services.AddDbContext<YourTutorDbContext>(x => x.UseSqlServer(connectionString.DefaultConnectionString,
+                x => x.MigrationsHistoryTable(ConstantsDAL.MigrationsHistoryTable, ConstantsDAL.DefaultSchema)));
 
             return services;
         }

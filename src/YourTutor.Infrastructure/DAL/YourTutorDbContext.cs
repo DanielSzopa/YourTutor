@@ -17,6 +17,8 @@ namespace YourTutor.Infrastructure.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+
+            modelBuilder.HasDefaultSchema(ConstantsDAL.DefaultSchema);
         }
     }
 }
