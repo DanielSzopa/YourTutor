@@ -5,4 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="YourTutor.Tests.Unit" />
+  </ItemGroup>
+
 </Project>
