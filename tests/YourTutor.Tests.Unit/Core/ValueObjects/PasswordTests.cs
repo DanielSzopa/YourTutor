@@ -17,7 +17,7 @@ namespace YourTutor.Tests.Unit.Core.ValueObjects
         [InlineData(" ")]
         [InlineData("")]
         [InlineData(null)]
-        public void Password_WhenValueIsEmptyOrNull_ShouldThrowInvalidPasswordException(string value)
+        public void CreateInstance_WhenValueIsEmptyOrNull_ShouldThrowInvalidPasswordException(string value)
         {
             //act
             Action result = () => { new Password(value); };
@@ -29,7 +29,7 @@ namespace YourTutor.Tests.Unit.Core.ValueObjects
         [Theory]
         [InlineData(21)]
         [InlineData(7)]
-        public void Password_WhenPasswordsLengthIsInvalid_ShouldThrowInvalidPasswordException(int length)
+        public void CreateInstance_WhenPasswordsLengthIsInvalid_ShouldThrowInvalidPasswordException(int length)
         {
             //act
             Action result = () => { new Password(_faker.Random.String2(length)); };
@@ -42,7 +42,7 @@ namespace YourTutor.Tests.Unit.Core.ValueObjects
         [InlineData(8)]
         [InlineData(15)]
         [InlineData(20)]
-        public void Password_WhenPasswordsLengthIsValid_ShouldNotThrowInvalidPasswordException(int length)
+        public void CreateInstance_WhenPasswordsLengthIsValid_ShouldNotThrowInvalidPasswordException(int length)
         {
             //act
             Action result = () => { new Password(_faker.Random.String2(length)); };

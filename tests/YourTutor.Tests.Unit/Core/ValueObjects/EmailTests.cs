@@ -16,41 +16,23 @@ public class EmailTests : IClassFixture<FakerFixture>
     [InlineData(" ")]
     [InlineData("")]
     [InlineData(null)]
-    public void Email_WhenValueIsEmptyOrNull_ShouldThrowInvalidEmailException(string value)
+    public void CreateInstance_WhenValueIsEmptyOrNull_ShouldThrowInvalidEmailException(string value)
     {
-        try
-        {
-            //act
-            var email = new Email(value);
-        }
-        catch (InvalidEmailException ex)
-        {
-            //assert
-            Assert.True(true);
-            return;
-        }
+        //act
+        Action result = () => { var email = new Email(value); };
 
         //assert
-        Assert.True(false);
+        result.Should().Throw<InvalidEmailException>();
     }
 
     [Fact]
-    public void Email_WhenValueIsValid_ShouldNotThrowInvalidEmailException()
+    public void CreateInstance_WhenValueIsValid_ShouldNotThrowInvalidEmailException()
     {
-        try
-        {
-            //act
-            var email = new Email(_faker.Person.Email);
-        }
-        catch (InvalidEmailException ex)
-        {
-            //assert
-            Assert.True(false);
-            return;
-        }
+        //act
+        Action result = () => { var email = new Email(_faker.Person.Email); };
 
         //assert
-        Assert.True(true);
+        result.Should().NotThrow<InvalidEmailException>();
     }
 }
 

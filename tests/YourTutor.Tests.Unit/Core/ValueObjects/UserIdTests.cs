@@ -8,39 +8,21 @@ public class UserIdTests
     [Fact]
     public void UserId_WhenValueIsGuidEmpty_ShouldThrowInvalidUserIdException()
     {
-        try
-        {
-            //act
-            var userId = new UserId(Guid.Empty);
-        }
-        catch (InvalidUserIdException ex)
-        {
-            //assert
-            Assert.True(true);
-            return;
-        }
+        //act
+        Action result = () => { new UserId(Guid.Empty); };
 
         //assert
-        Assert.True(false);
+        result.Should().Throw<InvalidUserIdException>();
     }
 
     [Fact]
     public void OfferId_WhenValueIsValid_ShouldNotThrowInvalidUserIdException()
     {
-        try
-        {
-            //act
-            var userId = new UserId(Guid.NewGuid());
-        }
-        catch (InvalidUserIdException ex)
-        {
-            //assert
-            Assert.True(false);
-            return;
-        }
+        //act
+        Action result = () => { new UserId(Guid.NewGuid()); };
 
         //assert
-        Assert.True(true);
+        result.Should().NotThrow<InvalidUserIdException>();
     }
 }
 

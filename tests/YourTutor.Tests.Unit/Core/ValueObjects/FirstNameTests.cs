@@ -16,41 +16,23 @@ public class FirstNameTests : IClassFixture<FakerFixture>
     [InlineData(" ")]
     [InlineData("")]
     [InlineData(null)]
-    public void FirstName_WhenValueIsEmptyOrNull_ShouldThrowInvalidFirstNameException(string value)
+    public void CreateInstance_WhenValueIsEmptyOrNull_ShouldThrowInvalidFirstNameException(string value)
     {
-        try
-        {
-            //act
-            var firstName = new FirstName(value);
-        }
-        catch (InvalidFirstNameException ex)
-        {
-            //assert
-            Assert.True(true);
-            return;
-        }
+        //act
+        Action result = () => { new FirstName(value); };
 
         //assert
-        Assert.True(false);
+        result.Should().Throw<InvalidFirstNameException>();
     }
 
     [Fact]
-    public void FirstName_WhenValueIsValid_ShouldNotThrowInvalidFirstNameException()
+    public void CreateInstance_WhenValueIsValid_ShouldNotThrowInvalidFirstNameException()
     {
-        try
-        {
-            //act
-            var firstName = new FirstName(_faker.Person.FirstName);
-        }
-        catch (InvalidFirstNameException ex)
-        {
-            //assert
-            Assert.True(false);
-            return;
-        }
+        //act
+        Action result = () => { new FirstName(_faker.Person.FirstName); };
 
         //assert
-        Assert.True(true);
+        result.Should().NotThrow<InvalidFirstNameException>();
     }
 }
 

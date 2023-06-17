@@ -16,41 +16,23 @@ public class LastNameTests : IClassFixture<FakerFixture>
     [InlineData(" ")]
     [InlineData("")]
     [InlineData(null)]
-    public void LastName_WhenValueIsEmptyOrNull_ShouldThrowInvalidLastNameException(string value)
+    public void CreateInstance_WhenValueIsEmptyOrNull_ShouldThrowInvalidLastNameException(string value)
     {
-        try
-        {
-            //act
-            var lastName = new LastName(value);
-        }
-        catch (InvalidLastNameException ex)
-        {
-            //assert
-            Assert.True(true);
-            return;
-        }
+        //act
+        Action result = () => { new LastName(value); };
 
         //assert
-        Assert.True(false);
+        result.Should().Throw<InvalidLastNameException>();
     }
 
     [Fact]
-    public void LastName_WhenValueIsValid_ShouldNotThrowInvalidLastNameException()
+    public void CreateInstance_WhenValueIsValid_ShouldNotThrowInvalidLastNameException()
     {
-        try
-        {
-            //act
-            var lastName = new LastName(_faker.Person.LastName);
-        }
-        catch (InvalidLastNameException ex)
-        {
-            //assert
-            Assert.True(false);
-            return;
-        }
+        //act
+        Action result = () => { new LastName(_faker.Person.LastName); };
 
         //assert
-        Assert.True(true);
+        result.Should().NotThrow<InvalidLastNameException>();
     }
 }
 

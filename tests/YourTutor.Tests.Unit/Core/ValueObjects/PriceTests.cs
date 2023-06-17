@@ -16,41 +16,23 @@ public class PriceTests : IClassFixture<FakerFixture>
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
-    public void Price_WhenValueIsNotGreaterThanZero_ShouldThrowInvalidPriceException(int value)
+    public void CreateInstance_WhenValueIsNotGreaterThanZero_ShouldThrowInvalidPriceException(int value)
     {
-        try
-        {
-            //act
-            var price = new Price(value);
-        }
-        catch (InvalidPriceException ex)
-        {
-            //assert
-            Assert.True(true);
-            return;
-        }
+        //act
+        Action result = () => { new Price(value); };
 
         //assert
-        Assert.True(false);
+        result.Should().Throw<InvalidPriceException>();
     }
 
     [Fact]
-    public void Price_WhenValueIsValid_ShouldNotThrowInvalidPriceException()
+    public void CreateInstance_WhenValueIsValid_ShouldNotThrowInvalidPriceException()
     {
-        try
-        {
-            //act
-            var price = new Price(_faker.Random.Int());
-        }
-        catch (InvalidPriceException ex)
-        {
-            //assert
-            Assert.True(false);
-            return;
-        }
+        //act
+        Action result = () => { new Price((int)_faker.Random.UInt(1)); };
 
         //assert
-        Assert.True(true);
+        result.Should().NotThrow<InvalidPriceException>();
     }
 }
 

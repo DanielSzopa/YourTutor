@@ -16,41 +16,23 @@ public class HashPasswordTests : IClassFixture<FakerFixture>
     [InlineData(" ")]
     [InlineData("")]
     [InlineData(null)]
-    public void HashPassword_WhenValueIsEmptyOrNull_ShouldThrowInvalidPasswordException(string value)
+    public void CreateInstance_WhenValueIsEmptyOrNull_ShouldThrowInvalidPasswordException(string value)
     {
-        try
-        {
-            //act
-            var hashPassword = new HashPassword(value);
-        }
-        catch (InvalidPasswordException ex)
-        {
-            //assert
-            Assert.True(true);
-            return;
-        }
+        //act
+        Action result = () => { new HashPassword(value); };
 
         //assert
-        Assert.True(false);
+        result.Should().Throw<InvalidPasswordException>();
     }
 
     [Fact]
-    public void HashPassword_WhenValueIsValid_ShouldNotThrowInvalidPasswordException()
+    public void CreateInstance_WhenValueIsValid_ShouldNotThrowInvalidPasswordException()
     {
-        try
-        {
-            //act
-            var hashPassword = new HashPassword(_faker.Random.String2(10));
-        }
-        catch (InvalidPasswordException ex)
-        {
-            //assert
-            Assert.True(false);
-            return;
-        }
+        //act
+        Action result = () => { new HashPassword(_faker.Random.String2(10)); };
 
         //assert
-        Assert.True(true);
+        result.Should().NotThrow<InvalidPasswordException>();
     }
 }
 

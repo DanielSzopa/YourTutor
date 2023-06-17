@@ -1,47 +1,28 @@
 ﻿using YourTutor.Core.Exceptions;
 using YourTutor.Core.ValueObjects;
-using YourTutor.Tests.Unit.Fixtures;
 
 namespace YourTutor.Tests.Unit.Core.ValueObjects;
 
 public class OfferIdTests
 {
     [Fact]
-    public void OfferId_WhenValueIsGuidEmpty_ShouldThrowInvalidOfferIdException()
+    public void CreateInstance_WhenValueIsGuidEmpty_ShouldThrowInvalidOfferIdException()
     {
-        try
-        {
-            //act
-            var offerId = new OfferId(Guid.Empty);
-        }
-        catch (InvalidOfferIdException ex)
-        {
-            //assert
-            Assert.True(true);
-            return;
-        }
+        //act
+        Action result = () => { new OfferId(Guid.Empty); };
 
         //assert
-        Assert.True(false);
+        result.Should().Throw<InvalidOfferIdException>();
     }
 
     [Fact]
-    public void OfferId_WhenValueIsValid_ShouldNotThrowInvalidOfferIdException()
+    public void CreateInstance_WhenValueIsValid_ShouldNotThrowInvalidOfferIdException()
     {
-        try
-        {
-            //act
-            var offerId = new OfferId(Guid.NewGuid());
-        }
-        catch (InvalidOfferIdException ex)
-        {
-            //assert
-            Assert.True(false);
-            return;
-        }
+        //act
+        Action result = () => { new OfferId(Guid.NewGuid()); };
 
         //assert
-        Assert.True(true);
+        result.Should().NotThrow<InvalidOfferIdException>();
     }
 }
 
