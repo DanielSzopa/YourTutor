@@ -4,14 +4,8 @@ using YourTutor.Tests.Unit.Fixtures;
 
 namespace YourTutor.Tests.Unit.Core.ValueObjects;
 
-public class OfferIdTests : IClassFixture<FakerFixture>
+public class OfferIdTests
 {
-    private readonly Faker _faker;
-    public OfferIdTests(FakerFixture fakerFixture)
-    {
-        _faker = fakerFixture.Faker;
-    }
-
     [Fact]
     public void OfferId_WhenValueIsGuidEmpty_ShouldThrowInvalidOfferIdException()
     {
