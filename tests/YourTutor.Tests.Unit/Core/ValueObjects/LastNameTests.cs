@@ -16,7 +16,7 @@ public class LastNameTests : IClassFixture<FakerFixture>
     [InlineData(" ")]
     [InlineData("")]
     [InlineData(null)]
-    public async Task LastName_WhenValueIsEmptyOrNull_ShouldThrowInvalidLastNameException(string value)
+    public void LastName_WhenValueIsEmptyOrNull_ShouldThrowInvalidLastNameException(string value)
     {
         try
         {
@@ -35,7 +35,7 @@ public class LastNameTests : IClassFixture<FakerFixture>
     }
 
     [Fact]
-    public async Task LastName_WhenValueIsValid_ShouldNotThrowInvalidLastNameException()
+    public void LastName_WhenValueIsValid_ShouldNotThrowInvalidLastNameException()
     {
         try
         {

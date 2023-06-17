@@ -16,7 +16,7 @@ public class FirstNameTests : IClassFixture<FakerFixture>
     [InlineData(" ")]
     [InlineData("")]
     [InlineData(null)]
-    public async Task FirstName_WhenValueIsEmptyOrNull_ShouldThrowInvalidFirstNameException(string value)
+    public void FirstName_WhenValueIsEmptyOrNull_ShouldThrowInvalidFirstNameException(string value)
     {
         try
         {
@@ -35,7 +35,7 @@ public class FirstNameTests : IClassFixture<FakerFixture>
     }
 
     [Fact]
-    public async Task FirstName_WhenValueIsValid_ShouldNotThrowInvalidFirstNameException()
+    public void FirstName_WhenValueIsValid_ShouldNotThrowInvalidFirstNameException()
     {
         try
         {

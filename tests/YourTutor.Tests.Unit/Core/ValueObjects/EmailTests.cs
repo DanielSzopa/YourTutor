@@ -16,7 +16,7 @@ public class EmailTests : IClassFixture<FakerFixture>
     [InlineData(" ")]
     [InlineData("")]
     [InlineData(null)]
-    public async Task Email_WhenValueIsEmptyOrNull_ShouldThrowInvalidEmailException(string value)
+    public void Email_WhenValueIsEmptyOrNull_ShouldThrowInvalidEmailException(string value)
     {
         try
         {
@@ -35,7 +35,7 @@ public class EmailTests : IClassFixture<FakerFixture>
     }
 
     [Fact]
-    public async Task Email_WhenValueIsValid_ShouldNotThrowInvalidEmailException()
+    public void Email_WhenValueIsValid_ShouldNotThrowInvalidEmailException()
     {
         try
         {
