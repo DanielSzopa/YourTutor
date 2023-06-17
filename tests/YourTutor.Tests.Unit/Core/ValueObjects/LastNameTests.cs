@@ -4,10 +4,10 @@ using YourTutor.Tests.Unit.Fixtures;
 
 namespace YourTutor.Tests.Unit.Core.ValueObjects;
 
-public class FirstNameTests : IClassFixture<FakerFixture>
+public class LastNameTests : IClassFixture<FakerFixture>
 {
     private readonly Faker _faker;
-    public FirstNameTests(FakerFixture fakerFixture)
+    public LastNameTests(FakerFixture fakerFixture)
     {
         _faker = fakerFixture.Faker;
     }
@@ -16,14 +16,14 @@ public class FirstNameTests : IClassFixture<FakerFixture>
     [InlineData(" ")]
     [InlineData("")]
     [InlineData(null)]
-    public async Task FirstName_WhenValueIsEmptyOrNull_ShouldThrowInvalidFirstNameException(string value)
+    public async Task LastName_WhenValueIsEmptyOrNull_ShouldThrowInvalidLastNameException(string value)
     {
         try
         {
             //act
-            var firstName = new FirstName(value);
+            var lastName = new LastName(value);
         }
-        catch (InvalidFirstNameException ex)
+        catch (InvalidLastNameException ex)
         {
             //assert
             Assert.True(true);
@@ -35,14 +35,14 @@ public class FirstNameTests : IClassFixture<FakerFixture>
     }
 
     [Fact]
-    public async Task FirstName_WhenValueIsValid_ShouldNotThrowInvalidFirstNameException()
+    public async Task LastName_WhenValueIsValid_ShouldNotThrowInvalidLastNameException()
     {
         try
         {
             //act
-            var firstName = new FirstName(_faker.Person.FirstName);
+            var lastName = new LastName(_faker.Person.LastName);
         }
-        catch (InvalidFirstNameException ex)
+        catch (InvalidLastNameException ex)
         {
             //assert
             Assert.True(false);
