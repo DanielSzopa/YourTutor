@@ -40,7 +40,7 @@ public class PriceTests : IClassFixture<FakerFixture>
         try
         {
             //act
-            var price = new Price(1);
+            var price = new Price(_faker.Random.Int());
         }
         catch (InvalidPriceException ex)
         {
