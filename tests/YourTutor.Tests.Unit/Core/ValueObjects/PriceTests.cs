@@ -29,7 +29,7 @@ public class PriceTests : IClassFixture<FakerFixture>
     public void CreateInstance_WhenValueIsValid_ShouldNotThrowInvalidPriceException()
     {
         //act
-        Action result = () => { new Price((int)_faker.Random.UInt(1)); };
+        Action result = () => { new Price(1); };
 
         //assert
         result.Should().NotThrow<InvalidPriceException>();
