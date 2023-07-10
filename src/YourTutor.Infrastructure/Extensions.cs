@@ -17,6 +17,7 @@ using YourTutor.Infrastructure.Authorization.CanEditTutor;
 using YourTutor.Infrastructure.Authorization.CanRemoveOffer;
 using YourTutor.Infrastructure.DAL;
 using YourTutor.Infrastructure.Email;
+using YourTutor.Infrastructure.HealthChecks;
 using YourTutor.Infrastructure.Logging;
 using YourTutor.Infrastructure.Security;
 using YourTutor.Infrastructure.Services;
@@ -31,6 +32,7 @@ namespace YourTutor.Infrastructure
             services
                 .AddAuthorizationPolicies()
                 .AddAuthenticationExtension(configuration)
+                .AddInfrastructureHealthChecks(configuration)
                 .AddRepositories()
                 .AddSeeders()
                 .AddHttpContextAccessor()
