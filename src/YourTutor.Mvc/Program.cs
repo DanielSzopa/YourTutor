@@ -3,6 +3,7 @@ using YourTutor.Application;
 using YourTutor.Application.Helpers;
 using YourTutor.Infrastructure;
 using YourTutor.Infrastructure.Middlewares;
+using YourTutor.Mvc.Api;
 using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +52,8 @@ try
     app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    app.AddHealthCheckEndpoint();
 
     logger.Information("Application works correctly before Run Middleware, {0}", logEvent);
 

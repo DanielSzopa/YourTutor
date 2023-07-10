@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.SendGrid" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="FluentEmail.SendGrid" Version="3.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
