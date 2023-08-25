@@ -43,7 +43,7 @@ namespace YourTutor.Infrastructure
                 .AddScoped<IHttpContextService, HttpContextService>()
                 .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingHandler<,>))
                 .AddSingleton<IHashService, HashService>()
-                .AddHostedService<DatabaseInitializer>()
+                .AddDbInitializerHostedService(configuration)
                 .AddScoped<IAuthorizationHandler, CanRemoveOfferRequirementHandler>()
                 .AddScoped<IAuthorizationHandler, CanEditTutorRequirementHandler>()
                 .RegisterAllSettings(configuration)
