@@ -35,13 +35,13 @@ internal class OfferRepository : IOfferRepository
         return offer;
     }
 
-    public async Task<bool> CheckIfUserHasAccessToOffer(OfferId offerId, UserId userId, CancellationToken cancellationToken)
+    public async Task<bool> CheckIfUserHasAccessToOffer(OfferId offerId, UserId userId)
     {
         var result = await _db
             .Offers
             .Include(o => o.Tutor)
             .ThenInclude(t => t.User)
-            .AnyAsync(o => o.Id == offerId && o.Tutor.User.Id == userId, cancellationToken);
+            .AnyAsync(o => o.Id == offerId && o.Tutor.User.Id == userId);
 
         return result;
     }
