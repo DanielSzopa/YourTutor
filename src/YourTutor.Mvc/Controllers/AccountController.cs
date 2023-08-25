@@ -29,11 +29,11 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register(RegisterVm vm)
+        public async Task<IActionResult> Register(RegisterVm vm, CancellationToken cancellationToken)
         {
             if (ModelState.IsValid)
             {
-                var response = await _sender.Send(new Register(vm));
+                var response = await _sender.Send(new Register(vm), cancellationToken);
 
                 if (response.Errors.Count > 0)
                 {
@@ -59,11 +59,11 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(LoginVm vm)
+        public async Task<IActionResult> Login(LoginVm vm, CancellationToken cancellationToken)
         {          
             if (ModelState.IsValid)
             {
-                var response = await _sender.Send(new Login(vm));
+                var response = await _sender.Send(new Login(vm), cancellationToken);
 
                 if (response.Errors.Count > 0)
                 {
@@ -86,9 +86,9 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpGet]
         [Route("logout")]
-        public async Task<IActionResult> Logout(SignOut command)
+        public async Task<IActionResult> Logout(SignOut command, CancellationToken cancellationToken)
         {
-            await _sender.Send(command);
+            await _sender.Send(command, cancellationToken);
             return RedirectToAction("Index", "Home");
         }
 

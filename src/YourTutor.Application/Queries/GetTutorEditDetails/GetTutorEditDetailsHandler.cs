@@ -15,7 +15,7 @@ public sealed class GetTutorEditDetailsHandler : IRequestHandler<GetTutorEditDet
 
     public async Task<EditTutorVm> Handle(GetTutorEditDetails request, CancellationToken cancellationToken)
     {
-        var details = await _tutorRepository.GetTutorDetailsForEdit(request.TutorId);
+        var details = await _tutorRepository.GetTutorDetailsForEdit(request.TutorId, cancellationToken);
 
         return new()
         {

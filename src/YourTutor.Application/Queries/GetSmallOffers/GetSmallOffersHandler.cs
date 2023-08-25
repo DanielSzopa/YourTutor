@@ -27,7 +27,7 @@ public sealed class GetSmallOffersHandler : IRequestHandler<GetSmallOffers, Smal
             : pagination;
 
         var smallOffersGroup = await _offerRepository.GetSmallOffers(offer.IsRemotely, offer.IsRemotelyFiltered, offer.PriceFrom, offer.PriceTo,
-            _pageSize, ExcludeRecords(pagination.PageNumber, _pageSize), pagination.SearchString);
+            _pageSize, ExcludeRecords(pagination.PageNumber, _pageSize), pagination.SearchString, cancellationToken);
 
 
         var results = smallOffersGroup.Offers

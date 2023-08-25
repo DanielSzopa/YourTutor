@@ -18,7 +18,7 @@ public sealed class GetOfferDetailsHandler : IRequestHandler<GetOfferDetails, Of
 
     public async Task<OfferDetailsVm> Handle(GetOfferDetails request, CancellationToken cancellationToken)
     {
-        var offer = await _offerRepository.GetOfferDetails(request.id);
+        var offer = await _offerRepository.GetOfferDetails(request.id, cancellationToken);
 
         if (offer == null)
         {

@@ -34,7 +34,7 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpGet]      
-        public async Task<IActionResult> MyAccount()
+        public async Task<IActionResult> MyAccount(CancellationToken cancellationToken)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
@@ -43,7 +43,7 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(_errorEndpoint, _homeController);
             }
 
-            var details = await _sender.Send(new GetTutorByUserId(userId));
+            var details = await _sender.Send(new GetTutorByUserId(userId), cancellationToken);
 
             ViewBag.IsHisAccount = true;
 
@@ -53,16 +53,14 @@ namespace YourTutor.Mvc.Controllers
         [HttpGet]
         [Route("{id:Guid}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid id, CancellationToken cancellationToken)
         {
-            var details = await _sender.Send(new GetTutorByUserId(id));
+            var details = await _sender.Send(new GetTutorByUserId(id), cancellationToken);
 
             if(details is null)
                 return RedirectToAction("", _offerController);
 
-            var result = _httpContextService.GetUserIdFromClaims() == id
-                ? true
-                : false;
+            var result = _httpContextService.GetUserIdFromClaims() == id;
 
             ViewBag.IsHisAccount = result;
 
@@ -71,7 +69,7 @@ namespace YourTutor.Mvc.Controllers
 
         [HttpGet]
         [Route("edit")]
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id, CancellationToken cancellationToken)
         {
             var authorizationResult = await _authorizationService
                 .AuthorizeAsync(_httpContextService.GetUser(), new CanEditTutorRequest(id), CustomAuthorizationPolicy.EditTutor);
@@ -79,13 +77,13 @@ namespace YourTutor.Mvc.Controllers
             if (!authorizationResult.Succeeded)
                 return new ForbidResult();
 
-            var details = await _sender.Send(new GetTutorEditDetails(id));
+            var details = await _sender.Send(new GetTutorEditDetails(id), cancellationToken);
             return View(details);
         }
 
         [HttpPost]
         [Route("edit")]
-        public async Task<IActionResult> Edit(EditTutorVm vm)
+        public async Task<IActionResult> Edit(EditTutorVm vm, CancellationToken cancellationToken)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
@@ -94,7 +92,7 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(_errorEndpoint, _homeController);
             }
 
-            await _sender.Send(new EditTutor(vm,userId));
+            await _sender.Send(new EditTutor(vm,userId), cancellationToken);
             return RedirectToAction(nameof(MyAccount));
         }
     }

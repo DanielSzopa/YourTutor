@@ -21,8 +21,8 @@ public sealed class DeleteOfferHandler : IRequestHandler<DeleteOffer, Unit>
 
     public async Task<Unit> Handle(DeleteOffer request, CancellationToken cancellationToken)
     {
-        await _offerRepository.RemoveOfferById(request.Id);
-        await _unitOfWork.SaveChangesAsync();
+        await _offerRepository.RemoveOfferById(request.Id, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Offer with id: {0} has been removed", request.Id.ToString());
         return Unit.Value;

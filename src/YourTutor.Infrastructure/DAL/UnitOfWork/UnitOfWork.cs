@@ -11,9 +11,9 @@ internal sealed class UnitOfWork : IUnitOfWork
         _yourTutorDbContext = yourTutorDbContext;
     }
 
-    public async Task SaveChangesAsync()
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
     {
-       await _yourTutorDbContext.SaveChangesAsync();
+       await _yourTutorDbContext.SaveChangesAsync(cancellationToken);
     }
 }
 

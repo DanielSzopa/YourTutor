@@ -33,25 +33,23 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffersFilterDto offersDto)
+        public async Task<IActionResult> Index([FromQuery] PaginationDto paginationDto, [FromQuery] OffersFilterDto offersDto, CancellationToken cancellationToken)
         {
             var query = new GetSmallOffers(paginationDto, offersDto);
-            var response = await _sender.Send(query);
+            var response = await _sender.Send(query, cancellationToken);
             return View(response);
         }
 
 
         [HttpGet("{id:Guid}")]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid id, CancellationToken cancellationToken)
         {
-            var details = await _sender.Send(new GetOfferDetails(id));        
+            var details = await _sender.Send(new GetOfferDetails(id), cancellationToken);        
 
             if (details is null)
                 return RedirectToAction(nameof(Index));
 
-            var result = _httpContextService.GetUserIdFromClaims()  == details.TutorId 
-                ? true 
-                : false;
+            var result = _httpContextService.GetUserIdFromClaims()  == details.TutorId;
 
             ViewBag.IsHisOffer = result;
 
@@ -67,7 +65,7 @@ namespace YourTutor.Mvc.Controllers
 
         [Authorize]
         [HttpPost("create")]
-        public async Task<IActionResult> Create(CreateOfferVm vm)
+        public async Task<IActionResult> Create(CreateOfferVm vm, CancellationToken cancellationToken)
         {
             var userId = _httpContextService.GetUserIdFromClaims();
             if (userId == Guid.Empty)
@@ -76,7 +74,7 @@ namespace YourTutor.Mvc.Controllers
                 return RedirectToAction(nameof(HomeController.Error), "Home");
             }
 
-            var offerId = await _sender.Send(new CreateOffer(vm, userId));
+            var offerId = await _sender.Send(new CreateOffer(vm, userId), cancellationToken);
 
             return RedirectToAction(nameof(Details), new { id = offerId });
         }
@@ -84,7 +82,7 @@ namespace YourTutor.Mvc.Controllers
 
         [Authorize]
         [Route("delete/{id:Guid}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             var authorizationResult = await _authorizationService.AuthorizeAsync(_httpContextService.GetUser(),
                 new DeleteOffer(id), CustomAuthorizationPolicy.DeleteOffer);
@@ -92,7 +90,7 @@ namespace YourTutor.Mvc.Controllers
             if (!authorizationResult.Succeeded)
                 return new ForbidResult();
 
-            await _sender.Send(new DeleteOffer(id));
+            await _sender.Send(new DeleteOffer(id), cancellationToken);
 
             return RedirectToAction(nameof(Index));
         }
@@ -111,9 +109,9 @@ namespace YourTutor.Mvc.Controllers
         }
 
         [HttpPost("contact/{id:Guid}")]
-        public async Task<IActionResult> Contact(ContactVm contactVm)
+        public async Task<IActionResult> Contact(ContactVm contactVm, CancellationToken cancellationToken)
         {
-            await _sender.Send(new Contact(contactVm));
+            await _sender.Send(new Contact(contactVm), cancellationToken);
             return RedirectToAction(nameof(Details), new { id = contactVm.Id });
         }
     }

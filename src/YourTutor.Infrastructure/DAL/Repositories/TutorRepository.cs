@@ -15,32 +15,32 @@ namespace YourTutor.Infrastructure.DAL.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<TutorDetailsReadModel> GetTutorDetailsByUserId(Guid userId)
+        public async Task<TutorDetailsReadModel> GetTutorDetailsByUserId(Guid userId, CancellationToken cancellationToken)
         {
             var details = await _dbContext.Tutor
                 .Include(t => t.User)
                 .Where(t => t.UserId == new UserId(userId))
                 .Select(t => new TutorDetailsReadModel(t.UserId, $"{t.User.FirstName.Value} {t.User.LastName.Value}", t.User.Email, t.Description, t.Country, t.Language))
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken);
 
             return details;
         }
 
-        public async Task<Tutor> GetTutorById(Guid userId)
+        public async Task<Tutor> GetTutorById(Guid userId, CancellationToken cancellationToken)
         {
             var tutor = await _dbContext
                 .Tutor
-                .FirstOrDefaultAsync(t => t.UserId == new UserId(userId));
+                .FirstOrDefaultAsync(t => t.UserId == new UserId(userId), cancellationToken);
             return tutor;
         }
 
-        public async Task<TutorDetailsForEditReadModel> GetTutorDetailsForEdit(UserId userId)
+        public async Task<TutorDetailsForEditReadModel> GetTutorDetailsForEdit(UserId userId, CancellationToken cancellationToken)
         {
             var details = await _dbContext
                 .Tutor
                 .Where(t => t.UserId == userId)
                 .Select(t => new TutorDetailsForEditReadModel(t.Description, t.Country, t.Language))
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken);
 
             return details;
         }

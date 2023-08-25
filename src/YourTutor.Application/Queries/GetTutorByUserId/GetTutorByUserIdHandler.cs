@@ -15,7 +15,7 @@ namespace YourTutor.Application.Queries.GetTutorByUserId
 
         public async Task<TutorDetailsVm> Handle(GetTutorByUserId request, CancellationToken cancellationToken)
         {
-            var details = await _tutorRepository.GetTutorDetailsByUserId(request.UserId) ?? default;
+            var details = await _tutorRepository.GetTutorDetailsByUserId(request.UserId, cancellationToken) ?? default;
 
             if (details is null)
                 return default;
