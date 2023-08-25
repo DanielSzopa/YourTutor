@@ -13,7 +13,7 @@ public interface IOfferRepository
 
     Task<OfferDetailsReadmodel> GetOfferDetails(OfferId id, CancellationToken cancellationToken);
 
-    Task<bool> CheckIfUserHasAccessToOffer(OfferId offerId, UserId userId, CancellationToken cancellationToken);
+    Task<bool> CheckIfUserHasAccessToOffer(OfferId offerId, UserId userId);
 
     Task<SmallOfferPaginationReadModel> GetSmallOffers(bool isRemotely, bool isRemotelyFiltered, int priceFrom, int priceTo, int pageSize, int excludeRecords, string searchString, CancellationToken cancellationToken);
 }
