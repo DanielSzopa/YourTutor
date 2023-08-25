@@ -25,7 +25,7 @@ namespace YourTutor.Application.Commands.SignIn
         public async Task<LoginResponse> Handle(Login request, CancellationToken cancellationToken)
         {
             var loginResponse = new LoginResponse();
-            var user = await _userRepository.GetUserByEmailAsync(request.LoginVm.Email.ToLower());
+            var user = await _userRepository.GetUserByEmailAsync(request.LoginVm.Email.ToLower(), cancellationToken);
             if (user is null)
             {
                 loginResponse.Errors.Add("Invalid credentials");

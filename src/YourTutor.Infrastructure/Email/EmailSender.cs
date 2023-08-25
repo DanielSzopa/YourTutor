@@ -20,7 +20,7 @@ namespace YourTutor.Infrastructure.Email
             _sendGridSender = new SendGridSender(sendGridSettings.Value.ApiKey);
             _logger = logger;
         }
-        public async Task SendEmailAsync(EmailBase email)
+        public async Task SendEmailAsync(EmailBase email, CancellationToken cancellationToken)
         {
             IFluentEmail fluentEmail = FluentEmail.Core.Email
                 .From(email.From)
@@ -29,7 +29,7 @@ namespace YourTutor.Infrastructure.Email
                 .Body(email.Body)
                 .Tag(email.Tag);
 
-            SendResponse response = await _sendGridSender.SendAsync(fluentEmail);
+            SendResponse response = await _sendGridSender.SendAsync(fluentEmail, cancellationToken);
 
             if (!response.Successful)
                 _logger.LogError(AppLogEvent.EmailSending, "Problem with sending email by sendGrid, messageId: {@messageId}, error: {@error}", response.MessageId, JoinErrors(response.ErrorMessages));

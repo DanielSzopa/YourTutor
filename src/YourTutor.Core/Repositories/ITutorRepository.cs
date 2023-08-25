@@ -6,9 +6,9 @@ namespace YourTutor.Core.Repositories
 {
     public interface ITutorRepository
     {
-        Task<TutorDetailsReadModel> GetTutorDetailsByUserId(Guid userId);
-        Task<Tutor> GetTutorById(Guid userId);
+        Task<TutorDetailsReadModel> GetTutorDetailsByUserId(Guid userId, CancellationToken cancellationToken);
+        Task<Tutor> GetTutorById(Guid userId, CancellationToken cancellationToken);
 
-        Task<TutorDetailsForEditReadModel> GetTutorDetailsForEdit(UserId userId);
+        Task<TutorDetailsForEditReadModel> GetTutorDetailsForEdit(UserId userId, CancellationToken cancellationToken);
     }
 }

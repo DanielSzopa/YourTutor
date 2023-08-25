@@ -23,7 +23,7 @@ public sealed class ContactHandler : IRequestHandler<Contact, Unit>
         var body = $"From: {vm.Email} \nName: {vm.Name} \nDescription: {vm.Description}";
         var email = new ContactEmail(body, vm.To, _emailSettings.From);
 
-        await _emailSender.SendEmailAsync(email);
+        await _emailSender.SendEmailAsync(email, cancellationToken);
 
         return Unit.Value;
     }
