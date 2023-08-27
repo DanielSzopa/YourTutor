@@ -7,6 +7,7 @@ using YourTutor.Mvc.Api;
 using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
 
 var services = builder.Services;
 var config = builder.Configuration;
