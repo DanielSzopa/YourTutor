@@ -1,30 +1,22 @@
-using Serilog;
 using YourTutor.Application;
 using YourTutor.Application.Helpers;
 using YourTutor.Infrastructure;
+using YourTutor.Infrastructure.Logging;
 using YourTutor.Infrastructure.Middlewares;
 using YourTutor.Mvc.Api;
 using YourTutor.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseLogger();
 
 var services = builder.Services;
 var config = builder.Configuration;
 
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(config)
-    .CreateLogger();
-
-var logger = Log.Logger;
-var logEvent = new
-{
-    EventId = AppLogEvent.Start
-};
+var logger = builder
+    .GetLogger<Program>();
 
 try
 {
-    logger.Information("Start building application, {0}", logEvent);
+    logger.LogInformation(AppLogEvent.Start, "Start building application");
 
     services
     .AddApplication()
@@ -33,7 +25,7 @@ try
 
     var app = builder.Build();
 
-    logger.Information("Application has been build, {0}", logEvent);
+    logger.LogInformation(AppLogEvent.Start, "Application has been build");
 
     if (!app.Environment.IsDevelopment())
     {
@@ -55,18 +47,14 @@ try
 
     app.AddHealthCheckEndpoint();
 
-    logger.Information("Application works correctly before Run Middleware, {0}", logEvent);
+    logger.LogInformation(AppLogEvent.Start, "Application works correctly before Run Middleware");
 
     app.Run();
 
 }
 catch (Exception ex)
 {
-    logger.Fatal(ex, "Application terminated unexpectedly, {0}", logEvent);
-}
-finally
-{
-    Log.CloseAndFlush();
+    logger.LogCritical(AppLogEvent.Start, ex, "Application terminated unexpectedly");
 }
 
 public partial class Program { }
