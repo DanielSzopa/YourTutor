@@ -24,7 +24,7 @@ public sealed class DeleteOfferHandler : IRequestHandler<DeleteOffer, Unit>
         await _offerRepository.RemoveOfferById(request.Id);
         await _unitOfWork.SaveChangesAsync();
 
-        _logger.LogInformation("Offer with id: {0} has been removed", request.Id.ToString());
+        _logger.LogInformation("Offer with id: {offerId} has been removed", request.Id.ToString());
         return Unit.Value;
     }
 }

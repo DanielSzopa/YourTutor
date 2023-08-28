@@ -23,58 +23,47 @@ using YourTutor.Infrastructure.Security;
 using YourTutor.Infrastructure.Services;
 using YourTutor.Infrastructure.Settings;
 
-namespace YourTutor.Infrastructure
+namespace YourTutor.Infrastructure;
+
+public static class Extensions
 {
-    public static class Extensions
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
-        {
-            services
-                .AddAuthorizationPolicies()
-                .AddAuthenticationExtension(configuration)
-                .AddInfrastructureHealthChecks(configuration)
-                .AddRepositories()
-                .AddSeeders()
-                .AddHttpContextAccessor()
-                .AddScoped<ISignInManager, SignInManager>()
-                .AddScoped<ISignOutManager, SignOutManager>()
-                .AddScoped<IEmailSender, EmailSender>()
-                .AddScoped<IClock, Clock>()
-                .AddScoped<IHttpContextService, HttpContextService>()
-                .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingHandler<,>))
-                .AddSingleton<IHashService, HashService>()
-                .AddHostedService<DatabaseInitializer>()
-                .AddScoped<IAuthorizationHandler, CanRemoveOfferRequirementHandler>()
-                .AddScoped<IAuthorizationHandler, CanEditTutorRequirementHandler>()
-                .RegisterAllSettings(configuration)
-                .AddYourTutorDbContext(configuration);
+        services
+            .AddCustomLogging(configuration)
+            .AddAuthorizationPolicies()
+            .AddAuthenticationExtension(configuration)
+            .AddInfrastructureHealthChecks(configuration)
+            .AddRepositories()
+            .AddSeeders()
+            .AddHttpContextAccessor()
+            .AddScoped<ISignInManager, SignInManager>()
+            .AddScoped<ISignOutManager, SignOutManager>()
+            .AddScoped<IEmailSender, EmailSender>()
+            .AddScoped<IClock, Clock>()
+            .AddScoped<IHttpContextService, HttpContextService>()
+            .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingHandler<,>))
+            .AddSingleton<IHashService, HashService>()
+            .AddHostedService<DatabaseInitializer>()
+            .AddScoped<IAuthorizationHandler, CanRemoveOfferRequirementHandler>()
+            .AddScoped<IAuthorizationHandler, CanEditTutorRequirementHandler>()
+            .RegisterAllSettings(configuration)
+            .AddYourTutorDbContext(configuration);
 
-            return services;
-        }
+        return services;
+    }
 
-        private static IServiceCollection RegisterAllSettings(this IServiceCollection services, IConfiguration configuration)
-        {
-            services
-                .RegisterSettings<IdentitySettings>(configuration)
-                .RegisterSettings<ConnectionStringsSettings>(configuration)
-                .RegisterSettings<SendGridSettings>(configuration)
-                .RegisterSettings<EmailSettings>(configuration)
-                .RegisterSettings<SeederSettings>(configuration)
-                .RegisterSettings<DbInitializerSettings>(configuration);
+    private static IServiceCollection RegisterAllSettings(this IServiceCollection services, IConfiguration configuration)
+    {
+        services
+            .RegisterSettings<IdentitySettings>(configuration)
+            .RegisterSettings<ConnectionStringsSettings>(configuration)
+            .RegisterSettings<SendGridSettings>(configuration)
+            .RegisterSettings<EmailSettings>(configuration)
+            .RegisterSettings<SeederSettings>(configuration)
+            .RegisterSettings<DbInitializerSettings>(configuration);
 
-            return services;
-        }
-
-        public static ConfigureHostBuilder UseLogger(this ConfigureHostBuilder host)
-        {
-            host.UseSerilog((context, config) =>
-            {
-                config.ReadFrom.Configuration(context.Configuration);
-            });
-
-            return host;
-        }
-
+        return services;
     }
 }
 
