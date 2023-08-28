@@ -26,7 +26,7 @@ try
 
     var app = builder.Build();
 
-    logger.LogInformation(AppLogEvent.Start, "Application has been build");
+    logger.LogInformation(AppLogEvent.Start, "Application has been build, environment: {environment}", app.Environment.EnvironmentName);
 
     if (!app.Environment.IsDevelopment())
     {
