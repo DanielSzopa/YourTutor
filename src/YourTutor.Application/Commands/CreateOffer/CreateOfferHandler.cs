@@ -21,8 +21,8 @@ namespace YourTutor.Application.Commands.CreateOffer
             var vm = request.CreateOfferVm;
             var offer = new Offer(Guid.NewGuid(), vm.Description, vm.Subject, vm.Price, vm.IsRemotely, vm.Location, request.UserId);
 
-            await _offerRepository.CreateOffer(offer);
-            await _unitOfWork.SaveChangesAsync();
+            await _offerRepository.CreateOffer(offer, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return offer.Id;
         }

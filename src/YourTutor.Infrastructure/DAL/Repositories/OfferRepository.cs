@@ -15,13 +15,13 @@ internal class OfferRepository : IOfferRepository
         _db = yourTutorDbContext;
     }
 
-    public async Task CreateOffer(Offer offer)
+    public async Task CreateOffer(Offer offer, CancellationToken cancellationToken)
     {
         await _db
-            .AddAsync(offer);
+            .AddAsync(offer, cancellationToken);
     }
 
-    public async Task<OfferDetailsReadmodel> GetOfferDetails(OfferId id)
+    public async Task<OfferDetailsReadmodel> GetOfferDetails(OfferId id, CancellationToken cancellationToken)
     {
         var offer = await _db
             .Offers
@@ -30,7 +30,7 @@ internal class OfferRepository : IOfferRepository
             .Where(o => o.Id == id)
             .Select(o => new OfferDetailsReadmodel(o.Id, o.Description, o.Subject, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName,
                 o.Tutor.User.Email, o.Tutor.Country, o.Tutor.Language, o.Tutor.UserId))
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
         return offer;
     }
@@ -46,15 +46,15 @@ internal class OfferRepository : IOfferRepository
         return result;
     }
 
-    public async Task RemoveOfferById(OfferId id)
+    public async Task RemoveOfferById(OfferId id, CancellationToken cancellationToken)
     {
         var offer = await _db.Offers
-            .FirstAsync(o => o.Id == id);
+            .FirstAsync(o => o.Id == id, cancellationToken);
 
         _db.Remove(offer);
     }
 
-    public async Task<SmallOfferPaginationReadModel> GetSmallOffers(bool isRemotely, bool isRemotelyFiltered, int priceFrom, int priceTo, int pageSize, int excludeRecords, string searchString)
+    public async Task<SmallOfferPaginationReadModel> GetSmallOffers(bool isRemotely, bool isRemotelyFiltered, int priceFrom, int priceTo, int pageSize, int excludeRecords, string searchString, CancellationToken cancellationToken)
     {
         var query = _db.
             Offers
@@ -89,7 +89,7 @@ internal class OfferRepository : IOfferRepository
                .Where(o => o.Price >= new Price(priceFrom) && o.Price <= new Price(priceTo));
         }
 
-        var quantity = await query.CountAsync();
+        var quantity = await query.CountAsync(cancellationToken);
 
         query = query
             .Skip(excludeRecords)
@@ -97,7 +97,7 @@ internal class OfferRepository : IOfferRepository
 
         var items = await query
             .Select(o => new SmallOffersReadModel(o.Id, o.Subject, o.Description, o.Price, o.Location, o.IsRemotely, o.Tutor.User.FirstName + " " + o.Tutor.User.LastName, o.Tutor.User.Email))
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         return new SmallOfferPaginationReadModel(items, quantity);
     }

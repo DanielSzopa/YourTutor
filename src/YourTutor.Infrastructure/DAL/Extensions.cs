@@ -6,6 +6,7 @@ using YourTutor.Application.Settings;
 using YourTutor.Core.Repositories;
 using YourTutor.Infrastructure.DAL.Repositories;
 using YourTutor.Infrastructure.DAL.Seeds;
+using YourTutor.Infrastructure.Settings;
 
 namespace YourTutor.Infrastructure.DAL
 {
@@ -33,6 +34,14 @@ namespace YourTutor.Infrastructure.DAL
         {
             return services
                     .AddSingleton<IYourTutorSeeder, YourTutorSeeder>();
+        }
+
+        internal static IServiceCollection AddDbInitializerHostedService(this IServiceCollection services, IConfiguration configuration)
+        {
+            if (configuration.GetSettings<DbInitializerSettings>().IsEnabled)
+                services.AddHostedService<DatabaseInitializer>();
+
+            return services;
         }
     }
 }

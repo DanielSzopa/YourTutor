@@ -20,6 +20,10 @@ internal class CustomLoggerFactory
             {
                 var serilogLogger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
+                .Filter.ByExcluding(logEvent =>
+                {
+                    return logEvent.Exception is OperationCanceledException;
+                })
                 .CreateLogger();
 
                 logger.AddSerilog(serilogLogger, true);

@@ -18,15 +18,13 @@ public sealed class EditTutorHandler : IRequestHandler<EditTutor, Unit>
 
     public async Task<Unit> Handle(EditTutor request, CancellationToken cancellationToken)
     {
-        var tutor = await _tutorRepository.GetTutorById(request.UserId);
-        if (tutor is null)
-            throw new NotFoundTutorException(request.UserId);
+        var tutor = await _tutorRepository.GetTutorById(request.UserId, cancellationToken) ?? throw new NotFoundTutorException(request.UserId);
 
         tutor.UpdateDescription(request.EditTutorVm.Description);
         tutor.UpdateCountry(request.EditTutorVm.Country);
         tutor.UpdateLanguage(request.EditTutorVm.Language);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }

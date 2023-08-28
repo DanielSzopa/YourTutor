@@ -38,7 +38,7 @@ namespace YourTutor.Application.Commands.SignUp
         {
             var registerVm = command.RegisterVm;
             var response = new RegisterResponse();
-            if (await _userRepository.IsEmailAlreadyExistsAsync(registerVm.Email))
+            if (await _userRepository.IsEmailAlreadyExistsAsync(registerVm.Email, cancellationToken))
             {
                 response.Errors.Add($"Email already exists: {registerVm.Email}");
                 _logger.LogError(AppLogEvent.SignUp, "Problem with registering user, email already exists, email {@email}", registerVm.Email);
@@ -67,11 +67,10 @@ namespace YourTutor.Application.Commands.SignUp
             if (response.Errors.Count > 0)
                 return response;
 
-            await _userRepository.AddUserAsync(user);
+            await _userRepository.AddUserAsync(user, cancellationToken);
             await _signInManager.SignInAsync(false, user.Id, $"{user.FirstName.Value} {user.LastName.Value}");
-
             if (_emailSettings.RegistrationNotificationIsEnabled)
-                await _emailSender.SendEmailAsync(new RegisterEmail(user.Email, _emailSettings.From));
+                await _emailSender.SendEmailAsync(new RegisterEmail(user.Email, _emailSettings.From), cancellationToken);
 
             return response;
         }

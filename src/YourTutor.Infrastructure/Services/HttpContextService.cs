@@ -28,16 +28,13 @@ namespace YourTutor.Infrastructure.Services
 
                 var claim = httpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
-
-                Guid result;
-
                 if (claim is null
                     || string.IsNullOrWhiteSpace(claim.Value)
-                    || !Guid.TryParse(claim.Value, out result))
+                    || !Guid.TryParse(claim.Value, out Guid result))
                 {
                     return Guid.Empty;
                 }
-                    
+
                 return result;
             }
             catch
