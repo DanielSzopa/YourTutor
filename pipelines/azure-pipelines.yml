@@ -38,5 +38,5 @@ stages:
             displayName: 'Run tests'
             inputs:
               command: 'test'
-              workingDirectory: '$(Build.SourcesDirectory)/tests\YourTutor.Tests.Unit'
+              workingDirectory: '$(Build.SourcesDirectory)/tests/YourTutor.Tests.Unit'
 
