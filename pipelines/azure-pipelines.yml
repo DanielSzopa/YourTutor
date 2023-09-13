@@ -19,9 +19,6 @@ stages:
           buildConfiguration: Release
         displayName: Build and test
         steps:
-          - pwsh: |
-              cd $(Build.SourcesDirectory)
-              ls
           - task: UseDotNet@2
             inputs:
               packageType: 'sdk'
