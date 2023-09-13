@@ -1,0 +1,42 @@
+trigger:
+  - master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - name: artifactPath
+    value: '$(Build.ArtifactStagingDirectory)/published'
+  - name: artifactName
+    value: 'app-artifact'
+
+stages:
+  - stage: Build
+    displayName: Build and publish artifact
+    jobs:
+      - job: build
+        variables:
+          buildConfiguration: Release
+        displayName: Build and test
+        steps:
+          - pwsh: |
+              cd $(Build.SourcesDirectory)
+              ls
+          - task: UseDotNet@2
+            inputs:
+              packageType: 'sdk'
+              version: '7.0.x'
+          - powershell: dotnet restore
+            displayName: Restore dependencies
+          - task: DotNetCoreCLI@2
+            displayName: 'Build'
+            inputs:
+              command: 'build'
+              arguments: '--no-restore --configuration ${{ variables.buildConfiguration }}'
+              workingDirectory: '$(Build.SourcesDirectory)'
+          - task: DotNetCoreCLI@2
+            displayName: 'Run tests'
+            inputs:
+              command: 'test'
+              workingDirectory: '$(Build.SourcesDirectory)/tests\YourTutor.Tests.Unit'
+
