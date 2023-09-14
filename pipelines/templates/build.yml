@@ -1,15 +1,3 @@
-trigger:
-  - master
-
-pool:
-  vmImage: ubuntu-latest
-
-variables:
-  - name: artifactPath
-    value: '$(Build.ArtifactStagingDirectory)/published'
-  - name: artifactName
-    value: 'app-artifact'
-
 stages:
   - stage: Build
     displayName: Build and publish artifact
@@ -36,4 +24,3 @@ stages:
             inputs:
               command: 'test'
               workingDirectory: '$(Build.SourcesDirectory)/tests/YourTutor.Tests.Unit'
-
