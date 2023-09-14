@@ -1,3 +1,14 @@
+parameters:
+  - name: shouldPublishArtifact
+    type: boolean
+    default: false
+  - name:  artifactPath
+    type: string
+    default: ''
+  - name:  artifactName
+    type: string
+    default: ''
+
 stages:
   - stage: Build
     displayName: Build and publish artifact
@@ -24,3 +35,19 @@ stages:
             inputs:
               command: 'test'
               workingDirectory: '$(Build.SourcesDirectory)/tests/YourTutor.Tests.Unit'
+          - task: DotNetCoreCLI@2
+            displayName: Publish
+            condition: ${{ eq(parameters.shouldPublishArtifact, true) }}
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              arguments: '--no-build --configuration ${{ variables.buildConfiguration }} --output ${{ parameters.artifactPath }}'
+              workingDirectory: '$(Build.SourcesDirectory)'
+          - task: PublishBuildArtifacts@1
+            displayName: Publish artifact
+            condition: ${{ eq(parameters.shouldPublishArtifact, true) }}
+            inputs:
+              PathtoPublish: ${{ parameters.artifactPath }}
+              ArtifactName: ${{ artifactName }}
+              publishLocation: 'Container'
+          
