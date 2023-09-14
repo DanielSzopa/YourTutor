@@ -5,4 +5,4 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-  templates: templates/build.yml
+  - template: templates/build.yml
