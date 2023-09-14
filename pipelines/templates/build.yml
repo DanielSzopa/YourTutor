@@ -13,7 +13,7 @@ stages:
   - stage: Build
     displayName: Build and publish artifact
     jobs:
-      - job: build
+      - job: Build
         variables:
           buildConfiguration: Release
         displayName: Build and test
