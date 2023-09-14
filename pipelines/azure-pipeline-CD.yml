@@ -1,3 +1,5 @@
+name: Continuous delivery pipeline
+
 trigger:
   - master
 
