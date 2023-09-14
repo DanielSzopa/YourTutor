@@ -34,4 +34,11 @@ stages:
                     downloadType: 'single'
                     artifactName: ${{ variables.artifactName }}
                     downloadPath: ${{ variables.artifactPath }}
+                - task: AzureWebApp@1
+                  inputs:
+                    azureSubscription: 'ado-service-connection'
+                    appType: 'webApp'
+                    appName: 'yourtutorwebapp'
+                    package: '${{ variables.artifactPath }}/${{ variables.artifactName }}/*.zip'
+                    deploymentMethod: 'zipDeploy'
                 
