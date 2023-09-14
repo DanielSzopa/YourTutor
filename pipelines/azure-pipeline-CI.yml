@@ -1,0 +1,11 @@
+name: Continuous integration pipeline
+
+trigger: none
+pr:
+  - master
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - template: templates/build.yml

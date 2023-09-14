@@ -1,0 +1,44 @@
+name: Continuous delivery pipeline
+
+trigger:
+  - master
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - name: artifactName
+    value: 'app-artifact'
+  - name: artifactPath
+    value: '$(Build.ArtifactStagingDirectory)/published'
+
+stages:
+  - template: templates/build.yml
+    parameters:
+      shouldPublishArtifact: true
+      artifactName: ${{ variables.artifactName }}
+      artifactPath: ${{ variables.artifactPath }}
+
+  - stage: Deployment
+    dependsOn: Build
+    jobs:
+      - deployment: Production
+        environment: Production
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: DownloadBuildArtifacts@1
+                  inputs:
+                    buildType: 'current'
+                    downloadType: 'single'
+                    artifactName: ${{ variables.artifactName }}
+                    downloadPath: ${{ variables.artifactPath }}
+                - task: AzureWebApp@1
+                  inputs:
+                    azureSubscription: 'ado-service-connection'
+                    appType: 'webApp'
+                    appName: 'yourtutorwebapp'
+                    package: '${{ variables.artifactPath }}/${{ variables.artifactName }}/*.zip'
+                    deploymentMethod: 'zipDeploy'

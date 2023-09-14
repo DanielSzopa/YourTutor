@@ -1,0 +1,52 @@
+parameters:
+  - name: shouldPublishArtifact
+    type: boolean
+    default: false
+  - name: artifactPath
+    type: string
+    default: ''
+  - name: artifactName
+    type: string
+    default: ''
+
+stages:
+  - stage: Build
+    displayName: Build and publish artifact
+    jobs:
+      - job: Build
+        variables:
+          buildConfiguration: Release
+        displayName: Build and test
+        steps:
+          - task: UseDotNet@2
+            inputs:
+              packageType: 'sdk'
+              version: '7.0.x'
+          - powershell: dotnet restore
+            displayName: Restore dependencies
+          - task: DotNetCoreCLI@2
+            displayName: 'Build'
+            inputs:
+              command: 'build'
+              arguments: '--no-restore --configuration ${{ variables.buildConfiguration }}'
+              workingDirectory: '$(Build.SourcesDirectory)'
+          - task: DotNetCoreCLI@2
+            displayName: 'Run tests'
+            inputs:
+              command: 'test'
+              workingDirectory: '$(Build.SourcesDirectory)/tests/YourTutor.Tests.Unit'
+          - task: DotNetCoreCLI@2
+            displayName: Publish
+            condition: ${{ eq(parameters.shouldPublishArtifact, true) }}
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              arguments: '--no-build --configuration ${{ variables.buildConfiguration }} --output ${{ parameters.artifactPath }}'
+              workingDirectory: '$(Build.SourcesDirectory)/src/YourTutor.Mvc'
+          - task: PublishBuildArtifacts@1
+            displayName: Publish artifact
+            condition: ${{ eq(parameters.shouldPublishArtifact, true) }}
+            inputs:
+              PathtoPublish: ${{ parameters.artifactPath }}
+              ArtifactName: ${{ parameters.artifactName }}
+              publishLocation: 'Container'
