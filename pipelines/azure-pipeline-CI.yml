@@ -1,5 +1,6 @@
 name: Continuous integration pipeline
 
+trigger: none
 pr:
   - master
 

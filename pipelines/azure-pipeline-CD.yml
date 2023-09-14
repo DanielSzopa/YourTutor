@@ -2,10 +2,11 @@ name: Continuous delivery pipeline
 
 trigger:
   - master
+pr: none
 
 pool:
   vmImage: ubuntu-latest
-  
+
 variables:
   - name: artifactName
     value: 'app-artifact'
@@ -41,4 +42,3 @@ stages:
                     appName: 'yourtutorwebapp'
                     package: '${{ variables.artifactPath }}/${{ variables.artifactName }}/*.zip'
                     deploymentMethod: 'zipDeploy'
-                
