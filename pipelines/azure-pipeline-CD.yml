@@ -5,10 +5,33 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+  
+variables:
+  - name: artifactName
+    value: 'app-artifact'
+  - name: artifactPath
+    value: '$(Build.ArtifactStagingDirectory)/published'
 
 stages:
   - template: templates/build.yml
     parameters:
       shouldPublishArtifact: true
-      artifactName: 'app-artifact'
-      artifactPath: '$(Build.ArtifactStagingDirectory)/published'
+      artifactName: ${{ variables.artifactName }}
+      artifactPath: ${{ variables.artifactPath }}
+
+  - stage: Deployment
+    dependsOn: Build
+    jobs:
+      - deployment: Production
+        environment: Production
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: DownloadBuildArtifacts@1
+                  inputs:
+                    buildType: 'current'
+                    downloadType: 'single'
+                    artifactName: ${{ variables.artifactName }}
+                    downloadPath: ${{ variables.artifactPath }}
+                
