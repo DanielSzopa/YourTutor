@@ -48,5 +48,5 @@ stages:
             condition: ${{ eq(parameters.shouldPublishArtifact, true) }}
             inputs:
               PathtoPublish: ${{ parameters.artifactPath }}
-              ArtifactName: ${{ artifactName }}
+              ArtifactName: ${{ parameters.artifactName }}
               publishLocation: 'Container'
