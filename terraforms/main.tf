@@ -25,12 +25,6 @@ module "sql_db" {
   sql_server_id = azurerm_mssql_server.sql_server.id
 }
 
-module "sql_db_test" {
-  source        = "./modules/sql_database"
-  sql_db_name   = local.sql_db_test_name
-  sql_server_id = azurerm_mssql_server.sql_server.id
-}
-
 resource "azurerm_service_plan" "service_plan" {
   name = local.app_service_name
   resource_group_name = azurerm_resource_group.rg.name
