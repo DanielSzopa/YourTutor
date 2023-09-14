@@ -1,0 +1,8 @@
+trigger:
+  - master
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - template: templates/build.yml
