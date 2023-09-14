@@ -6,3 +6,7 @@ pool:
 
 stages:
   - template: templates/build.yml
+    parameters:
+      shouldPublishArtifact: true
+      artifactName: 'app-artifact'
+      artifactPath: '$(Build.ArtifactStagingDirectory)/published'
