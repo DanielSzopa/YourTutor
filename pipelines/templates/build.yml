@@ -42,7 +42,7 @@ stages:
               command: 'publish'
               publishWebProjects: false
               arguments: '--no-build --configuration ${{ variables.buildConfiguration }} --output ${{ parameters.artifactPath }}'
-              workingDirectory: '$(Build.SourcesDirectory)'
+              workingDirectory: '$(Build.SourcesDirectory)/src/YourTutor.Mvc'
           - task: PublishBuildArtifacts@1
             displayName: Publish artifact
             condition: ${{ eq(parameters.shouldPublishArtifact, true) }}
