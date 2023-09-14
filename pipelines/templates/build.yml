@@ -2,10 +2,10 @@ parameters:
   - name: shouldPublishArtifact
     type: boolean
     default: false
-  - name:  artifactPath
+  - name: artifactPath
     type: string
     default: ''
-  - name:  artifactName
+  - name: artifactName
     type: string
     default: ''
 
@@ -50,4 +50,3 @@ stages:
               PathtoPublish: ${{ parameters.artifactPath }}
               ArtifactName: ${{ artifactName }}
               publishLocation: 'Container'
-          
