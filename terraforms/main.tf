@@ -26,11 +26,11 @@ module "sql_db" {
 }
 
 resource "azurerm_service_plan" "service_plan" {
-  name = local.app_service_name
+  name                = local.app_service_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  os_type = "Windows"
-  sku_name = "D1"
+  os_type             = "Windows"
+  sku_name            = "D1"
 }
 
 resource "azurerm_windows_web_app" "webapp" {
@@ -51,6 +51,7 @@ resource "azurerm_windows_web_app" "webapp" {
   app_settings = {
     "ConnectionStrings:DefaultConnectionString" = local.connection_string
     "SendGrid:ApiKey"                           = var.api_key
+    "ASPNETCORE_ENVIRONMENT"                    = "Production"
   }
 
 }
