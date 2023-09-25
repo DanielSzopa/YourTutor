@@ -2,10 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using YourTutor.Application.Helpers;
 using YourTutor.Infrastructure.DAL.Seeds;
-using YourTutor.Infrastructure.Settings;
 
 namespace YourTutor.Infrastructure.DAL;
 
