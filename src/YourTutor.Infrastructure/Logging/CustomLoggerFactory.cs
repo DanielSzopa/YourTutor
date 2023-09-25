@@ -19,7 +19,7 @@ internal class CustomLoggerFactory
             var loggerFactory = LoggerFactory.Create(logger =>
             {
                 var serilogLogger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
+                .ReadFrom.Configuration(configuration, SerilogSection())
                 .Filter.ByExcluding(logEvent =>
                 {
                     return logEvent.Exception is OperationCanceledException;
@@ -33,5 +33,12 @@ internal class CustomLoggerFactory
         }
 
         return LoggerFactoryInstance;
+    }
+
+    private static string SerilogSection()
+    {
+        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        env = !string.IsNullOrWhiteSpace(env) ? env : string.Empty;
+        return $"Serilog_{env}";
     }
 }
