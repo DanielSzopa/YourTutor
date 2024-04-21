@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DotNet.Testcontainers.Builders;
+using DotNet.Testcontainers.Containers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Respawn;
@@ -13,7 +15,7 @@ namespace YourTutor.Tests.Integration.Setup;
 
 public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    private string _connectionString;
+    private readonly string _connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>().DefaultConnectionString;
 
     private Respawner _respawner;
 
@@ -22,6 +24,15 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     public HttpClient Client { get; private set; }
     public HttpClient AuthenticatedClient { get; private set; }  
     internal TestDatabase TestDatabase { get; private set; }
+
+    private readonly IContainer _testContainer = new ContainerBuilder()
+        .WithImage("mcr.microsoft.com/mssql/server:2019-latest")
+        .WithEnvironment("ACCEPT_EULA", "Y")
+        .WithEnvironment("MSSQL_SA_PASSWORD", "-Test123-")
+        .WithEnvironment("MSSQL_PID", "Express")
+        .WithPortBinding("1433", "1433")
+        .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))
+        .Build();
 
     public YourTutorApp()
     {
@@ -48,7 +59,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        _connectionString = SettingsHelper.GetSettings<ConnectionStringsSettings>().DefaultConnectionString;
+        await _testContainer.StartAsync();
         TestDatabase = new TestDatabase(_connectionString);
         await TestDatabase.InitializeDbAsync();
 
@@ -76,6 +87,7 @@ public class YourTutorApp : WebApplicationFactory<Program>, IAsyncLifetime
     async Task IAsyncLifetime.DisposeAsync()
     {
         await TestDatabase.CustomDisposeAsync();
+        await _testContainer.StopAsync();
     }
 
 
